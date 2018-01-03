@@ -40,6 +40,7 @@ echo <<<block
       </div>
     </div>
     <script src = 'jsfiles/bootstrap4_js/bootstrap.min.js' ></script>
+    <script src = '/onlinetutor/dist/bundle.js'></script>
     <script src = 'jsfiles/funcs.js' ></script>
     <script type = "text/javascript" src = "./jsfiles/quotes.js"></script>
   </body>
