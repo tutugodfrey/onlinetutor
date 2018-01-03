@@ -23,16 +23,6 @@ $select_result .= "</select>";
 
 ?>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>
-</title>
-<link type = "text/css" rel = "stylesheet" href = "./../mylecapp_css/style1.css" />
-</head>
-<body>
-<div id = "body_div">
 <!-- interface for a lecturer to sign up to use the service -->
 <div id = "signup">
 <h1>sign up</h1>
@@ -96,8 +86,5 @@ $select_result .= "</select>";
 </fieldset><br/>
 <input type = "submit" value = "Sign Up" name = "singup" />
 </form>
-</div>
 <p> Already have an Account? <a href = "./login.php" >Log In</a></p>
 </div>
-</body>
-</html>
