@@ -3,8 +3,6 @@
 include "db_connect2.php";
 include "function2.php";
 
-
-
 if(!isset($_POST["login"])){
 
 if(isset($_POST["log_out"])){
@@ -14,34 +12,29 @@ session_destroy();
 }
 
 $display = <<<end
-<p>Please Enter Your Username and Password</p>
-<div id = "login">
-<fieldset>
-<form method = "POST" action = "login.php" >
-<legend>Log In As</legend>
-<input type = "radio" name = "user_type" id = 'lecturer' value = "lecturer" /><label for = "lecturer" >Lecturer</label>
-<input type = "radio" name = "user_type" id = 'student' value = "student" /><label for = "student" >Student</label><br />
-<label for = "username">Username</label>
-<input type = "text" name = "username" id = 'username'  size = "30" /><br />
-<label for = "password" >Password</label>
-<input type = "password" id = 'password' value = "password"  name = "password" /><br />
-<input type = "submit" value = "Log-In" name = "login" /><br />
-</form>
-</fieldset>
-
-<div>
-<p> Don't have an Account? <a href = "signup.php" >Sign Up</a></p>
-</div>
-
-<div>
-<fieldset>
-<p>I<a href = "reset_password.php?forget_password=yes"> forgot my password?</a>   I want to <a href = "reset_password.php?change=yes">Change password</a></p>
-</fieldset>
-</div>
-
-</div>
-
-
+  <p>Please Enter Your Username and Password</p>
+  <div id = "login">
+    <fieldset>
+      <form method = "POST" action = "login.php" >
+      <legend>Log In As</legend>
+      <input type = "radio" name = "user_type" id = 'lecturer' value = "lecturer" /><label for = "lecturer" >Lecturer</label>
+      <input type = "radio" name = "user_type" id = 'student' value = "student" /><label for = "student" >Student</label><br />
+      <label for = "username">Username</label>
+      <input type = "text" name = "username" id = 'username'  size = "30" /><br />
+      <label for = "password" >Password</label>
+      <input type = "password" id = 'password' value = "password"  name = "password" /><br />
+      <input type = "submit" value = "Log-In" name = "login" /><br />
+      </form>
+    </fieldset>
+    <div>
+      <p> Don't have an Account? <a href = "signup.php" >Sign Up</a></p>
+    </div>
+    <div>
+    <fieldset>
+      <p>I<a href = "reset_password.php?forget_password=yes"> forgot my password?</a>   I want to <a href = "reset_password.php?change=yes">Change password</a></p>
+    </fieldset>
+    </div>
+  </div>
 end;
 }	elseif(isset($_POST["login"])) {
 $username = trim($_POST["username"]);
@@ -59,7 +52,7 @@ $display = "<p>Please Enter your username and password to login<a href = \"login
 //authenticate the use
 $query_string = "select id, lastname, firstname, picture from registered_users where username = \"$username\" and password = sha1($password)";
 
-run_query($query_string);		//use registration database. if access is denied the user authentication fails 
+run_query($query_string);		//use registration database. if access is denied the user authentication fails
 if($row_num2 == 0){
 $display = "<p>Your username or password is not con correct. please ensure you are duly registered to use this app</P";
 }					//login error message will be displayed
@@ -75,14 +68,14 @@ $_SESSION["user_image_url"] = $user_info[3];
 if($user_type == "student"){
 $_SESSION["class"] = "student";
 $_SESSION["owner_id"] = $user_id;
-header("Location:/mylecturerapp/student_interface/index1.php");
+header("Location:/onlinetutor/student_interface/dashboard.php");
 }
 
 if($user_type == "lecturer"){
 $_SESSION["class"] = "lecturer";
 $_SESSION["lecturer_db"] = "lec".$user_id;
 $_SESSION["owner_id"] = $user_id;
-header("Location:/mylecturerapp/lecturer_interface/index1.php");
+header("Location:/onlinetutor/lecturer_interface/dashboard.php");
 }
 exit();
 
@@ -93,18 +86,4 @@ exit();
 }
 ?>
 
-
-<!DOCTYPE html>
-<html>
-<head>
-<title></title>
-<link type = "text/css" rel = "stylesheet" href = "/mylecturerapp/mylecapp_css/style1.css" />
-<link type = "text/css" rel = "stylesheet" href = "/mylecturerapp/mylecapp_css/login.css" />
-
-</head>
-<body>
-<div id = "login_div" >
 <?php echo $display; ?>
-</div>
-</body>
-</html>

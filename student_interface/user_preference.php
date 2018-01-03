@@ -14,8 +14,8 @@ echo "username = $S_username";
 
 
 
-} 	else	{		
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+} 	else	{
+header("Location:/onlinetutor/login.php");  		//user do not have an active session
 exit();
 }
 

@@ -85,19 +85,19 @@ $note = build_array($row_num2);
 $post_text = trim($note["note"]);		//obtain the note incase user want to edit it
 $title = trim($note["title"]);
 $post_date = $note["date_format(note_date, \"Posted %D %M %Y\")"];
- 
+
 $display = "
 <h1>$course_code: $title</h1>
 <div id = \"text_area\" >$post_text</div><br />
 <h3>Note posted on $post_date</h3>";
 }
 }
-}		//end view note  
+}		//end view note
 
 
 
 }	else {
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/onlinetutor/login.php");  		//user do not have an active session
 exit();
 }
 ?>

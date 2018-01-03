@@ -21,7 +21,7 @@ $course_ids = build_array($row_num2);
 if($row_num2 == 1){
 $course_ids = [$course_ids];
 }
-$all_student_ids = [];	
+$all_student_ids = [];
 foreach($course_ids as $course_id){
 $query_string = "select student_id from registered_courses where course_id = \"$course_id\" and student_id != \"$owner_id\"";
 run_query($query_string, $lecturer_db);
@@ -48,7 +48,7 @@ $display = "<p>No other student have registered the courses you offer</p>";
 
 
 $students_info = [];
-//get the names of and pix of this students 
+//get the names of and pix of this students
 for($i = 0; $i < sizeof($all_student_ids); $i++) {
 $query_string = "select id, lastname, firstname, picture from registered_users where id = \"$all_student_ids[$i]\"";
 run_query($query_string);	//use genereal database
@@ -75,7 +75,7 @@ $student_info[1] $student_info[2]
 <a href = "/mylecturerapp/common/profile.php?profile=yes&user_id=$student_info[0]">View Profile</a>
 </p>
 block;
-}		//end foreach inside for block	
+}		//end foreach inside for block
 }
 }
 }
@@ -83,7 +83,7 @@ block;
 
 
 }	else {
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/onlinetutor/login.php");  		//user do not have an active session
 exit();
 }
 

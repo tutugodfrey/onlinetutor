@@ -19,28 +19,29 @@ echo <<<block
             </a>
           </li>
           <li class = 'nav-item' >
-            <a href = './common/signup.php' class = 'nav-link' >
+            <a href = '/onlinetutor/common/signup.php' class = 'nav-link' >
               signup
             </a>
           </li>
           <li class = 'nav-item'>
-            <a href = './common/login.php' class = 'nav-link' >
+            <a href = '/onlinetutor/common/login.php' class = 'nav-link' >
               signin
             </a>
           </li>
         </ul>
       </div>
-      <div id = 'content-area'>
+      <div><p id = "ajax_neutral">Processing ...</p></div>
+      <div id = 'main_content'>
         <h1>
-          Welcome to Online tutor 
+          Welcome to Online tutor
         </h1>
       </div>
       <div id = 'footer'>
       </div>
     </div>
-    <script src = './jsfiles/bootstrap4_js/bootstrap.min.js' ></script>
-    <script src = './jsfiles/funcs.js' ><script>
+    <script src = 'jsfiles/bootstrap4_js/bootstrap.min.js' ></script>
+    <script src = 'jsfiles/funcs.js' ></script>
+    <script type = "text/javascript" src = "./jsfiles/quotes.js"></script>
   </body>
 </html>
 block;
-

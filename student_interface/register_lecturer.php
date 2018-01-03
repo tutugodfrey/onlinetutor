@@ -16,7 +16,7 @@ $name = $_GET["name_like_nojs"];
 if(isset($_GET["name_like_js"])) {
 $name = $_GET["name_like_js"];
 }
-$query_string = "select id, lastname, firstname from registered_lecturers 
+$query_string = "select id, lastname, firstname from registered_lecturers
 		where firstname like \"$name%\" or lastname like \"$name%\" or username like \"$name%\"";
 
 run_query($query_string);
@@ -84,7 +84,7 @@ $display  = "<p>your are already registered with this lecturer</p>";
 
 
 }	else {
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/onlinetutor/login.php");  		//user do not have an active session
 exit();
 }
 ?>

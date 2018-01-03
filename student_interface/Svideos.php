@@ -1,4 +1,4 @@
-<?php 
+<?php
 //include include required files
 include "db_connect2.php";
 include "function2.php";
@@ -48,8 +48,8 @@ file_download($path, $filename);
 }
 
 
-}	else {			
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+}	else {
+header("Location:/onlinetutor/login.php");  		//user do not have an active session
 exit();
 }
 ?>

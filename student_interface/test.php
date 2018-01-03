@@ -148,8 +148,8 @@ $heading = "<h1>Test Taker</h1>";
 $instructions = "
 <pre><h2>Instructions</h2><p>
 This is $test_type $test_id for $course_code. This $test_type will
-last for $duration minutes and your are required to answer 
-$no_of_questions $question. Each question carry equal mark Please 
+last for $duration minutes and your are required to answer
+$no_of_questions $question. Each question carry equal mark Please
 ensure you take the test on or before $deadline.</p>
 </pre>";
 $display = <<<block
@@ -182,18 +182,18 @@ $mark = $_POST["mark"];
 
 $no_of_questions = $_POST["no_of_questions"];
 $instructions = $_POST["instructions"];
-if($instructions == "" || $test_id == "" || $course_id == "" || $duration == "" ||$deadline == "" 
+if($instructions == "" || $test_id == "" || $course_id == "" || $duration == "" ||$deadline == ""
 		|| $mark == "" || $no_of_questions == ""){
 $display = "<p>An error error has occured. please go back and try again</p>";
 }	else	{
 $course_code = get_course_code($course_id, 1, $lecturer_db);
 
 if($test_type == "exam"){		//all question for this course_id
-$query_string = "select questions, option_A, option_B, option_C, option_D, correct_option from 
+$query_string = "select questions, option_A, option_B, option_C, option_D, correct_option from
 		questions where course_id = \"$course_id\"";
 
 }	else if ($test_type == "test") 	{
-$query_string = "select questions, option_A, option_B, option_C, option_D, correct_option from 
+$query_string = "select questions, option_A, option_B, option_C, option_D, correct_option from
 		questions where test_id = \"$test_id\" and course_id = \"$course_id\"";
 
 }
@@ -259,8 +259,8 @@ $score  = 0;
 for($i = 0; $i < ($no_of_questions); $i++){
 $ans = $i+1;		//adding 1 to $i mark the first questions who answer is at index 0 of the answers array
 $ans = "ans_$ans";
-if(isset($_POST["$ans"])){		//test each of the submitted answer against the answer array 
-$answer = $_POST["$ans"];		//if student does not select option for any question the question is not tested 
+if(isset($_POST["$ans"])){		//test each of the submitted answer against the answer array
+$answer = $_POST["$ans"];		//if student does not select option for any question the question is not tested
 if($answer == $answers[$i]){		//and so the no score is assign
 $score = $score + $mark;
 }
@@ -311,7 +311,7 @@ $display .= "<p>Congratulations, you scored $total_score in the test. you did ex
 
 
 }	else {
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/onlinetutor/login.php");  		//user do not have an active session
 exit();
 }
 

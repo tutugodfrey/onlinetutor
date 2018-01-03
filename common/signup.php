@@ -5,13 +5,13 @@ include "date_function.php";
 //include "function2.php";
 /*
 $values = array ();
-$values = array (array ("What is the name of your first school", "How old are you when you got married", 
+$values = array (array ("What is the name of your first school", "How old are you when you got married",
 				"What is your brand name of your first car", "What is the name of your favorite teacher"));
 $rows = sizeof($values[0]);
 select_option("security question", "security_question", $values, $rows);
 $result = $select_result;
 */
-$values = array ("What is the name of your first school?", "How old are you when you got married?", 
+$values = array ("What is the name of your first school?", "How old are you when you got married?",
 				"What is your brand name of your first car?", "What is the name of your favorite teacher?");
 
 $select_result = "<label for = \"security questions\"> Security Questions </label><select name = \"security_question\">";
@@ -29,7 +29,7 @@ $select_result .= "</select>";
 <head>
 <title>
 </title>
-<link type = "text/css" rel = "stylesheet" href = "/mylecturerapp/mylecapp_css/style1.css" />
+<link type = "text/css" rel = "stylesheet" href = "./../mylecapp_css/style1.css" />
 </head>
 <body>
 <div id = "body_div">
@@ -97,7 +97,7 @@ $select_result .= "</select>";
 <input type = "submit" value = "Sign Up" name = "singup" />
 </form>
 </div>
-<p> Already have an Account? <a href = "login.php" >Log In</a></p>
+<p> Already have an Account? <a href = "./login.php" >Log In</a></p>
 </div>
 </body>
 </html>

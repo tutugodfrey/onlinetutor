@@ -13,7 +13,7 @@ $L_id = $_SESSION["L_id"];
 if($S_id == ""){
 $display = "<p>An error occur. Please go back and try again</p>";
 
-} 	else		{ 
+} 	else		{
 if(isset($_GET["friends"])){
 $friends_table = "std".$S_id."_friends";
 $display = "<h1>Your friends</h1>";
@@ -216,7 +216,7 @@ run_query($query_string);
 if($row_num2 == 1){
 $display = "<p>The massage has already been posted</p>";
 }	else	{
-$query_string = array("insert into $my_chat_table values(null, \"$sender\", \"$receiver\", \"$post_text\", now()), \"$user_type\"", 
+$query_string = array("insert into $my_chat_table values(null, \"$sender\", \"$receiver\", \"$post_text\", now()), \"$user_type\"",
 			"insert into $friend_table values(null, \"$sender\", \"$receiver\", \"$post_text\", now())", "\s\");
 run_query($query_string);
 if($row_num2 == 0 && $row_num3 == 0){
@@ -324,7 +324,7 @@ if (isset($_POST["search_friend"])) {
 $name =  trim($_POST["name"]);
 $user_type = $_POST["user_type"];
 if($user_type == "s"){
-$query_string = array "select id, lastname, firstname from registered_students 
+$query_string = array "select id, lastname, firstname from registered_students
 		where (firstname like \"$name%\" or lastname like \"$name%\" or username like \"$name%\") and (id != \"$user_id\")";
 }
 
@@ -341,7 +341,7 @@ $result = select_option($friends, "Names", "coursemates");
 }
 $display = <<<block
 <p> Matching list</p>
-<form name = "new_friend" method = "POST" action = "/mylecturerapp/student_interface/coursemates.php" >
+<form name = "new_friend" method = "POST" action = "/onlinetutor/student_interface/coursemates.php" >
 $result
 <input type = "submit" id = "addFriend" name = "add_friend" value = "Add" />
 </form>
@@ -352,7 +352,7 @@ block;
 
 }		//end $S_id else block
 }	else {
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/onlinetutor/login.php");  		//user do not have an active session
 exit();
 }
 ?>
@@ -362,6 +362,3 @@ exit();
 
 
 <?php echo $display; ?>
-
-
-

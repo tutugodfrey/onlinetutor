@@ -1,4 +1,4 @@
-<?php 
+<?php
 //include files of functions
 include "db_connect2.php";
 include "function2.php";
@@ -70,7 +70,7 @@ $new_array[0][3] = $score[3];
 if(strtolower($score[0]) === "test"){
 $id = $score[1] - 1;
 if(sizeof($new_array) !== 0){
-$size_of_inner = sizeof($new_array[$id]);	
+$size_of_inner = sizeof($new_array[$id]);
 if(!$new_array[$id]){
 $new_array[$id] = ["", "", "", ""];
 $new_array[$id][0] = $id + 1;
@@ -162,7 +162,7 @@ $display = mytable($scores, "no", "yes");
 
 
 }	else {
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/onlinetutor/login.php");  		//user do not have an active session
 exit();
 }
 ?>

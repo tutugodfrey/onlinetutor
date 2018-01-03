@@ -12,7 +12,7 @@ $note_table = "user".$owner_id."_note";
 if($owner_id == ""){
 $display = "<p>An error occur it seem you did not select any lectuerer</p>";
 }	else		{
-$heading = ""; 
+$heading = "";
 if(isset($_GET["mynote"]) || isset($_POST["edit"]) ){
 //offset all initial values
 $post_text = "";   $note_id = "";  $note_course_code = "";  $registered_course_code = "";  $title = ""; $saved_note_heading = "";
@@ -262,28 +262,25 @@ block;
 }
 
 
-if(isset($_POST["delete"])){
-if(empty($_POST["note_id"])){
-$display = "<p>Please select the checkbox to delete the note</p>";
-} 	else 	{
-$note_id = trim($_POST["note_id"][0]);
-$query_string = "delete from $note_table where id = \"$note_id\"";
-run_query($query_string);
-if($row_num2 == 0){
-$display = "<p>The note could note be deleted now please try again later</p>";
+    if(isset($_POST["delete"])){
+      if(empty($_POST["note_id"])){
+        $display = "<p>Please select the checkbox to delete the note</p>";
+      } 	else 	{
+        $note_id = trim($_POST["note_id"][0]);
+        $query_string = "delete from $note_table where id = \"$note_id\"";
+        run_query($query_string);
+        if($row_num2 == 0){
+          $display = "<p>The note could note be deleted now please try again later</p>";
+        }	else {
+          $display = "<p>The note has been deleted</p>";
+        }
+      }
+    }
+
+  }	//end verify owner_id
 }	else {
-$display = "<p>The note has been deleted</p>";
-}
-}
-}
-
-
-
-
-}	//end verify owner_id
-}	else {
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
-exit();
+  header("Location:/onlinetutor/login.php");  		//user do not have an active session
+  exit();
 }
 
 ?>

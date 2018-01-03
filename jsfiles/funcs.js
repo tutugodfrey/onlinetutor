@@ -1,4 +1,3 @@
- 
 
 xmlHttp = createXmlHttpRequest();
 var calculator_id;
@@ -7,7 +6,7 @@ var new_chat_id = "";
 var submit_id = "";
 var image_ele;
 //var close_chat;
-var chat_msg_div;	
+var chat_msg_div;
 var chat_div;
 var file_available = false;
 var storedHistoryData;
@@ -124,7 +123,7 @@ data_array = [image_ele[imgSize], "class", "large_img", "yes"];
 //new_image = image_ele[imgSize];
 newEvent (image_ele[imgSize], "click", changeAttribute, data_array);
 }
-} 
+}
 
 if(document.getElementById("enter_lecturer_name")){
 enter_lec_id = document.getElementById("enter_lecturer_name");
@@ -146,7 +145,7 @@ calculator();
 newEvent(calcEle, "mousedown", move_ele, calcEle);
 }
 
-if(document.getElementById("chat_div")){	
+if(document.getElementById("chat_div")){
 chat_div = document.getElementById("chat_div");
 
 close_chat = document.getElementById("close_chat");
@@ -167,7 +166,7 @@ if(document.getElementById("chat_msg_div")) {
 //alert("work on updating top  post chat");
 chat_msg_div = document.getElementById("chat_msg_div");
 newEvent(chat_msg_div, "scroll", earlier_chat, chat_msg_div);
-} 
+}
 
 
 
@@ -218,7 +217,7 @@ var xmlHttp = createXmlHttpRequest();
 function createXmlHttpRequest(){
 //will store the reference to the XMLHttpRequest object
 var xmlHttp;
-// this should work for all browsers except IE6 and older 
+// this should work for all browsers except IE6 and older
 try{
 //try to create XMLHttpRequest object
 xmlHttp = new XMLHttpRequest();
@@ -256,14 +255,14 @@ ele_object.setAttribute(attr_to_change, new_attr);
  if (ele_attr === new_attr && remove_attr === "yes") {
 //remove the attribute. the image become small
 ele_object.removeAttribute(attr_to_change);
-} 	
+}
 else if (ele_attr === new_attr && remove_attr === "no") {
 //no action taken
 }
 else if(ele_attr === new_attr && (remove_attr !== "yes" || remove_attr !== "no" || remove_attr !== "undefined")){
 var change_to = remove_attr;
 ele_object.setAttribute(attr_to_change, remove_attr);
-} 
+}
 
 }		//end changeClass
 
@@ -296,7 +295,7 @@ function move_handler(event){
 if(!buttonPress(event)){
 removeEventListener("mousemove", move_handler);
 
-}	else	{ 
+}	else	{
 
 //var yOffset = event.pageY;
 //var xOffset = event.pageX;
@@ -347,7 +346,7 @@ ajx_busy();
 if(xmlHttp.readyState == 4){
 if(xmlHttp.status == 200){
 textResponse = xmlHttp.responseText;
-
+console.log(textResponse)
 callback();
 
 } else {
@@ -393,7 +392,7 @@ xmlHttp.open(method, url, true);		//now set request headers for the post method
 if(file_available === false) {	//form does not have a file input  else form will be submitted with FormData()
 
 xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-}	
+}
 xmlHttp.setRequestHeader("Content-length", msg.length);
 xmlHttp.setRequestHeader("Connection", "close");
 xmlHttp.onreadystatechange = function()	{
@@ -413,7 +412,7 @@ textResponse = xmlHttp.responseText;
 
 callback();
 } else {
-alert("There was a problem accessing the server: " + xmlHttp.statusText);
+console.log("There was a problem accessing the server: " + xmlHttp.statusText);
 }
 }
 }
@@ -426,7 +425,7 @@ xmlHttp.send(msg);
 
 //////////////////////////////////
 //use popstate to update the content area
-window.addEventListener("popstate", 
+window.addEventListener("popstate",
 function (e) {
 storedHistoryData = e.state;		//keep this variable global;
 //alert(storedHistoryData);
@@ -460,7 +459,7 @@ function newEvent(element_object,  event_type, callback, func_argument){
 if(element_object.addEventListener){
 element_object.addEventListener(event_type, function(event) {
 
-event.preventDefault();	
+event.preventDefault();
 callback(func_argument);
 
 },
@@ -468,7 +467,7 @@ false );
 }	else if (element_object.attachEvent) {
 element_object.attachEvent("on"+ event_type,
 function(event){
-event.preventDefault();	
+event.preventDefault();
 callback(func_argument);
 } );
 }
@@ -497,18 +496,13 @@ function displayContent () {
 
 if(href_class === "friend" || (document.getElementById("chat_msg_div") && href_class === "friend") ) {
 chating();
-
 }
 else if (document.getElementById("chat_msg_div") && submit_id === "send_chat"){	//check that the id of the submit is not the same for send chat button
 //alert("formating the chat display");
 chat_display (); 	//display chat messages
-
 			//listening after every 5 seconds
-
 }	else if (submit_id === "calc") {
-
 calc_display();
-
 }	else if (textResponse.indexOf("The grade has been recorded") > 1)	 {
 var idOfGrade = "grade" + post_id;		//formate the id of the checkbox that indicate a graded post
 var gradeCheckbox = document.getElementById(idOfGrade);
@@ -521,16 +515,12 @@ myDiv = document.getElementById("main_content");
 myDiv.innerHTML = textResponse;
 }
 dom_notifier();	//when elements becomes officially available call function to get their id's
-
-
 href_class = "";		//offset this so others can display normally
 }
 
 
 ////////////////////////////////////////////////////
 function form_element(funct_arg) {
-//alert(submit_id);
-
 // furn_argument is array that compose [form_ele, function] function pass to post/getMethod for hander ajax response
 var form_ele = funct_arg[0];
 var ele_method = form_ele.getAttribute("method");
@@ -539,12 +529,9 @@ var form_name = form_ele.getAttribute("name");
 var ele_controls = form_ele.elements;
 //alert(form_ele);
 var url = "";
-var msg = ""; 
+var msg = "";
 var form_values = [];
 var submit_buttons = [];
-
-
-
 
 for(j = 0; j < ele_controls.length; j++){
 var ele_name = ele_controls[j].getAttribute("name");
@@ -559,17 +546,17 @@ var values = [ele_id, submit_ele];
 submit_buttons.push(values);
 } 	else if (ele_type === "select-one") {
 
-form_values.push(select_value(ele_name));  
+form_values.push(select_value(ele_name));
  }
-	
+
 else if (ele_type === "checkbox" || ele_type === "radio") {
 checked_value =  getCheckboxValue(ele_controls[j]);
 //alert(checked_value[0] + checked_value[1]);
 
 if(checked_value !== undefined){
 form_values.push(checked_value);
-} 
-}			
+}
+}
 else if ( ele_type === "text"){
 var ele_id = ele_controls[j].getAttribute("id");
 form_values.push(input_value(ele_id));
@@ -594,7 +581,7 @@ ele_value = ele_controls[j].getAttribute("value");
 form_values.push([ele_name, ele_value]);
 }
 
-}		//end for 
+}		//end for
 for(i = 0; i < submit_buttons.length; i++) {
 if(submit_buttons[i][0] === "updateProfile" || submit_buttons[i][0] === "search_frnd") {
 form_values.push(submit_buttons[i][1]);
@@ -629,25 +616,22 @@ postMethod(data, funct_arg[1]);
 }
 
 
-if(ele_method === "GET"){
-data  = [ele_action + "?" + msg, "GET"];
-getMethod(data, funct_arg[1]);
-}
+  if(ele_method === "GET"){
+  data  = [ele_action + "?" + msg, "GET"];
+  getMethod(data, funct_arg[1]);
+  }
 
 ///use this section to define input type text and textarea that will be offset after form submission
-//add the id of the element to the if condition 
-if(submit_id === "send_chat" ) {
-alert(submit_id);
-document.getElementById("chat_text_field").value = "";
+//add the id of the element to the if condition
+  if(submit_id === "send_chat" ) {
+  alert(submit_id);
+  document.getElementById("chat_text_field").value = "";
+  }
+}		// end form_element function
 
-}
-
-
-}		//form_element function
- 
 
 function submit_ele(ele) {
-var form_ele; 
+var form_ele;
 submit_id = ele.getAttribute("id");
 
 if(submit_id === "calc" && calculator_id === undefined){
@@ -695,7 +679,7 @@ var ele_value = ele.value;
 if(ele_value === "photo" || ele_value === "birthday") {
 var form_ele = ele.parentNode;
 form_element([form_ele, displayContent]);		//call form_element to autosubmit the  form
-} 	
+}
 }
 
 
@@ -765,31 +749,24 @@ ele_value = " ";
 alert(file_ele + "= undefined");
 return "";
 }
-alert('i pass here');
+
 //return [ele_name, ele_value];
 }		//end file_upload
 
 function linkValue(ele) {
-var href = ele.getAttribute("href");
-href_class = ele.getAttribute("class");
-
-
-if(href_class === "friend") {
-
-chat_div_class = chat_div.getAttribute("class");
-
-if(chat_div_class === null || chat_div_class === "_show"){
-
-getMethod([href, "GET"], displayContent); 
-}	else if (chat_div_class === "js_hide")	{
-getMethod([href, "GET"], displayContent); 
-//changeAttribute([chat_div, "class", "_show"]);
-}
-
-
-}	else	{
-getMethod([href, "GET"], displayContent); 
-}
+  var href = ele.getAttribute("href");
+  href_class = ele.getAttribute("class");
+  if(href_class === "friend") {
+    chat_div_class = chat_div.getAttribute("class");
+    if(chat_div_class === null || chat_div_class === "_show"){
+      getMethod([href, "GET"], displayContent);
+    }	else if (chat_div_class === "js_hide")	{
+      getMethod([href, "GET"], displayContent);
+      //changeAttribute([chat_div, "class", "_show"]);
+    }
+  }	else	{
+    getMethod([href, "GET"], displayContent);
+  }
 }
 
 ////////////////////////////////////////////
@@ -815,7 +792,7 @@ name_to_search = ele.value;
 ele_name = ele.name;
 ele_type = ele.type;
 
-form_ele = get_form_ele(ele);	
+form_ele = get_form_ele(ele);
 
 //form_ele = ele.parentNode.parentNode.parentNode;
 //alert(form_ele.type);
@@ -924,7 +901,7 @@ if(what_to_do === "display_chat") {
 data_array = [chat_div, "class", "_show",  "js_hide"];	//chat_div is global. chat_div will alternate b/w _show and js_hide
 changeAttribute(data_array);
 }
-}  
+}
 
 
 
@@ -1077,7 +1054,7 @@ newEvent(ele, "click", calc, ele);
 
 
 function calc(ele){
-var ele_value = ele.value; 
+var ele_value = ele.value;
 
 if(ele_value === "close") {
 calc_div = document.getElementById("use_calculator");
@@ -1119,24 +1096,24 @@ calcOperator = "";
 operator_box.innerHTML = calcOperator;
 value1_box.innerHTML = calcValue1;
 value2_box.innerHTML = calcValue2;
-}  
-else if (ele_value === "+" || ele_value === "-" 
+}
+else if (ele_value === "+" || ele_value === "-"
 || ele_value === "/" || ele_value === "x"){
 calcOperator = ele_value;
 operator_box.innerHTML = calcOperator;
-} 
+}
 else if (calcOperator === "" && (ele_value !== "+" || ele_value !== "-"
- || ele_value !== "x" || ele_value !== "/" || ele_value !== "=" 
+ || ele_value !== "x" || ele_value !== "/" || ele_value !== "="
 || ele_value !== "reset")){
 calcValue1 += ele_value;
 value1_box.innerHTML = calcValue1;
-}  			
+}
 else if((ele_value === "+" || ele_value === "-" || ele_value === "x" ||
-ele_value === "/") && (calcOperator === "+" || calcOperator === "-" 
+ele_value === "/") && (calcOperator === "+" || calcOperator === "-"
 || calcOperator === "x" || calcOperator === "/")  ){
 calcOperator = ele_value;
 calcOperator_box.innerHTML = calcOperator;
-}		
+}
 else if((ele_value !== "+" || ele_value !== "-" || ele_value !== "x" ||
 ele_value !== "/" || ele_value !== "reset") && (calcOperator === "+" ||
  calcOperator === "-" || calcOperator === "x" || calcOperator === "/")){
@@ -1169,8 +1146,8 @@ funcTimeup = func_timeup;
 }
 show_time = document.getElementById(displayEle);
 
-time_up = setInterval(displayTime,  1000); 
- 
+time_up = setInterval(displayTime,  1000);
+
 }
 
 
@@ -1188,14 +1165,14 @@ alert("no time up function");
 if (duration >= 0 && sec_count === 0) {
 duration = duration - 1;
 sec_count = 60;
-}	
+}
 show_time.innerHTML = duration + ":" + sec_count;
 sec_count--;
 }
 duration_sec--;
 
 }
- 
+
 
 function submit_test(){
 submit_id = "submitTest";
