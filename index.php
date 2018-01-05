@@ -41,7 +41,7 @@ echo <<<block
       <div id = 'footer'>
       <ul class = 'nav' >
         <li class = 'nav-item' >
-          <a href = '/onlinetutor/term-of-use.php' class = 'nav-link' >
+          <a href = '/onlinetutor/common/term-of-use.php' class = 'nav-link' >
             Terms of Use
           </a>
         </li>
@@ -51,7 +51,7 @@ echo <<<block
           </a>
         </li>
         <li class = 'nav-item'>
-          <a href = '/onlinetutor/common/contacts.php' class = 'nav-link' >
+          <a href = '/onlinetutor/common/contact-us.php' class = 'nav-link' >
             Contact Us
           </a>
         </li>
@@ -60,7 +60,6 @@ echo <<<block
     </div>
     <script src = 'jsfiles/bootstrap4_js/bootstrap.min.js' ></script>
     <script src = '/onlinetutor/dist/bundle.js'></script>
-    <script src = 'jsfiles/funcs.js' ></script>
     <script type = "text/javascript" src = "./jsfiles/quotes.js"></script>
   </body>
 </html>

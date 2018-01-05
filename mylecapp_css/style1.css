@@ -15,6 +15,6 @@ img	{
 				visibility:visible;
 }
 
-.graded[value="NO"], .js_hide, #ajax_neutral	{
+.graded[value="NO"], .js-hide, #ajax_neutral	{
 				visibility:hidden;
 }
