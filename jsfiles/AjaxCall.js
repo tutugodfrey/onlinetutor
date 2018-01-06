@@ -6,7 +6,7 @@ const xmlHttp = createXmlHttpRequest();
 
 
 const AjaxCall = class {
-	getMethod (url, callback, popHistortData) {
+	getMethod (url, callback, storeUrl, popHistortData) {
 		if(xmlHttp.readyState === 0 || xmlHttp.readyState === 4){
 			xmlHttp.open("GET", url, true);
 			xmlHttp.onreadystatechange = function()	{
@@ -16,7 +16,7 @@ const AjaxCall = class {
 					if(xmlHttp.status === 200){
 						const headers = xmlHttp.getAllResponseHeaders();
 						const contentType  = xmlHttp.getResponseHeader("content-type");
-						storeHistory(url, 'get', popHistortData);
+						storeHistory(url, 'get', storeUrl, popHistortData);
 						let textResponse;
 						if(contentType === "text/xml") {
 							textResponse = xmlHttp.responseXML;
@@ -33,7 +33,7 @@ const AjaxCall = class {
 		}
 	}
 
-	postMethod (url, msg, callback, popHistortData, fileAvailable = true) {
+	postMethod (url, msg, callback, storeUrl, popHistortData, fileAvailable = true) {
 		if(xmlHttp.readyState == 0 || xmlHttp.readyState == 4){
 			xmlHttp.open(method, url, true);		//now set request headers for the post method
 			if(fileAvailable === false) {	
@@ -49,7 +49,7 @@ const AjaxCall = class {
 				if(xmlHttp.status == 200){
 					const headers = xmlHttp.getAllResponseHeaders();
 					const contentType  = xmlHttp.getResponseHeader("content-type");
-					storeHistory(url, 'post', popHistortData, [msg, fileAvailable]);
+					storeHistory(url, 'post', storeUrl, popHistortData, [msg, fileAvailable]);
 					let textResponse;
 					if(content_type === "text/xml") {
 						textResponse = xmlHttp.responseXML;

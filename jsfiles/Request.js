@@ -8,17 +8,17 @@ const displayContent = new DisplayContent();
 const Request = class {
   loadHeader(hrefEle){
     const url = '/onlinetutor/common/header1.html';
-   setTimeout(ajaxCall.getMethod, 500, url, displayContent.header)
+   setTimeout(ajaxCall.getMethod, 100, url, displayContent.header, false)
   }
 
   loadDefault(hrefEle){
     const url = '/onlinetutor/common/default.html';
-    setTimeout(ajaxCall.getMethod, 1000, url, displayContent.display)
+    setTimeout(ajaxCall.getMethod, 200, url, displayContent.display)
   }
 
   loadFooter(hrefEle){
     const url = '/onlinetutor/common/footer1.html';
-    setTimeout(ajaxCall.getMethod, 1500, url, displayContent.footer)
+    setTimeout(ajaxCall.getMethod, 300, url, displayContent.footer, false)
   }
 
   hrefRequest(hrefEle){
