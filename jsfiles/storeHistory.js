@@ -9,14 +9,12 @@ const storeHistory = function(url, method, popHistortData, info) {
 	  	historyData = `${url}m=get`;
 	  }
 		if (typeof popHistortDataa === null) {
-			console.log('you push to state')
 		  history.pushState(historyData, "newurl", url);
 		}	else	{
 			if(popHistortData === historyData) {
 				console.log('right here')
 				//do nothing ie do not store the same historyData
 			}	else {
-				console.log('am here')
 			  history.pushState(historyData, "newurl", url);
 			}
 	  }

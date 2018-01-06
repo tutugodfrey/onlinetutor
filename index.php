@@ -13,49 +13,13 @@ echo <<<block
   </head>
   <body>
     <div>
-      <div id = 'header' class = 'page-header navbar' >
-        <ul class = 'nav' >
-          <li class = 'nav-item' >
-            <a href = '/onlinetutor/index.php' class = 'nav-link' >
-              home
-            </a>
-          </li>
-          <li class = 'nav-item' >
-            <a href = '/onlinetutor/common/signup.php' class = 'nav-link' >
-              signup
-            </a>
-          </li>
-          <li class = 'nav-item'>
-            <a href = '/onlinetutor/common/login.php' class = 'nav-link' >
-              signin
-            </a>
-          </li>
-        </ul>
+      <div id = 'header-div' class = 'page-header navbar' >
       </div>
       <div><p id = "ajax_neutral">Processing ...</p></div>
-      <div id = 'main_content'>
-        <h1>
-          Welcome to Online tutor
-        </h1>
+      <div id = 'main-content'>
+        
       </div>
-      <div id = 'footer'>
-      <ul class = 'nav' >
-        <li class = 'nav-item' >
-          <a href = '/onlinetutor/common/term-of-use.php' class = 'nav-link' >
-            Terms of Use
-          </a>
-        </li>
-        <li class = 'nav-item' >
-          <a href = '/onlinetutor/common/about-us.php' class = 'nav-link' >
-            About Us
-          </a>
-        </li>
-        <li class = 'nav-item'>
-          <a href = '/onlinetutor/common/contact-us.php' class = 'nav-link' >
-            Contact Us
-          </a>
-        </li>
-      </ul>
+      <div id = 'footer-div'>
       </div>
     </div>
     <script src = 'jsfiles/bootstrap4_js/bootstrap.min.js' ></script>
