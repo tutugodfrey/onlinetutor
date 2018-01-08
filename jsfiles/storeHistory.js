@@ -1,5 +1,5 @@
 
-const storeHistory = function(url, method, storeUrl = true, popHistortData, info) {
+const storeHistory = function(url, method, storeUrl = true, poppedHistortData, info) {
 		if(storeUrl === false) {
 			return
 		} else {
@@ -7,14 +7,15 @@ const storeHistory = function(url, method, storeUrl = true, popHistortData, info
 		  if(method === 'post') {
 		  	const msg = info[0];
 		  	const fileAvailable = info[1];
-		  	historyData = `${url}${msg}m=post&${fileAvialable}`;
+		  	historyData = `${url}${msg}m=post&${fileAvailable}`;
 		  } else if (method === 'get') {
 		  	historyData = `${url}m=get`;
 		  }
-			if (typeof popHistortDataa === null) {
+			if (typeof poppedHistortData === null) {
+				console.log('no pop data')
 			  history.pushState(historyData, "newurl", url);
 			}	else	{
-				if(popHistortData === historyData) {
+				if(poppedHistortData === historyData) {
 					console.log('right here')
 					//do nothing ie do not store the same historyData
 				}	else {

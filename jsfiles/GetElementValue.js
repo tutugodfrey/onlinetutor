@@ -41,7 +41,7 @@ const GetElementValue = class {
 			const eleName = checkBoxEle.name;
 			return [eleName, eleValue];
 		} else {
-			console.log('checkbox not checked')
+			return
 		}
 	}
   

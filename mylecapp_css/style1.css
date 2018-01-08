@@ -7,6 +7,17 @@ img	{
 	height:66px; width:5%; position:relative; left:9px; top:3px;  border:none; float:left;
 }
 
+p#validation-notice {
+	visibility:hidden; border:1px solid red;
+}
+/*
+#modificationNotice {
+	font-weight:bold; position:relative; top:8px;
+}
+*/
+.fail-validation {
+	 border: 1px solid red;
+}
 #ajax_busy, #ajax_neutral	{
 					background-color:#9db7c0; position:absolute; left:5px; top:150px; z-index:3;
 }

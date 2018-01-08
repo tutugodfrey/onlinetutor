@@ -6,7 +6,7 @@ const xmlHttp = createXmlHttpRequest();
 
 
 const AjaxCall = class {
-	getMethod (url, callback, storeUrl, popHistortData) {
+	getMethod (url, callback, storeUrl, poppedHistortData) {
 		if(xmlHttp.readyState === 0 || xmlHttp.readyState === 4){
 			xmlHttp.open("GET", url, true);
 			xmlHttp.onreadystatechange = function()	{
@@ -16,7 +16,7 @@ const AjaxCall = class {
 					if(xmlHttp.status === 200){
 						const headers = xmlHttp.getAllResponseHeaders();
 						const contentType  = xmlHttp.getResponseHeader("content-type");
-						storeHistory(url, 'get', storeUrl, popHistortData);
+						storeHistory(url, 'get', storeUrl, poppedHistortData);
 						let textResponse;
 						if(contentType === "text/xml") {
 							textResponse = xmlHttp.responseXML;
@@ -33,15 +33,18 @@ const AjaxCall = class {
 		}
 	}
 
-	postMethod (url, msg, callback, storeUrl, popHistortData, fileAvailable = true) {
+	postMethod (url, msg, callback, storeUrl, poppedHistortData, fileAvailable = true) {
+		console.log(msg)
 		if(xmlHttp.readyState == 0 || xmlHttp.readyState == 4){
-			xmlHttp.open(method, url, true);		//now set request headers for the post method
+			xmlHttp.open('POST', url, true);		//now set request headers for the post method
 			if(fileAvailable === false) {	
 				//prevent form submission with FormData()
 				xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlHttp.setRequestHeader("Accept", "application/json");
+				// xmlHttp.setRequestHeader("Content-type", "application/json");
 			}
-			xmlHttp.setRequestHeader("Content-length", msg.length);
-			xmlHttp.setRequestHeader("Connection", "close");
+			// xmlHttp.setRequestHeader("Content-length", msg.length);
+			// xmlHttp.setRequestHeader("Connection", "close");
 			xmlHttp.onreadystatechange = function()	{
 			//processsing indicator
 			ajaxBusy(xmlHttp);
@@ -49,13 +52,14 @@ const AjaxCall = class {
 				if(xmlHttp.status == 200){
 					const headers = xmlHttp.getAllResponseHeaders();
 					const contentType  = xmlHttp.getResponseHeader("content-type");
-					storeHistory(url, 'post', storeUrl, popHistortData, [msg, fileAvailable]);
+					// storeHistory(url, 'post', storeUrl, poppedHistortData, [msg, fileAvailable]);
 					let textResponse;
-					if(content_type === "text/xml") {
+					if(contentType === "text/xml") {
 						textResponse = xmlHttp.responseXML;
 					}	else {
 						textResponse = xmlHttp.responseText;
 					}
+					// console.log(JSON.parse(textResponse))
 					callback(textResponse);
 					} else {
 						console.log(`There was a problem accessing the server: ${xmlHttp.statusText}`);

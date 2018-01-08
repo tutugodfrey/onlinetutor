@@ -1,4 +1,5 @@
 import EventListener from './EventListener';
+import formValueCollector from './formValueCollector';
 import handlePopState from './handlePopState';
 import Request from './Request';
 const listener = new EventListener();
@@ -28,6 +29,14 @@ const linkEles = document.getElementsByTagName("a");
 	for(let i = 0; i < linkEles.length; i++) {
 	listener.newEvent(linkEles[i], "click", request.hrefRequest, linkEles[i] );
 	}
+}
+
+// handle all form submission; forms button class include submit-buttons
+if(document.getElementsByClassName("submit-buttons")){
+const submitBtn = document.getElementsByClassName("submit-buttons");
+for(let i = 0; i < submitBtn.length; i++ ) {
+listener.newEvent(submitBtn[i], "click", formValueCollector, submitBtn[i]);
+}
 }
 
 }	//end dom_notifier
