@@ -8,6 +8,7 @@ const request = new Request();
 listener.popState(handlePopState);
 
 const domNotifier = function() {
+// listener.popState(handlePopState);
 
 if(document.getElementById('header-div')) {
 	const headerDiv = document.getElementById('header-div');
@@ -33,12 +34,12 @@ const linkEles = document.getElementsByTagName("a");
 
 // handle all form submission; forms button class include submit-buttons
 if(document.getElementsByClassName("submit-buttons")){
-const submitBtn = document.getElementsByClassName("submit-buttons");
-for(let i = 0; i < submitBtn.length; i++ ) {
-listener.newEvent(submitBtn[i], "click", formValueCollector, submitBtn[i]);
+	const submitBtn = document.getElementsByClassName("submit-buttons");
+	for(let i = 0; i < submitBtn.length; i++ ) {
+	listener.newEvent(submitBtn[i], "click", formValueCollector, submitBtn[i]);
+	}
 }
-}
-
+ 
 }	//end dom_notifier
 
 export default domNotifier;

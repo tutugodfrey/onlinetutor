@@ -1,5 +1,6 @@
 
 const storeHistory = function(url, method, storeUrl = true, poppedHistortData, info) {
+		console.log('poppedHistoryData', poppedHistortData)
 		if(storeUrl === false) {
 			return
 		} else {

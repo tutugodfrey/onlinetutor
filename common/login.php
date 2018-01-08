@@ -38,52 +38,48 @@ $display = <<<end
   </div>
 end;
 }	elseif(isset($_POST["login"])) {
-$username = trim($_POST["username"]);
-$password = $_POST["password"];
-if(empty($_POST["user_type"])){
-$display = "<p>Please indicate whether you are lecturer or student to log in</p>";
-}	else	{
-$user_type = $_POST["user_type"];
-if($username == "" || $user_type == "" || $password == "password" || $password == ""){
-$display = "<p>Please Enter your username and password to login<a href = \"login.php\">&lt;&lt; Back</a></p>";
-}	else	{
+  $username = trim($_POST["username"]);
+  $password = $_POST["password"];
+  if(empty($_POST["user_type"])){
+    $display = "<p>Please indicate whether you are lecturer or student to log in</p>";
+  }	else	{
+    $user_type = $_POST["user_type"];
+    if($username == "" || $user_type == "" || $password == "password" || $password == ""){
+      $display = "<p>Please Enter your username and password to login<a href = \"login.php\">&lt;&lt; Back</a></p>";
+    }	else	{
+      //process log in for students
+      //authenticate the use
+      $query_string = "select id, username, user_type, lastname, firstname, picture from registered_users where username = \"$username\" and password = sha1($password)";
 
-//process log in for students
+      run_query($query_string);		//use registration database. if access is denied the user authentication fails
+      if($row_num2 == 0){
+        //login not successful
+        $display = "<p>Your username or password is not con correct. please ensure you are duly registered to use this app</P>s";
+      } else if($row_num2 == 1){
 
-//authenticate the use
-$query_string = "select id, username, user_type, lastname, firstname, picture from registered_users where username = \"$username\" and password = sha1($password)";
+        $user_info = build_array($row_num2);
+        $user_id = $user_info[0];
+        $display = json_encode($user_info);
+        session_start();
+        $_SESSION["user_names"] = $user_info[1]." ".$user_info[2];
+        $_SESSION["user_image_url"] = $user_info[3];
 
-run_query($query_string);		//use registration database. if access is denied the user authentication fails
-if($row_num2 == 0){
-$display = "<p>Your username or password is not con correct. please ensure you are duly registered to use this app</P>s";
-}					//login error message will be displayed
-if($row_num2 == 1){
+        if($user_type == "student"){
+          $_SESSION["class"] = "student";
+          $_SESSION["owner_id"] = $user_id;
+          // header("Location:/onlinetutor/student_interface/dashboard.php");
+        }
 
-$user_info = build_array($row_num2);
-$user_id = $user_info[0];
-echo json_encode($user_info);
-session_start();
-$_SESSION["user_names"] = $user_info[1]." ".$user_info[2];
-$_SESSION["user_image_url"] = $user_info[3];
-
-if($user_type == "student"){
-$_SESSION["class"] = "student";
-$_SESSION["owner_id"] = $user_id;
-// header("Location:/onlinetutor/student_interface/dashboard.php");
-}
-
-if($user_type == "lecturer"){
-$_SESSION["class"] = "lecturer";
-$_SESSION["lecturer_db"] = "lec".$user_id;
-$_SESSION["owner_id"] = $user_id;
-// header("Location:/onlinetutor/lecturer_interface/dashboard.php");
-}
-exit();
-
-}
-
-}
-}
+        if($user_type == "lecturer"){
+          $_SESSION["class"] = "lecturer";
+          $_SESSION["lecturer_db"] = "lec".$user_id;
+          $_SESSION["owner_id"] = $user_id;
+          // header("Location:/onlinetutor/lecturer_interface/dashboard.php");
+        }
+        // exit();
+      }
+    }
+  }
 }
 ?>
 

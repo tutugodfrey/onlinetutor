@@ -1,5 +1,6 @@
 import HandleContent from './HandleContent';
 import GetElementValue from './GetElementValue';
+import storeUserData from './storeUserData'
 import AjaxCall from './AjaxCall';
 import LocalStorage from './LocalStorage';
 const storeData = new LocalStorage();
@@ -40,13 +41,15 @@ const Request = class {
          // storeData.deleteData('userData')
           const username = JSON.parse(userData).username;
           if (username !== newUsername) {
-            ajaxCall.postMethod(url, formInfo, handleContent.storeUserData, false, true, false);
+            ajaxCall.postMethod(url, formInfo, storeUserData, false, true, false);
           } else {
             // userData already in localStorage; use userData to make request and display appropriate content
             console.log('username already in store')
+            // '/onlinetutor/students/dashboard.php?dashboard'
+            ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
           }
         } else {
-          ajaxCall.postMethod(url, formInfo, handleContent.storeUserData, false, true, false);
+          ajaxCall.postMethod(url, formInfo, storeUserData, false, true, false);
         }
       } else {  // include more if else block if need be to do something other than display with post result
         ajaxCall.postMethod(url, formInfo, handleContent.display, true, true, false);

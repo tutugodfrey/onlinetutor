@@ -9,7 +9,7 @@ $owner_id = $_SESSION["owner_id"];
 $lecturer_db = $_SESSION["lecturer_db"];
 $heading = "";
 
-if(isset($_GET["Sdiscussion"])){
+if(isset($_GET["discussions"])){
 $course_ids = registered_course_ids($owner_id, $lecturer_db);
 if(empty($course_ids)){
 $display = "<p>You have not registered any course with this lecturer yet</p>";
