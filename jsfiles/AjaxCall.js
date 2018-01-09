@@ -7,7 +7,7 @@ const xmlHttp = createXmlHttpRequest();
 
 const AjaxCall = class {
 	getMethod (url, callback, storeUrl, poppedHistortData) {
-		// console.log("callback", callback)
+		// console.log("url", url)
 		if(xmlHttp.readyState === 0 || xmlHttp.readyState === 4){
 			xmlHttp.open("GET", url, true);
 			xmlHttp.onreadystatechange = function()	{

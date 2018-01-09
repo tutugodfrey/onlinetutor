@@ -8,10 +8,10 @@ if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
 $lecturer_db = $_SESSION["lecturer_db"];
 
-if(isset($_POST["lecture_note"]) || isset($_POSTT["edit"])){
+if(isset($_GET["lecture_note"]) || isset($_POST["edit"])){
 $heading = ""; $view_old_note = ""; $view_note_button = ""; $saved_courses = ""; $course_note = ""; $topic = ""; $save_button = ""; $post_text = "";
 $display = ""; $update_button = ""; $text_area = ""; $note_id = ""; $take_new_note = ""; $upload_note = ""; $upload_image = ""; $title = "";
-if(isset($_POST["lecture_note"])){
+if(isset($_GET["lecture_note"])){
 //get the course lecturer is taking table
 $query_string = "select course_id, course_code from courses";
 run_query($query_string, $lecturer_db);

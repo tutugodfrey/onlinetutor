@@ -8,7 +8,7 @@ $owner_id = $_SESSION["owner_id"];
 $lecturer_db = $_SESSION["lecturer_db"];
 $display = ""; $heading = "";
 
-if(isset($_POST["discussion"]) || isset($_GET["discussion"])) {
+if(isset($_GET["discussions"])) {
 $heading = "";
 $heading = "<h1>Create a discussion</h1>";
 //get the course that the lecturer is taking

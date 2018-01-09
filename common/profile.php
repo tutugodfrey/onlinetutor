@@ -13,7 +13,6 @@ $display = "<p>You do not have an active user setion to view ths page</p>";
 
 }		else 		{
 if(isset($_GET["profile"])){
-$class = $_GET["class"];
 $user_id = $_GET["user_id"];
 echo $class;
 //if($class ==  "student"){

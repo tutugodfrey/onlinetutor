@@ -115,7 +115,6 @@ if(isset($_GET["dashboard"])){
 			</li>
 		</ul>
 	</div>
-
 	<div id = "secnavdiv" class = "page-header navbar">
 		<ul id = "secnav" class = "nav" >
 			<li class = "nav-item">

@@ -9,7 +9,7 @@ $lecturer_db = $_SESSION["lecturer_db"];
 
 
 
-if(isset($_POST["announcement"]) || isset($_GET["announcement"])){
+if(isset($_GET["announcements"])){
 if($owner_id == ""){
 $display = "<p>you cannot continue you username is not set</p>";
 }	else	{

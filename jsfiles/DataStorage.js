@@ -1,6 +1,8 @@
 import LocalStorage from "./LocalStorage"
+import HandleContent from "./HandleContent"
 import AjaxCall from './AjaxCall';
 const storeData = new LocalStorage();
+const handleContent = new HandleContent();
 const ajaxCall = new AjaxCall(); 
 
 const DataStorage = class {
@@ -16,10 +18,10 @@ const DataStorage = class {
 					const userType = userData["user_type"];
 	        if(userType === 'lecturer') {
 	        	console.log(`you are a ${userType}`);
-	        	  ajaxCall.getMethod('/instructors/dashboard.php?dashboard', handleContent.display, true)
+	        	  ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.display, true)
 	        } else if(userType === 'student') {
 	        	console.log(`you are a ${userType}`);
-	        	  ajaxCall.getMethod('/students/dashboard.php?dashboard', handleContent.header, true)
+	        	  ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
 	        } else {
 	        	console.log('Unknown user_type');
 	        }	

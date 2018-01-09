@@ -13,107 +13,67 @@ $display = "";
 if(!$_POST){
 
 $nav_buttons = <<<block
-<div id = "prynav" >
-<ul>
-
-<li class = "link_buttons">
-<form method = "GET" action = "./../common/profile.php" >
-<input type = "hidden" value = "$class" name = "class" />
-<input type = "hidden" value = "$owner_id" name = "user_id" />
-<input type = "submit" class = "submit_buttons" value = "View Profile" id = "lecturers_profile" name = "profile" />
-</form>
-</li>
-<li class = "link_buttons">
-<form method = "GET" action = "./save_course.php" >
-<input type = "submit" id = "save_course" class = "submit_buttons" value = "Add Course" name = "save_courses" />
-</form>
-</li>
-<li class = "link_buttons">
-<form method = "GET" action = "./registered_students.php" >
-<input type = "submit" class = "submit_buttons" value = "Students" id = "your_students" name = "registered_students" />
-</form>
-</li>
-<li class = "link_buttons">
-<form method = "GET" action = "./set_questions.php" >
-<input type = "submit" class = "submit_buttons" value = "Set Questions" id = "questions" name = "set_questions" />
-</form>
-</li>
-<li class = "link_buttons">
-<form method = "GET" action = "./discussion.php" >
-<input type = "submit" class = "submit_buttons" value = "Create Discussion" id = "create_discussion" name = "discussion" />
-</form>
-</li>
-<li class = "link_buttons">
-<form method = "POST" action = "./lecture_note.php" >
-<input type = "submit" class = "submit_buttons" id = "save_note" name = "lecture_note" value = "Save Note" />
-</form>
-</li>
-
-<li class = "link_buttons">
-<form method = "GET" action = "./videos.php" >
-<input type = "submit" class = "submit_buttons" id = "addVideo" name = "add_video" value = "Add Video" />
-</form>
-</li>
-
-<li class = "link_buttons">
-<form method = "GET" action = "./opentest.php">
-<input type = "submit" class = "submit_buttons" value = "Tests/Exams" id = "tests" name = "tests" />
-</form>
-</li>
-<li class = "link_buttons">
-<form method = "GET" action = "./results.php">
-<input type = "submit" class = "submit_buttons" value = "Results" id= "result" name = "results" />
-</form>
-</li>
-<li class = "link_buttons">
-<form method = "GET" action = "./announcement.php">
-<input type = "submit" id = "announcements" class = "submit_buttons" value = "Annoucement" name = "announcement" />
-</form>
-</li>
-
-<li class = "link_buttons">
-<form id = "friend_form" method = "GET" action = "./../common/friends.php">
-<input type = "submit" id = "friendForm" class = "submit_buttons" value = "Friends" name = "friends" />
-</form>
-</li>
-
-</ul>
-</div>
-
-<div id = "secnavdiv" >
-<ul id = "secnav" >
-<li>
-
-<hr class = "navbar" /><hr class = "navbar" /><hr class = "navbar" />
-<ul>
-<li class = "link_buttonss">
-<form id = "sfeedback" method = "GET" action = "./../common/feedback.php">
-<input type = "submit" id = "feedbacks" class = "submit_buttonss" value = "Feedback" name = "feedback" />
-</form>
-</li>
-
-<li class = "link_buttonss">
-<form  id = "slog_out" method = "GET" action = "./../common/login.php" >
-<input type = "submit" id = "logout" class = "submit_buttonss" value = "log out" name = "log_out" />
-</form>
-</li>
-
-<li class = "link_buttonss">
-<form id = "shelpForm" method = "GET" action = "./../common/help.php" >
-<input type = "submit" id = "help" class = "submit_buttonss" name = "get_help" value = "help" />
-</form>
-</li>
-
-<li class = "link_buttonss">
-<form id = "scalcForm" method = "GET" action = "./../common/calculator.html" >
-<input type = "submit" id = "calc" class = "submit_buttonss" name = "get_calculator" value = "calculator" />
-</form>
-</li>
-</ul>
-
-</li>
-</ul>
-</div>
+<div id = "prynav" class = "page-header navbar">
+    <ul class = "nav">
+      <li class = "link_buttons">
+        <a href = "./../common/profile.php?profile&user_id=$owner_id" class = "link-item">Profile</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "save_course" href = "./save_course.php?save_courses" class = "link-item">Save Courses</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "your_students" href = "./registered_students.php?registered_students" class = "link-item">Students</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "questions" href = "./set_questions.php?set_questions" class = "link-item">Set Question</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "discussions" href = "./discussions.php?discussions" class = "link-item">Discussions</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "save_note" href = "./lecture_note.php?lecture_note" class = "link-item">Save Note</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "addVideo" href = "./videos.php?add_video" class = "link-item">Add Videos</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "tests" href = "./opentest.php?tests" class = "link-item">Test/Exams</a>
+      </li>
+      <li class = "link_buttons">
+        <a id= "results" href = "./results.php?results" class = "link-item">Results</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "announcements" href = "./announcements.php?announcements" class = "link-item">Announcements</a>
+      </li>
+      <li class = "link_buttons">
+        <a id = "friends" href = "./../common/friends.php?friends" class = "link-item">Friends</a>
+      </li>
+    </ul>
+  </div>
+  <div id = "secnavdiv" class = "page-header navbar">
+    <ul id = "secnav" class = "nav" >
+      <li class = "nav-item">
+        <hr/> <hr/> <hr/>
+        <ul class = "nav">
+          <li class = "link_buttons nav-item">
+            <a href = "/onlinetutor/common/profile.php?profile&user_id=$owner_id" class = "link-item">Your Profile</a>
+          </li>
+          <li class = "link_buttonss nav-item">
+            <a href = "/onlinetutor/common/feedback.php?feedback" class = "nav-link">Feedback</a>
+          </li>
+          <li class = "link_buttonss nav-item">
+            <a href = "/onlinetutorp/common/login.php?log_out" class = "nav-link">Logout</a>
+          </li>
+          <li class = "link_buttons nav-item">
+            <a href = "/onlinetutor/common/calculator.php?get_calculator" class = "nav-item">Calculator</a>
+          </li>
+          <li class = "link_buttonss nav-item">
+            <a href = "/onlinetutor/common/help.php?get_help" class = "nav-link">Help</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 block;
 
 }
