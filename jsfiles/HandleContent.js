@@ -30,6 +30,11 @@ const HandleContent = class {
 		}
 	}
 
+	notice(content) {
+		console.log(content)
+		
+	}
+
 	// dom_notifier();	//when elements becomes officially available call function to get their id's
 }
 

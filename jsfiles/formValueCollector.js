@@ -6,6 +6,7 @@ const request = new Request()
 const elementType  = new  GetElementValue()
 
 const formValueCollector = function(formControl) {
+	console.log('eletype', formControl)
 	const formElement = elementType.getFormElement(formControl)
 	const method = formElement.method;
 	const url = formElement.action;
@@ -23,7 +24,7 @@ const formValueCollector = function(formControl) {
   for(let elem of formControls){
     let eleValue;
     const eleType = elem.type;
-    // console.log(eleType)
+    console.log(eleType)
     let eleName = elem.getAttribute('name');
     if(elem.getAttribute('class')){
       const eleClass = elem.getAttribute('class');
@@ -56,7 +57,9 @@ const formValueCollector = function(formControl) {
 	          formInfo = `${eleName}=${eleValue}&${formInfo}`;
 	        }    
 	      } else if (eleType === 'select-one'){
-          eleValue = newFuncs.selectValue(eleName);
+	      	console.log('got here')
+          eleValue = elementType.selectedValue(eleName);
+          console.log('select value', eleValue)
           if(eleValue === 'select' || eleValue === ''){
             changeAttribute(elem, 'class', 'fail-validation form-control');
             allFieldsValidated = false;
@@ -102,6 +105,20 @@ const formValueCollector = function(formControl) {
 	    		// formInfo[eleName] = eleValue
 	      }    	
 	    }
+   	} else {
+   		// element with no class attributes
+   		 if (eleType === 'select-one'){
+	      	console.log('got here')
+          eleValue = elementType.selectedValue(eleName);
+          console.log('select value', eleValue)
+          if(eleValue === 'select' || eleValue === ''){
+            changeAttribute(elem, 'class', 'fail-validation form-control');
+            allFieldsValidated = false;
+        	} else {
+        		// formInfo[eleName] = eleValue;
+        		formInfo = `${eleName}=${eleValue}&${formInfo}`;
+        	}
+	      }
    	}
   }
 
@@ -151,6 +168,9 @@ const formValueCollector = function(formControl) {
     console.log('some fields require validation')
   }  else {
     // proceed with form submittion
+    if(formInfo.lastIndexOf("&") === formInfo.length - 1){
+    	formInfo = formInfo.substring(0, formInfo.length-1)
+    }
     request.formRequest(method, url, formInfo)
   } 
 }

@@ -37,33 +37,33 @@ if(isset($_GET["dashboard"])){
 			$select_result = "<select><option>No lecturer</option></select>";
 		}	else {
 			array_unshift($values, ["select", "Select", "lecturer"]);
-			select_option($values, "", "user_id");
+			select_option($values, "lecturers", "user_id");
 		}
 	}
 
 	//an html to display some command
-	$nav_buttons = <<<end
+	$display = <<<end
 	<div id = "prynav" class = "page-header navbar">
 		<ul class = "nav">
+			<!-- hide this element display when a user select a lecturer and construct thefull url or get from localStorage -->
 			<li class = "link_buttons">
-				<a href = "/onlinetutor/common/profile.php?profile&user_id=$L_id" class = "link-item">Your Profile</a>
+				<a href = "/onlinetutor/common/profile.php?profile&user_id=" class = "link-item">Instructor Profile</a>
 			</li>
 			<li class = "link_buttons nav-item">
 				<form method = "GET" action = "$_SERVER[PHP_SELF]" >
-					<input type = "hidden" value = "$user_image_url" name = "user_image_url" />
-					<div id = "lecturers"> $select_result </div>
-					<input type = "submit" id = "choose_lec" class = "submit-button" value = "Select Lecturer" name = "select" />
-					<input type = "submit" id = "del_lec" class = "submit-buttons" value = "Delete" name = "delete" />
+					<div> $select_result </div>
+					<input type = "submit" id = "choose_lec" class = "submit-buttons" value = "Select Lecturer" name = "select" />
+					<!-- <input type = "submit" id = "del_lec" class = "submit-buttons" value = "Delete" name = "delete" /> -->
 				</form>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/coursemates.php?coursemates" class = "link-item">Your Profile</a>
+				<a href = "/onlinetutor/students/coursemates.php?coursemates" class = "link-item">Coursemates</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/courses.php?registered_courses" class = "link-item">Your Profile</a>
+				<a href = "/onlinetutor/students/courses.php?registered_courses" class = "link-item">Your Courses</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/courses.php?courses" class = "link-item">Your Profile</a>
+				<a href = "/onlinetutor/students/courses.php?courses" class = "link-item">Courses</a>
 			</li>
 			<li class = "link_buttons nav-item">
 				<a href = "/onlinetutor/students/test.php?tests" class = "link-item">Tests</a>
@@ -148,16 +148,21 @@ end;
 //  set session variable when a student select a particular lecturer
 // 
 if(isset($_GET["select"])){
-	$user_image_url = $_GET["user_image_url"];
 	if(!isset($_GET["user_id"])){
 		$L_id = "";
 	}	else	{
 		$L_id = $_GET["user_id"];
 		$_SESSION["L_id"] = $L_id;		//set L_id to the global session variable
 		$_SESSION["lecturer_db"] = "lec".$L_id;
+		$query_string = "select id, lastname, firstname, user_type, picture from registered_users where id = \"$L_id\"";
+		run_query($query_string);
+		if($row_num2 == 0){
+			$display = "Error setting the selected lecturer";
+		}	else 	{
+			$value = build_array($row_num2);
+			$display = json_encode($value);
+		}
 	}
-
-$display = "<p>session variables set</p>";
 }
 
 
@@ -185,8 +190,6 @@ exit();
 ?>
 
 
-
-<?php echo $nav_buttons; ?>
 <?php echo $display; ?>
 
 

@@ -1,4 +1,5 @@
-
+import EventListener from "./EventListener"
+const listener = new EventListener();
 const GetElementValue = class {
 	
 	getFormElement(ele){
@@ -20,6 +21,7 @@ const GetElementValue = class {
 	    const selectEle = document.getElementsByName(eleName);
 	    for(let i = 0; i < selectEle.length; i++){
 	     eleValue = (selectEle[i].value);
+	     console.log(eleName, eleValue)
 	    }
 	    return eleValue;
 	  } else {
@@ -78,6 +80,14 @@ const GetElementValue = class {
 		}	
 	}		//end file_upload
 
+	elementEvents(eleId, eventType, callback) {
+		// get select field for lecturer name
+		if(document.getElementById(eleId)) {
+			console.log('Your lecturers are ready');
+			const eleType = document.getElementById(eleId);
+			listener.newEvent(eleType, eventType, callback, eleType);
+		}
+	}
 
 
 } // end class definition

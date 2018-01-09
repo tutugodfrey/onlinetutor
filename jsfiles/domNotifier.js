@@ -1,8 +1,12 @@
 import EventListener from './EventListener';
+import GetElementValue from './GetElementValue';
+import HandleElementEvent from './HandleElementEvent'
 import formValueCollector from './formValueCollector';
 import handlePopState from './handlePopState';
 import Request from './Request';
 const listener = new EventListener();
+const getElementValue = new GetElementValue();
+const handleElementEvent = new HandleElementEvent()
 const request = new Request();
 
 listener.popState(handlePopState);
@@ -39,7 +43,11 @@ if(document.getElementsByClassName("submit-buttons")){
 	listener.newEvent(submitBtn[i], "click", formValueCollector, submitBtn[i]);
 	}
 }
- 
+
+//list for event
+// getElementValue.elementEvents("lecturers", "change", handleElementEvent.selectLecturer)
+getElementValue.elementEvents("lecturers", "change", formValueCollector)
+
 }	//end dom_notifier
 
 export default domNotifier;
