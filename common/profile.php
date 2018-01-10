@@ -14,7 +14,6 @@ $display = "<p>You do not have an active user setion to view ths page</p>";
 }		else 		{
 if(isset($_GET["profile"])){
 $user_id = $_GET["user_id"];
-echo $class;
 //if($class ==  "student"){
 $query_string = "select picture, lastname, firstname, gender, birthday, title, faculty, department, email, phone from registered_users where id = \"$user_id\"";
 $fields = array ("picture", "lastname", "firstname", "gender", "date of birth", "title", "faculty", "department", "email", "phone");
@@ -49,7 +48,7 @@ $profile .= "</dl>"; 	//close definitive list
 if($user_id === $owner_id || $owner_class === $class) {
 $display = <<<block
 $profile
-<a href = "$_SERVER[PHP_SELF]?edit_profile=yes&class=$class&user_id=$user_id" >Edit Profile</a>
+<a href = "$_SERVER[PHP_SELF]?edit_profile=yes&&user_id=$user_id" >Edit Profile</a>
 block;
 }	else 	{
 $display = $profile;

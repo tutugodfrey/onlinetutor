@@ -89,6 +89,15 @@ const GetElementValue = class {
 		}
 	}
 
+	//confirm password
+	confirmPasswordValues(passWord1, passWord2){
+	  if(passWord1 !== passWord2){
+	    return false;
+	  }
+	  return true;
+	}
+
+
 
 } // end class definition
 

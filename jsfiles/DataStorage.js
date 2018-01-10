@@ -18,7 +18,7 @@ const DataStorage = class {
 					const userType = userData["user_type"];
 	        if(userType === 'lecturer') {
 	        	console.log(`you are a ${userType}`);
-	        	  ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.display, true)
+	        	  ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
 	        } else if(userType === 'student') {
 	        	console.log(`you are a ${userType}`);
 	        	  ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)

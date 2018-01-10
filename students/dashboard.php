@@ -2,14 +2,15 @@
 //include the db_connect function
 include "db_connect2.php";
 include "function2.php";
+
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
 $user_image_url = $_SESSION["user_image_url"];
 $display = "";
-
+echo $owner_id;
 if(isset($_GET["dashboard"])){
-	$friends_table = "user".$owner_id."_friends";
+	$friends_table = "user"."7"."_friends";
 	$query_string = "select friend_id from $friends_table where confirm = \"yes\" and user_type = \"lecturer\"";		//getting ids of lecturers
 	run_query($query_string);
 	if($row_num2 == 0){
@@ -183,8 +184,8 @@ if(isset($_GET["delete"]))	{
 }
 
 } 	else	{
-header("Location:/onlinetutor/login.php");  		//user do not have an active session
-exit();
+ header("Location: /onlinetutor/common/login.php");  		//user do not have an active session
+ exit();
 }
 ?>
 

@@ -48,10 +48,10 @@ const Request = class {
             // userData already in localStorage; use userData to make request and display appropriate content
             console.log('username already in store')
             if(userType === "student") {
-              // '/onlinetutor/students/dashboard.php?dashboard'
-              ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
+              // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard'
+              ajaxCall.getMethod('/onlinetutor/students/dashboard.php?dashboard', handleContent.header, true)
             } else if (userType === "lecturer") {
-             ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
+              ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
             }
 
           }

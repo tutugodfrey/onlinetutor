@@ -21,20 +21,20 @@ $courses = build_array($row_num2);
 if($row_num2 == 1){
 $courses = [$courses];
 }
-$select_result = select_option ($courses, "course code", "course_id");
+$select_result = select_option ($courses, "course code", "course_id", "form-control");
 //write html for video upload
 $display = <<< block
 <h1>Video Upload</h1>
 <p> Use the form below to uplaod a video </p>
-<form name = "videoForm" method = "POST" action = "$_SERVER[PHP_SELF]" enctype = "multipart/form-data">
+<form name = "videoForm" class = "form-group" method = "POST" action = "$_SERVER[PHP_SELF]" enctype = "multipart/form-data">
 $select_result <br />
 <label for = "video_caption" >Video Caption</label>
-<input type = "text" id = "videoCaption" name = "video_caption" size = "40" /> <br />
+<input type = "text" id = "videoCaption" class = "form-control" name = "video_caption" size = "40" /> <br />
 <label for = "vidoe">Add Video</label>
-<input type = "file" id = "videoFile" multiple name = "video_file"  /> <br />
+<input type = "file" id = "videoFile" class = "form-control" multiple = multiple name = "video_file"  /> <br />
 <!-- multiple videos can be uploaded to the server -->
-<input type = "submit" class = "inner_btns" id = "uploadVideo" name = "upload_video" value = "Upload Video" />
-<input type = "submit" class = "inner_btns" id = "viewUploadedVideos" name = "uploaded_videos" value = "View Uploaded Videos" />
+<input type = "submit" class = "btn btn-success" id = "uploadVideo" name = "upload_video" value = "Upload Video" />
+<input type = "submit" class = "btn btn-success" id = "viewUploadedVideos" name = "uploaded_videos" value = "View Uploaded Videos" />
 </form>
 block;
 }

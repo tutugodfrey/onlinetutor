@@ -14,8 +14,9 @@ session_destroy();
 $display = <<<end
   <p>Please Enter Your Username and Password</p>
   <div id = "login">
+    <h3 class = "form-heading">Log in</h3>
     <fieldset>
-      <form method = "POST" action = "login.php" >
+      <form class = "form-group" method = "POST" action = "login.php" >
       <p id = "validation-notice">Fields mark below are required</p>
       <!--
       <legend>Log In As</legend>
@@ -26,7 +27,7 @@ $display = <<<end
       <input type = "text" name = "username" id = 'username' class = 'requiredFields form-control'  size = "30" /><br />
       <label for = "password" >Password</label>
       <input type = "password" id = 'password' placeholder = "password" class = 'requiredFields form-control'  name = "password" /><br />
-      <input type = "submit" value = "Log-In" class = "submit-buttons form-control" name = "login" /><br />
+      <input type = "submit" value = "Log-In" class = "btn btn-success form-control" name = "login" /><br />
       </form>
     </fieldset>
     <div>
@@ -58,25 +59,23 @@ end;
 
       $user_info = build_array($row_num2);
       $user_id = $user_info[0];
-      $user_type = $user_info[3];
+      $user_type = $user_info["user_type"];
+
       $display = json_encode($user_info);
       session_start();
-      $_SESSION["user_names"] = $user_info[1]." ".$user_info[2];
-      $_SESSION["user_image_url"] = $user_info[3];
+      $_SESSION["names"] = $user_info["lastname"]." ".$user_info["firstname"];
+      $_SESSION["user_image_url"] = $user_info["picture"];
 
       if($user_type == "student"){
         $_SESSION["class"] = "student";
         $_SESSION["owner_id"] = $user_id;
-        // header("Location:/onlinetutor/student_interface/dashboard.php");
       }
 
       if($user_type == "lecturer"){
         $_SESSION["class"] = "lecturer";
         $_SESSION["lecturer_db"] = "lec".$user_id;
         $_SESSION["owner_id"] = $user_id;
-        // header("Location:/onlinetutor/lecturer_interface/dashboard.php");
       }
-      // exit();
     }
   }
 }

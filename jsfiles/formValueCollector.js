@@ -46,6 +46,22 @@ const formValueCollector = function(formControl) {
 	        	formInfo = `${eleName}=${eleValue}&${formInfo}`;
 	        	// formInfo[eleName] = eleValue
 	        }  
+	      } else if(eleType === "email") {
+	      	eleValue = elem.value.trim();
+	        if(eleValue === '' || eleValue === ' '){
+	            changeAttribute(elem, 'class', 'fail-validation form-control');
+	            allFieldsValidated = false;
+	        } else {
+	        	if(eleName === 'email'){
+		          emailIsValid = emailRegExp.test(elem.value);
+		          if(!emailIsValid){
+		            changeAttribute(elem, 'class', 'fail-validation form-control');
+		            allFieldsValidated = false;
+		          };
+	        	} 
+	        	formInfo = `${eleName}=${eleValue}&${formInfo}`;
+	        	// formInfo[eleName] = eleValue
+	        }
 	      } else if (eleType === 'password') {
 	      	eleValue = elem.value.trim()
           if(eleValue === ''){
@@ -60,7 +76,7 @@ const formValueCollector = function(formControl) {
 	      	console.log('got here')
           eleValue = elementType.selectedValue(eleName);
           console.log('select value', eleValue)
-          if(eleValue === 'select' || eleValue === ''){
+          if(eleValue === "select" || eleValue === "default" || eleValue === ""){
             changeAttribute(elem, 'class', 'fail-validation form-control');
             allFieldsValidated = false;
         	} else {
@@ -153,9 +169,9 @@ const formValueCollector = function(formControl) {
   if(passwordArray.length > 1){
     let confirmPassword;
     if(passwordArray.length === 2){
-      confirmPassword = newFuncs.confirmPasswordValues(passwordArray[0], passwordArray[1])
+      confirmPassword = elementType.confirmPasswordValues(passwordArray[0], passwordArray[1])
     } else if (passwordArray.length === 3) {
-      confirmPassword = newFuncs.confirmPasswordValues(passwordArray[1], passwordArray[2])
+      confirmPassword = elementType.confirmPasswordValues(passwordArray[1], passwordArray[2])
     }
     if(!confirmPassword){
       allFieldsValidated = false;

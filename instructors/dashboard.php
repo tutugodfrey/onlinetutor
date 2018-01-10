@@ -10,7 +10,7 @@ $user_image_url = $_SESSION["user_image_url"];
 
 $display = "";
 
-if(!$_POST){
+if(isset($_GET["dashboard"])){
 
 $nav_buttons = <<<block
 <div id = "prynav" class = "page-header navbar">
@@ -56,7 +56,7 @@ $nav_buttons = <<<block
         <hr/> <hr/> <hr/>
         <ul class = "nav">
           <li class = "link_buttons nav-item">
-            <a href = "/onlinetutor/common/profile.php?profile&user_id=$owner_id" class = "link-item">Your Profile</a>
+            <a href = "/onlinetutor/common/profile.php?profile&user_id=$owner_id" class = "nav-link">Your Profile</a>
           </li>
           <li class = "link_buttonss nav-item">
             <a href = "/onlinetutor/common/feedback.php?feedback" class = "nav-link">Feedback</a>
@@ -65,7 +65,7 @@ $nav_buttons = <<<block
             <a href = "/onlinetutorp/common/login.php?log_out" class = "nav-link">Logout</a>
           </li>
           <li class = "link_buttons nav-item">
-            <a href = "/onlinetutor/common/calculator.php?get_calculator" class = "nav-item">Calculator</a>
+            <a href = "/onlinetutor/common/calculator.php?get_calculator" class = "nav-link">Calculator</a>
           </li>
           <li class = "link_buttonss nav-item">
             <a href = "/onlinetutor/common/help.php?get_help" class = "nav-link">Help</a>
@@ -78,49 +78,13 @@ block;
 
 }
 
-
-
-if(isset($_POST["get_username"])) { //for js to initiate localStorage
-$display = $L_username;
-}
-
-
-
 }	else	{	//if there is not active user session
 header("Location:/onlinetutor/login.php");
 exit();
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<title></title>
-<link type = "text/css" rel = "stylesheet" href = "/onlinetutor/mylecapp_css/style1.css" />
-<meta name = "viewport" content = "width=device-width, initial-scale=1" >
-</head>
-<body id = "bdy">
- <div id = "body_div">
-  <div id = "app_logo_area">
-    <p id = "app_logo">MyLecApp</p>
-    <p id = "app_desc">Lecturer-Student Interaction cannot be more better. interact more effectively with your students</p>
-    <div id = "nav_buttons" >
-     <img src = "<?php echo $user_image_url; ?>" alt = "image" />
-     <?php echo $nav_buttons; ?>
-    </div>
-  </div>
-  <div><p id = "ajax_neutral">Processing ...</p></div>
-<div id = "use_calculator"> </div>
-<div id = "chat_div" class = "js_hide" ><p  id = "close_chat">x</p> </div>
-  <div id = "main_content" name = "main_content_div">
-     <?php echo $display; ?>
-  </div>
-  <div id = "side_content" name = "side_div">
-  </div>
-  <div id = "doc_foot" name = "foot">
-  </div>
-</div>
-<script type = "text/javascript" src = "./../jsfiles/funcs.js"></script>
-<script type = "text/javascript" src = "./../jsfiles/quotes.js"></script>
-</body>
-</html>
+
+<?php echo $nav_buttons; ?>
+
+

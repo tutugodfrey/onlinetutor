@@ -13,6 +13,9 @@ $success_string = "<p>Your rigistration is successful <a href =\"login.php\" >Lo
 //gather the require data from user
 //clean up the user input
 $user_type = $_POST["user_type"];
+if($user_type === "" || $user_type === " ") {
+	$user_type = "student";
+}
 
 admin_connect();
 $lastname = mysqli_real_escape_string($mysqli, trim($_POST["lastname"]));
@@ -39,7 +42,7 @@ $date_of_birth = "$byear-$bmon-$bday";
 
 
 //verify that all required field are entered corrected
-if($lastname == "" || $firstname == "" || $gender == "select gender" || $gender == "" || $user_type == "" ||
+if($lastname == "" || $firstname == "" || $gender == "select gender" || $gender == "" ||
 	$institution == "" || $faculty == "" || $department == "" || $title == "" || $bday == "bday" || $phone_number == "" ||
 	$bmon == "bmon" || $byear == "byear" || $email == "" || $username == "" || $password1 == "" || 
 	$password1 == "password1" || $password2 == "" || $password2 == "password2" || $agreement_status == ""){
@@ -127,11 +130,11 @@ $display = "<p>An error has occured please try again</p>";
 }	else {
 
 //handle uploaded photo
-mkdir("C:/xampp/htdocs/mylecturerapp/personal_data/user$user_id"); //create a directory to store the url to the picture
-mkdir("C:/xampp/htdocs/mylecturerapp/personal_data/user$user_id/images"); //create a directory to store other images that user will use for other purposes
-mkdir("C:/xampp/htdocs/mylecturerapp/personal_data/user$user_id/videos"); //create a directory to store the images that the user will use for other purposes
-mkdir("C:/xampp/htdocs/mylecturerapp/personal_data/user$user_id/profile_pix"); //create a directory to store the images that the user will use for other purposes
-$store = "C:/xampp/htdocs/mylecturerapp/personal_data/user$user_id/profile_pix";
+mkdir("C:/xampp/htdocs/onlinetutor/personal_data/user$user_id"); //create a directory to store the url to the picture
+mkdir("C:/xampp/htdocs/onlinetutor/personal_data/user$user_id/images"); //create a directory to store other images that user will use for other purposes
+mkdir("C:/xampp/htdocs/onlinetutor/personal_data/user$user_id/videos"); //create a directory to store the images that the user will use for other purposes
+mkdir("C:/xampp/htdocs/onlinetutor/personal_data/user$user_id/profile_pix"); //create a directory to store the images that the user will use for other purposes
+$store = "C:/xampp/htdocs/onlinetutor/personal_data/user$user_id/profile_pix";
 
 
 
@@ -139,11 +142,11 @@ if (is_uploaded_file($_FILES["photo"]['tmp_name'])){
 	//move the file from the tempatory folder to a local directory
 move_uploaded_file($_FILES["photo"]['tmp_name'],      
 "$store/".$_FILES["photo"]['name']) or die("Couldn't move file"); //can also be $store."/".
-$picture = "/mylecturerapp/personal_data/".$user_id."/profile_pix/".$_FILES["photo"]['name'];	//save the url to the database
+$picture = "/onlinetutor/personal_data/".$user_id."/profile_pix/".$_FILES["photo"]['name'];	//save the url to the database
 //echo "file was moved!";
 }  	else	 {
 //the user does not upload a photo so use the default photo
-$picture = "/mylecturerapp/personal_data/defaultpix.png";
+$picture = "/onlinetutor/personal_data/defaultpix.png";
 }
 
 $query_string = "update registered_users set picture = \"$picture\" where id = \"$user_id\"";
@@ -166,13 +169,6 @@ $display = "A record with this already exist with $firstname $lastname $phone_nu
 }
 
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-<title><?php $title_display ?></title>
-</head>
-<body>
+s
 <?php echo $display; ?>
-</body>
-</html>
+

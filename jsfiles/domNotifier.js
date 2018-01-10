@@ -37,8 +37,8 @@ const linkEles = document.getElementsByTagName("a");
 }
 
 // handle all form submission; forms button class include submit-buttons
-if(document.getElementsByClassName("submit-buttons")){
-	const submitBtn = document.getElementsByClassName("submit-buttons");
+if(document.getElementsByClassName("btn")){
+	const submitBtn = document.getElementsByClassName("btn");
 	for(let i = 0; i < submitBtn.length; i++ ) {
 	listener.newEvent(submitBtn[i], "click", formValueCollector, submitBtn[i]);
 	}
