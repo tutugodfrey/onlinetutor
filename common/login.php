@@ -58,10 +58,10 @@ end;
     } else if($row_num2 == 1){
 
       $user_info = build_array($row_num2);
-      $user_id = $user_info[0];
+      $user_id = $user_info["id"];
       $user_type = $user_info["user_type"];
-
       $display = json_encode($user_info);
+      //$display = json_encode($user_info);
       session_start();
       $_SESSION["names"] = $user_info["lastname"]." ".$user_info["firstname"];
       $_SESSION["user_image_url"] = $user_info["picture"];

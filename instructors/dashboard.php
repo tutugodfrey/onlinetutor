@@ -5,7 +5,6 @@ include "function2.php";
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$class = $_SESSION["class"];
 $user_image_url = $_SESSION["user_image_url"];
 
 $display = "";
@@ -79,7 +78,7 @@ block;
 }
 
 }	else	{	//if there is not active user session
-header("Location:/onlinetutor/login.php");
+header("Location:/onlinetutor/common/login.php");
 exit();
 }
 ?>

@@ -14,7 +14,6 @@ const DataStorage = class {
 				// login successful
 				try {
 					storeData.setUserData('userData', content);
-
 					const userType = userData["user_type"];
 	        if(userType === 'lecturer') {
 	        	console.log(`you are a ${userType}`);

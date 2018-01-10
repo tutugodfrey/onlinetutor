@@ -32,11 +32,9 @@ const Request = class {
 
   formRequest(method, url, formInfo) {
     if(method === 'post') {
-       console.log(formInfo)
       if(formInfo.indexOf('login') >= 0){
         const indexOfEqualSign = formInfo.lastIndexOf('=');
         const newUsername = formInfo.substring(indexOfEqualSign + 1, formInfo.length);
-        console.log(newUsername);
         if(storeData.getData('userData')) {
           const userData = storeData.getData('userData');
          // storeData.deleteData('userData')
@@ -53,7 +51,6 @@ const Request = class {
             } else if (userType === "lecturer") {
               ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
             }
-
           }
         } else {
           ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, true, false);
@@ -62,8 +59,6 @@ const Request = class {
         ajaxCall.postMethod(url, formInfo, handleContent.display, true, true, false);
       }
     } else if (method === 'get' || "GET") {
-      const fullUrl = `${url}?${formInfo}`;
-      // console.log(fullUrl, method)
       if(fullUrl.indexOf("select=Select Lecturer") > 0) {
         // student select a lecturer
         ajaxCall.getMethod(fullUrl, dataStorage.storeInsturctorData, false);

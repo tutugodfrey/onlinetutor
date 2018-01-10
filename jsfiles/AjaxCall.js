@@ -7,7 +7,6 @@ const xmlHttp = createXmlHttpRequest();
 
 const AjaxCall = class {
 	getMethod (url, callback, storeUrl, poppedHistortData) {
-		 console.log("url", url)
 		if(xmlHttp.readyState === 0 || xmlHttp.readyState === 4){
 			xmlHttp.open("GET", url, true);
 			xmlHttp.onreadystatechange = function()	{
@@ -24,6 +23,7 @@ const AjaxCall = class {
 						}	else {
 							textResponse = xmlHttp.responseText;
 						}
+						// console.log(textResponse);
 						callback(textResponse);
 					} else {
 					console.log(`There was a problem accessing the server:  ${ xmlHttp.statusText }`);
@@ -35,8 +35,6 @@ const AjaxCall = class {
 	}
 
 	postMethod (url, msg, callback, storeUrl, poppedHistortData, fileAvailable = true) {
-		console.log("url", url);
-		console.log(msg)
 		if(xmlHttp.readyState == 0 || xmlHttp.readyState == 4){
 			xmlHttp.open('POST', url, true);		//now set request headers for the post method
 			if(fileAvailable === false) {	
@@ -62,7 +60,6 @@ const AjaxCall = class {
 						textResponse = xmlHttp.responseText;
 					}
 					// console.log(JSON.parse(textResponse))
-					console.log(content)
 					callback(textResponse);
 					} else {
 						console.log(`There was a problem accessing the server: ${xmlHttp.statusText}`);
