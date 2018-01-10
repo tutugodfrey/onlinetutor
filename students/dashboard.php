@@ -57,37 +57,37 @@ if(isset($_GET["dashboard"])){
 				</form>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/coursemates.php?coursemates" class = "link-item">Coursemates</a>
+				<a href = "/onlinetutor/students/coursemates.php?coursemates" class = "nav-link">Coursemates</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/courses.php?registered_courses" class = "link-item">Your Courses</a>
+				<a href = "/onlinetutor/students/courses.php?registered_courses" class = "nav-link">Your Courses</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/courses.php?courses" class = "link-item">Courses</a>
+				<a href = "/onlinetutor/students/courses.php?courses" class = "nav-link">Courses</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/test.php?tests" class = "link-item">Tests</a>
+				<a href = "/onlinetutor/students/test.php?tests" class = "nav-link">Tests</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/scores.php?scores" class = "link-item">Scores</a>
+				<a href = "/onlinetutor/students/scores.php?scores" class = "nav-link">Scores</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/discussions.php?discussions" class = "link-item">Discussions</a>
+				<a href = "/onlinetutor/students/discussions.php?discussions" class = "nav-link">Discussions</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/announcements.php?announcements" class = "link-item">Announcemnt</a>
+				<a href = "/onlinetutor/students/announcements.php?announcements" class = "nav-link">Announcemnts</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/common/friends.php?friends" class = "link-item">Friends</a>
+				<a href = "/onlinetutor/common/friends.php?friends" class = "nav-link">Friends</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/lecture_note.php?lecture_note" class = "link-item">Lecture Notes</a>
+				<a href = "/onlinetutor/students/lecture_note.php?lecture_note" class = "nav-link">Lecture Notes</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/videos.php?view_videos" class = "link-item">Videos</a>
+				<a href = "/onlinetutor/students/videos.php?view_videos" class = "nav-link">Videos</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/mynote.php?mynote" class = "link-item">Notes</a>
+				<a href = "/onlinetutor/students/mynote.php?mynote" class = "nav-link">Notes</a>
 			</li>
 			<li class = "link_buttons nav_item">
 				<form id = "search_lec_form" method = "GET" action = "/onlinetutor/common/search_names.php" >
@@ -121,7 +121,7 @@ if(isset($_GET["dashboard"])){
 				<hr/> <hr/> <hr/>
 				<ul class = "nav">
 					<li class = "link_buttons nav-item">
-						<a href = "/onlinetutor/common/profile.php?profile&user_id=$owner_id" class = "link-item">Your Profile</a>
+						<a href = "/onlinetutor/common/profile.php?profile&user_id=$owner_id" class = "nav-link">Your Profile</a>
 					</li>
 					<li class = "link_buttonss nav-item">
 						<a href = "/onlinetutor/common/feedback.php?feedback" class = "nav-link">Feedback</a>
@@ -130,7 +130,7 @@ if(isset($_GET["dashboard"])){
 						<a href = "/onlinetutorp/common/login.php?log_out" class = "nav-link">Logout</a>
 					</li>
 					<li class = "link_buttons nav-item">
-						<a href = "/onlinetutor/common/calculator.php?get_calculator" class = "nav-item">Calculator</a>
+						<a href = "/onlinetutor/common/calculator.php?get_calculator" class = "nav-link">Calculator</a>
 					</li>
 					<li class = "link_buttonss nav-item">
 						<a href = "/onlinetutor/common/help.php?get_help" class = "nav-link">Help</a>

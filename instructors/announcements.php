@@ -7,8 +7,6 @@ if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
 $lecturer_db = $_SESSION["lecturer_db"];
 
-
-
 if(isset($_GET["announcements"])){
 	if($owner_id == ""){
 		$display = "<p>you cannot continue you username is not set</p>";
@@ -25,7 +23,6 @@ if(isset($_GET["announcements"])){
 block;
 	}
 }
-
 
 if(isset($_POST["make_announcement"])){
 	$message = trim($_POST["message"]);
@@ -73,7 +70,6 @@ if(isset($_GET["view_announcement"])){
 block;
 	}
 }
-
 
 if(isset($_POST["delete"])){
 	if(trim($_POST["announcement_id"][0]) == ""){
