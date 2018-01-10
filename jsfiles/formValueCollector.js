@@ -24,7 +24,7 @@ const formValueCollector = function(formControl) {
   for(let elem of formControls){
     let eleValue;
     const eleType = elem.type;
-    console.log(eleType)
+    // console.log(eleType)
     let eleName = elem.getAttribute('name');
     if(elem.getAttribute('class')){
       const eleClass = elem.getAttribute('class');
@@ -73,9 +73,7 @@ const formValueCollector = function(formControl) {
 	          formInfo = `${eleName}=${eleValue}&${formInfo}`;
 	        }    
 	      } else if (eleType === 'select-one'){
-	      	console.log('got here')
           eleValue = elementType.selectedValue(eleName);
-          console.log('select value', eleValue)
           if(eleValue === "select" || eleValue === "default" || eleValue === ""){
             changeAttribute(elem, 'class', 'fail-validation form-control');
             allFieldsValidated = false;
@@ -115,6 +113,10 @@ const formValueCollector = function(formControl) {
             	checkValues[eleName].push(eleValue)
             } 
           } 
+	      } else if(eleType === "hidden") {
+	      	eleValue = elem.value;
+	      	formInfo = `${eleName}=${eleValue}&${formInfo}`;
+	    		// formInfo[eleName] = eleValue
 	      } else {
 	      	eleValue = elem.value;
 	      	formInfo = `${eleName}=${eleValue}&${formInfo}`;
@@ -124,9 +126,7 @@ const formValueCollector = function(formControl) {
    	} else {
    		// element with no class attributes
    		 if (eleType === 'select-one'){
-	      	console.log('got here')
           eleValue = elementType.selectedValue(eleName);
-          console.log('select value', eleValue)
           if(eleValue === 'select' || eleValue === ''){
             changeAttribute(elem, 'class', 'fail-validation form-control');
             allFieldsValidated = false;
@@ -134,7 +134,14 @@ const formValueCollector = function(formControl) {
         		// formInfo[eleName] = eleValue;
         		formInfo = `${eleName}=${eleValue}&${formInfo}`;
         	}
-	      }
+	      } else if(eleType === "hidden") {
+		      	eleValue = elem.value;
+		      	formInfo = `${eleName}=${eleValue}&${formInfo}`;
+		    		// formInfo[eleName] = eleValue
+		    } else {
+		    	eleValue = elem.value;
+	      	formInfo = `${eleName}=${eleValue}&${formInfo}`;
+		    }
    	}
   }
 

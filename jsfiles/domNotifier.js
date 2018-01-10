@@ -1,6 +1,7 @@
 import EventListener from './EventListener';
 import GetElementValue from './GetElementValue';
-import HandleElementEvent from './HandleElementEvent'
+import HandleElementEvent from './HandleElementEvent';
+import { timer } from "./HandleElementEvent";
 import formValueCollector from './formValueCollector';
 import handlePopState from './handlePopState';
 import Request from './Request';
@@ -44,10 +45,15 @@ if(document.getElementsByClassName("btn")){
 	}
 }
 
+if(document.getElementById("test_duration")){
+	const test_duration_id = document.getElementById("test_duration");
+	const test_duration = test_duration_id.value;
+	timer(test_duration, "time_left", formValueCollector);
+}
+
 //list for event
 // getElementValue.elementEvents("lecturers", "change", handleElementEvent.selectLecturer)
-getElementValue.elementEvents("lecturers", "change", formValueCollector)
-
+getElementValue.elementEvents("lecturers", "change", formValueCollector);
 }	//end dom_notifier
 
 export default domNotifier;

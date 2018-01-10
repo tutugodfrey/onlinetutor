@@ -59,6 +59,7 @@ const Request = class {
         ajaxCall.postMethod(url, formInfo, handleContent.display, true, true, false);
       }
     } else if (method === 'get' || "GET") {
+      const fullUrl = `${url}?${formInfo}`;
       if(fullUrl.indexOf("select=Select Lecturer") > 0) {
         // student select a lecturer
         ajaxCall.getMethod(fullUrl, dataStorage.storeInsturctorData, false);

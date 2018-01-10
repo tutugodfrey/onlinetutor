@@ -1,4 +1,4 @@
-import EventListener from "./EventListener"
+import EventListener from "./EventListener";
 const listener = new EventListener();
 const GetElementValue = class {
 	
@@ -96,7 +96,6 @@ const GetElementValue = class {
 	  }
 	  return true;
 	}
-
 
 
 } // end class definition
