@@ -55,7 +55,7 @@ if(isset($_GET["view_tests"])){
 		$query_string = "select test_id, date_format(deadline, \"%D %M %Y\"), test_type from test where course_id = \"$course_id\" and test_status = \"opened\"";
 		run_query($query_string, $lecturer_db);
 		if($row_num2 == 0){
-			$display = "<p>No test have been set for $course_code</p>";
+			$display = "<p>No test have been set for $course_code[0]</p>";
 		}	else	{
 			$tests = build_array($row_num2);
 			if($row_num2 == 1){

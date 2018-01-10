@@ -69,7 +69,7 @@ if(isset($_GET["dashboard"])){
 				<a href = "/onlinetutor/students/test.php?tests" class = "link-item">Tests</a>
 			</li>
 			<li class = "link_buttons nav-item">
-				<a href = "/onlinetutor/students/scores.php?scores" class = "link-item">Tests</a>
+				<a href = "/onlinetutor/students/scores.php?scores" class = "link-item">Scores</a>
 			</li>
 			<li class = "link_buttons nav-item">
 				<a href = "/onlinetutor/students/discussions.php?discussions" class = "link-item">Discussions</a>
