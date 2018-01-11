@@ -11,17 +11,17 @@ const handleContent = new HandleContent();
 
 const Request = class {
   loadHeader(hrefEle){
-    const url = '/onlinetutor/common/header1.html';
+    const url = '/common/header1.html';
    setTimeout(ajaxCall.getMethod, 100, url, handleContent.header, false)
   }
 
   loadDefault(hrefEle){
-    const url = '/onlinetutor/common/default.html';
+    const url = '/common/default.html';
     setTimeout(ajaxCall.getMethod, 300, url, handleContent.display)
   }
 
   loadFooter(hrefEle){
-    const url = '/onlinetutor/common/footer1.html';
+    const url = '/common/footer1.html';
     setTimeout(ajaxCall.getMethod, 500, url, handleContent.footer, false)
   }
 

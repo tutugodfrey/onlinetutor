@@ -24,7 +24,7 @@ const formValueCollector = function(formControl) {
   for(let elem of formControls){
     let eleValue;
     const eleType = elem.type;
-    // console.log(eleType)
+    console.log(eleType)
     let eleName = elem.getAttribute('name');
     if(elem.getAttribute('class')){
       const eleClass = elem.getAttribute('class');
