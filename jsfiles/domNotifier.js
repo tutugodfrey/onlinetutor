@@ -5,10 +5,13 @@ import { timer } from "./HandleElementEvent";
 import formValueCollector from './formValueCollector';
 import handlePopState from './handlePopState';
 import Request from './Request';
+import Chats from "./Chats";
+
 const listener = new EventListener();
 const getElementValue = new GetElementValue();
 const handleElementEvent = new HandleElementEvent()
 const request = new Request();
+const chats = new Chats();
 
 listener.popState(handlePopState);
 
@@ -51,8 +54,13 @@ if(document.getElementById("test_duration")){
 	timer(test_duration, "time_left", formValueCollector);
 }
 
-//list for event
-// getElementValue.elementEvents("lecturers", "change", handleElementEvent.selectLecturer)
+if(document.getElementById('send_chat')) {
+	const submitBtn = document.getElementById('send_chat');
+	listener.newEvent(submitBtn, "click", formValueCollector, submitBtn);
+	// check for update to chats
+	setInterval(chats.updateChat, 3000)
+}
+
 getElementValue.elementEvents("lecturers", "change", formValueCollector);
 }	//end dom_notifier
 

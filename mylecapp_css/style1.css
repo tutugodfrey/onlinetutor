@@ -22,10 +22,10 @@ p#validation-notice {
 					background-color:#9db7c0; position:absolute; left:5px; top:150px; z-index:3;
 }
 
-.graded[value="yes"], ._show, #ajax_busy	{
+.graded[value="yes"], .show-item, #ajax_busy	{
 				visibility:visible;
 }
 
-.graded[value="NO"], .js-hide, #ajax_neutral	{
+.graded[value="NO"], .hide-item, #ajax_neutral	{
 				visibility:hidden;
 }

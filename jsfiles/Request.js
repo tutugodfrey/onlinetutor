@@ -11,17 +11,17 @@ const handleContent = new HandleContent();
 
 const Request = class {
   loadHeader(hrefEle){
-    const url = '/common/header1.html';
+    const url = '/onlinetutor/common/header1.html';
    setTimeout(ajaxCall.getMethod, 100, url, handleContent.header, false)
   }
 
   loadDefault(hrefEle){
-    const url = '/common/default.html';
+    const url = '/onlinetutor/common/default.html';
     setTimeout(ajaxCall.getMethod, 300, url, handleContent.display)
   }
 
   loadFooter(hrefEle){
-    const url = '/common/footer1.html';
+    const url = '/onlinetutor/common/footer1.html';
     setTimeout(ajaxCall.getMethod, 500, url, handleContent.footer, false)
   }
 
@@ -32,6 +32,7 @@ const Request = class {
 
   formRequest(method, url, formInfo) {
     if(method === 'post') {
+      console.log(formInfo)
       if(formInfo.indexOf('login') >= 0){
         const indexOfEqualSign = formInfo.lastIndexOf('=');
         const newUsername = formInfo.substring(indexOfEqualSign + 1, formInfo.length);
@@ -53,10 +54,13 @@ const Request = class {
             }
           }
         } else {
-          ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, true, false);
+          ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, false);
         }
+      } else if (formInfo.indexOf('send_chat_msg') >= 0) {
+        console.log("what to send chat message");
+        ajaxCall.postMethod(url, formInfo, handleContent.chatMessage, false, false);
       } else {  // include more if else block if need be to do something other than display with post result
-        ajaxCall.postMethod(url, formInfo, handleContent.display, true, true, false);
+        ajaxCall.postMethod(url, formInfo, handleContent.display, true, false);
       }
     } else if (method === 'get' || "GET") {
       const fullUrl = `${url}?${formInfo}`;

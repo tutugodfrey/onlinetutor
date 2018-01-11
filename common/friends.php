@@ -114,23 +114,23 @@ if(isset($_GET["choose_friend"])){
 				//end query to select post
 		}
 		$display .= <<<block
-		<div id = "chat_msg_div" >   $chats   </div><br />
+		<div id = "chat-msg-div" >   $chats   </div><br />
 		<form  id = "chat_form" name = "chat_form" method = "POST" action = "$_SERVER[PHP_SELF]" enctype = "multipart/form-data">
 		<!-- a hook to fetch older post messages -->
 		<input type = "hidden" id = "topValue" name = "top_post_time" value = "$top_post_time" />
 		<input type = "hidden" id = "my_friend" name = "friend_id" value = "$friend_id" />
 		<div id = "server_reply"></div>
-		<textarea id = "chat_text_field" rows = "1" class = "form-control" cols = "30" name = "post_text"></textarea><br />
+		<textarea id = "chat-text-field" rows = "1" class = "form-control" cols = "30" name = "post_text"></textarea><br />
 		<label for = "chatMediaFile">Uploads</label>
 		<input type = "file" id = "chatMediaFile" class = "form-control" name = "media_file"  multiple = "multiple"/><br />
-		<input type = "submit" class = "btn btn-primary" id = "send_chat" value = "send" name = "send_post" />
+		<input type = "submit" class = "btn btn-primary" id = "send_chat" value = "send" name = "send_chat_msg" />
 		<!-- <input type = "submit" class = "nojs_show btn" id = "oldPost" value = "Old messages" name = "old_posts" /> -->
 		</form>
 block;
 	}
 }		//end choose friend
 
-if(isset($_POST["send_post"])){
+if(isset($_POST["send_chat_msg"])){
 	$friend_id = trim($_POST["friend_id"]);
 	$post_text = trim($_POST["post_text"]);
 	if(isset($_POST["last_post_time"])){

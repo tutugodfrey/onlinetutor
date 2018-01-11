@@ -46,8 +46,8 @@ if(isset($_GET["dashboard"])){
 	<div id = "prynav" class = "page-header navbar">
 		<ul class = "nav">
 			<!-- hide this element display when a user select a lecturer and construct thefull url or get from localStorage -->
-			<li class = "link_buttons">
-				<a href = "/onlinetutor/common/profile.php?profile&user_id=" class = "link-item">Instructor Profile</a>
+			<li id = "instructor-profile-link" class = "link_buttons hide-item" >
+				<a  href = "/onlinetutor/common/profile.php?profile&user_id=" class = "nav-link">Instructor Profile</a>
 			</li>
 			<li class = "link_buttons nav-item">
 				<form method = "GET" action = "$_SERVER[PHP_SELF]" >

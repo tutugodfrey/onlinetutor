@@ -30,9 +30,23 @@ const HandleContent = class {
 		}
 	}
 
+	chatMessage(content) {
+		if(document.getElementById("chat-msg-div")) {
+			const chatMsgDiv = document.getElementById("chat-msg-div");
+			// check the status of the returned content
+			if(content.indexOf("chat-post-succeed=true") > 0){
+			  chatMsgDiv.innerHTML += content;
+			  const chatTextField = document.getElementById("chat-text-field");
+			  chatTextField.value = "";
+			} else {
+				console.log(content)
+			}
+		  domNotifier();
+		}
+	}
+
 	notice(content) {
 		console.log(content)
-		
 	}
 
 	// dom_notifier();	//when elements becomes officially available call function to get their id's

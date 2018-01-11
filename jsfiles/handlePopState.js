@@ -16,9 +16,9 @@ const handlePopState = function(poppedHistortData) {
     const url = urlString.substring(0, urlDelimiter + 1);
     const msg = urlString.substring(urlDelimiter + 1, urlString.length);
     // will need to further modulate handling true false case for file
-    ajaxCall.postMethod(url, msg,  handleContent.display, poppedHistortData, fileAvailable);
+    ajaxCall.postMethod(url, msg,  handleContent.display, true, fileAvailable,  poppedHistortData);
   } else if(methodIndicator.indexOf("get") > 1 ){
-    ajaxCall.getMethod(urlString, handleContent.display, poppedHistortData);
+    ajaxCall.getMethod(urlString, handleContent.display, true, poppedHistortData);
   }
 }
 

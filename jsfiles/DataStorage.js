@@ -1,6 +1,7 @@
 import LocalStorage from "./LocalStorage"
 import HandleContent from "./HandleContent"
 import AjaxCall from './AjaxCall';
+import changeAttribute from "./changeAttribute";
 const storeData = new LocalStorage();
 const handleContent = new HandleContent();
 const ajaxCall = new AjaxCall(); 
@@ -42,9 +43,17 @@ const DataStorage = class {
 				try {
 					storeData.setUserData('instructorData', content);
 					const userType = instructorData["user_type"];
+					const instructorId = instructorData["id"];
 	        if(userType === 'lecturer') {
 	        	console.log(`you selected a ${userType}`);
-	        	  // ajaxCall.getMethod('/instructors/dashboard.php?dashboard', handleContent.display, true)
+	        	if(document.getElementById("instructor-profile-link")) {
+	        		const profileLink = document.getElementById("instructor-profile-link");
+	        		const hrefItem = profileLink.firstChild;
+	        		let hrefValue = hrefItem.getAttribute("href");
+	        		hrefValue = `${hrefValue}instructorId`;
+	        		hrefItem.setAttribute("href", hrefValue);
+	        		profileLink.setAttribute("class", "link_buttons hide-item");
+	        	}
 	        } else {
 	        	console.log('Unknown user_type');
 	        }	

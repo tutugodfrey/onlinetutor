@@ -23,8 +23,7 @@ echo <<<block
       </div>
     </div>
     <script src = 'jsfiles/bootstrap4_js/bootstrap.min.js' ></script>
-    <script src = 'dist/bundle.js'></script>
-    <script type = "text/javascript" src = "./jsfiles/quotes.js"></script>
+    <script src = '/onlinetutor/dist/bundle.js'></script>
   </body>
 </html>
 block;

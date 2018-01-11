@@ -34,7 +34,7 @@ const AjaxCall = class {
 		}
 	}
 
-	postMethod (url, msg, callback, storeUrl, poppedHistortData, fileAvailable = true) {
+	postMethod (url, msg, callback, storeUrl,  fileAvailable = true, poppedHistortData) {
 		if(xmlHttp.readyState == 0 || xmlHttp.readyState == 4){
 			xmlHttp.open('POST', url, true);		//now set request headers for the post method
 			if(fileAvailable === false) {	
