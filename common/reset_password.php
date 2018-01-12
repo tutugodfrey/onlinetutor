@@ -1,7 +1,7 @@
 <?php 
 //include necessary function
-include "db_connect2.php";
-include "function2.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
 if(isset($_GET["change"])){
 //user provide his username, old password and new password
 

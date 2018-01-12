@@ -1,8 +1,8 @@
 <?php
 //this script will get infomation from the lecturer's database
-include "db_connect2.php";
-include "function2.php";
-include "date_function.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
+include "./../includes/date_function.php";
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];

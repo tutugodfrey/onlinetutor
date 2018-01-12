@@ -1,7 +1,7 @@
 <?php
 //include functions to connect to database and run queries
-include "db_connect2.php";
-include "function2.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
 
 if(!isset($_POST["login"])){
 

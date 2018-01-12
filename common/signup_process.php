@@ -1,7 +1,7 @@
 <?php
 //include database connection file
-include "db_connect2.php";
-include "function2.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
 
 
 if(empty($_POST["agreement"])){

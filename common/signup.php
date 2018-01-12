@@ -1,7 +1,7 @@
 
 <?php
 //include function to call date_fields
-include "date_function.php";
+include "./../includes/date_function.php";
 //include "function2.php";
 /*
 $values = array ();
