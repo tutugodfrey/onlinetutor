@@ -16,6 +16,10 @@ const AjaxCall = class {
 				if(url.indexOf("last_post_time") >= 0) {
 					// do no indicate progress
 					console.log("do not display busy indicator");
+					if(document.getElementById("ajax_busy")) {
+						const indicator = document.getElementById("ajax_busy");
+						indicator.setAttribute("id", "ajax_neutral");
+					}
 				} else {
 					//processing indicator
 					console.log("i also got here")
