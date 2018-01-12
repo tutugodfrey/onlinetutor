@@ -230,7 +230,7 @@ if(isset($_GET["get_recent_post"])){
 		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>No new chats messages</p>";
-			$display = "";
+																									
 		}	else	{
 			$chats = build_array($row_num2);
 			if($row_num2 == 1){

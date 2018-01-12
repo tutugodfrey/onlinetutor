@@ -13,7 +13,7 @@ const Chats = class {
 			const latestPost = chats[lengthOfPosts].textContent;
 			const stringLength = latestPost.length;
 			const startPos = stringLength - 19;		//19 is length of the datatime portion
-			const lastPostTime = latestPost.substring(startPos, stringLength);
+			lastPostTime = latestPost.substring(startPos, stringLength);
 		}
 		const friendId = document.chat_form.friend_id.value;
 		const msg = "get_recent_post&friend_id=" + friendId + "&last_post_time=" + lastPostTime;

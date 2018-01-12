@@ -10,8 +10,18 @@ const AjaxCall = class {
 		if(xmlHttp.readyState === 0 || xmlHttp.readyState === 4){
 			xmlHttp.open("GET", url, true);
 			xmlHttp.onreadystatechange = function()	{
-				//processing indicator
-				ajaxBusy(xmlHttp);
+
+				//add condition to avoid displaying progress bar
+				console.log(url)
+				if(url.indexOf("last_post_time") >= 0) {
+					// do no indicate progress
+					console.log("do not display busy indicator");
+				} else {
+					//processing indicator
+					console.log("i also got here")
+					ajaxBusy(xmlHttp);
+			  }
+				
 				if(xmlHttp.readyState === 4){
 					if(xmlHttp.status === 200){
 						const headers = xmlHttp.getAllResponseHeaders();
@@ -52,7 +62,7 @@ const AjaxCall = class {
 				if(xmlHttp.status == 200){
 					const headers = xmlHttp.getAllResponseHeaders();
 					const contentType  = xmlHttp.getResponseHeader("content-type");
-					// storeHistory(url, 'post', storeUrl, poppedHistortData, [msg, fileAvailable]);
+					storeHistory(url, 'post', storeUrl, poppedHistortData, [msg, fileAvailable]);
 					let textResponse;
 					if(contentType === "text/xml") {
 						textResponse = xmlHttp.responseXML;

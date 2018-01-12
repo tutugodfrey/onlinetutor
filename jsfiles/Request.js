@@ -42,13 +42,13 @@ const Request = class {
           const username = JSON.parse(userData).username;
           const userType = JSON.parse(userData).user_type;
           if (username !== newUsername) {
-            ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, true, false);
+            ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, false);
           } else {
             // userData already in localStorage; use userData to make request and display appropriate content
             console.log('username already in store')
             if(userType === "student") {
               // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard'
-              ajaxCall.getMethod('/onlinetutor/students/dashboard.php?dashboard', handleContent.header, true)
+              ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
             } else if (userType === "lecturer") {
               ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
             }

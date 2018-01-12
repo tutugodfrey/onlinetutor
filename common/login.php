@@ -40,18 +40,18 @@ $display = <<<end
     </div>
   </div>
 end;
-}	elseif(isset($_POST["login"])) {
+} elseif(isset($_POST["login"])) {
   $username = trim($_POST["username"]);
   $password = $_POST["password"];
 
   if($username == "" || $password == "password" || $password == ""){
     $display = "<p>Please Enter your username and password to login<a href = \"login.php\">&lt;&lt; Back</a></p>";
-  }	else	{
+  } else  {
     //process log in for students
     //authenticate the use
     $query_string = "select id, username, user_type, lastname, firstname, picture from registered_users where username = \"$username\" and password = sha1($password)";
 
-    run_query($query_string);		//use registration database. if access is denied the user authentication fails
+    run_query($query_string);   //use registration database. if access is denied the user authentication fails
     if($row_num2 == 0){
       //login not successful
       $display = "<p>Your username or password is not con correct. please ensure you are duly registered to use this app</P>s";

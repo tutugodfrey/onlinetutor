@@ -45,7 +45,7 @@ $profile .= "<dt>". ucwords($fields[$i]).": </dt><dd>$values[$i]</dd>";
 }	//end for block
 $profile .= "</dl>"; 	//close definitive list
 
-if($user_id === $owner_id || $owner_class === $class) {
+if($user_id === $owner_id) {
 $display = <<<block
 $profile
 <a href = "$_SERVER[PHP_SELF]?edit_profile=yes&&user_id=$user_id" >Edit Profile</a>
@@ -58,7 +58,6 @@ $display = $profile;
 }		// end profile
 
 if(isset($_GET["edit_profile"])) {
-$class = $_GET["class"];
 $user_id = $_GET["user_id"];
 $heading = "<h1>Update Profile</h1>";
 $values = [["firstname"], ["lastname"], ["gender"], ["birthday"], ["title"], ["department"], ["faculty"], ["email"], ["photo"], ["username"]];

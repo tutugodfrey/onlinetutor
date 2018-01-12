@@ -57,8 +57,10 @@ if(document.getElementById("test_duration")){
 if(document.getElementById('send_chat')) {
 	const submitBtn = document.getElementById('send_chat');
 	listener.newEvent(submitBtn, "click", formValueCollector, submitBtn);
+
 	// check for update to chats
-	setInterval(chats.updateChat, 3000)
+	// will work on updating chat uing web worker
+	setInterval(chats.updateChat, 10000)
 }
 
 getElementValue.elementEvents("lecturers", "change", formValueCollector);

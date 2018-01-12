@@ -6,7 +6,7 @@ const request = new Request()
 const elementType  = new  GetElementValue()
 
 const formValueCollector = function(formControl) {
-	console.log('eletype', formControl)
+	// console.log('eletype', formControl)
 	const formElement = elementType.getFormElement(formControl)
 	const method = formElement.method;
 	const url = formElement.action;
@@ -24,7 +24,7 @@ const formValueCollector = function(formControl) {
   for(let elem of formControls){
     let eleValue;
     const eleType = elem.type;
-    console.log(eleType)
+    // console.log(eleType)
     let eleName = elem.getAttribute('name');
     if(elem.getAttribute('class')){
       const eleClass = elem.getAttribute('class');

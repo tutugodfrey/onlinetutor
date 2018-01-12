@@ -48,11 +48,12 @@ const DataStorage = class {
 	        	console.log(`you selected a ${userType}`);
 	        	if(document.getElementById("instructor-profile-link")) {
 	        		const profileLink = document.getElementById("instructor-profile-link");
-	        		const hrefItem = profileLink.firstChild;
-	        		let hrefValue = hrefItem.getAttribute("href");
-	        		hrefValue = `${hrefValue}instructorId`;
-	        		hrefItem.setAttribute("href", hrefValue);
-	        		profileLink.setAttribute("class", "link_buttons hide-item");
+	        		const hrefItem = document.getElementById("profile-link");
+	        		console.log(hrefItem)
+	        		 let hrefValue = hrefItem.getAttribute("href");
+	        		 hrefValue = `${hrefValue}${instructorId}`;
+	        		 hrefItem.setAttribute("href", hrefValue);
+	        		profileLink.setAttribute("class", "link_buttons show-item");
 	        	}
 	        } else {
 	        	console.log('Unknown user_type');
