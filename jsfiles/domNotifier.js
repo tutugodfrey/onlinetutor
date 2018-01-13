@@ -4,6 +4,7 @@ import HandleElementEvent from './HandleElementEvent';
 import { timer } from "./HandleElementEvent";
 import formValueCollector from './formValueCollector';
 import handlePopState from './handlePopState';
+import {getQuotes, moreQuote} from "./quotes";
 import Request from './Request';
 import Chats from "./Chats";
 
@@ -17,15 +18,23 @@ listener.popState(handlePopState);
 
 const domNotifier = function() {
 // listener.popState(handlePopState);
+if(document.getElementById('side-bar')) {
+	getQuotes();
+}  
+
+if(document.getElementById('get-more-quote')) {
+	const moreQuoteButton = document.getElementById("get-more-quote");
+	listener.newEvent(moreQuoteButton, "click", moreQuote, moreQuoteButton );
+}  
 
 if(document.getElementById('header-div')) {
 	const headerDiv = document.getElementById('header-div');
 	listener.newEvent(window, "load", request.loadHeader, headerDiv );
 }
 
-if(document.getElementById('main-content')) {
-	const mainContentDiv = document.getElementById('main-content');
-	listener.newEvent(window, "load", request.loadDefault, mainContentDiv );
+if(document.getElementById('content-area')) {
+	const contentAreaDiv = document.getElementById('content-area');
+	listener.newEvent(window, "load", request.loadDefault, contentAreaDiv );
 }
 
 if(document.getElementById('footer-div')) {

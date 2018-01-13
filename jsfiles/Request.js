@@ -17,17 +17,22 @@ const Request = class {
 
   loadDefault(hrefEle){
     const url = '/onlinetutor/common/default.html';
-    setTimeout(ajaxCall.getMethod, 300, url, handleContent.display)
+    setTimeout(ajaxCall.getMethod, 500, url, handleContent.display)
   }
 
   loadFooter(hrefEle){
     const url = '/onlinetutor/common/footer1.html';
-    setTimeout(ajaxCall.getMethod, 500, url, handleContent.footer, false)
+    setTimeout(ajaxCall.getMethod, 1000, url, handleContent.footer, false)
   }
 
   hrefRequest(hrefEle){
     const data = getElementValue.linkValue(hrefEle);
-    ajaxCall.getMethod(data[0], handleContent.display)
+    const href = data[0];
+    if(href.indexOf("signup") > 0 || href.indexOf("login") > 0 || href.indexOf("default") > 0 || href.indexOf("home") > 0 ) {
+      ajaxCall.getMethod(href, handleContent.display)
+    } else {
+      ajaxCall.getMethod(href, handleContent.mainContent)
+   }
   } 
 
   formRequest(method, url, formInfo) {
@@ -48,9 +53,12 @@ const Request = class {
             console.log('username already in store')
             if(userType === "student") {
               // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard'
-              ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
+              ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true);
+              setTimeout(ajaxCall.getMethod, 5000, './../students/home.php', handleContent.display, true);
+             // ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
             } else if (userType === "lecturer") {
-              ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
+              ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true);
+              setTimeout(ajaxCall.getMethod, 5000, './../instructors/home.php', handleContent.display, true);
             }
           }
         } else {

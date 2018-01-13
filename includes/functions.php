@@ -182,7 +182,7 @@ function mytable($values, $checkbox = "no", $display_col1 = "yes", $grade = "no"
 
 /////////////////////////////////////////////////////
 //function to output result in a select option field
-function select_option($values, $label, $name_of_field, $class_name = ""){
+function select_option($values, $label, $name_of_field, $select_class = "", $lable_class = ""){
 	$rows = sizeof($values);
 	global $select_result;
 	global $L;
@@ -207,7 +207,7 @@ function select_option($values, $label, $name_of_field, $class_name = ""){
 	}
 	//}
 	//$rows = sizeof($values);
-	$select_result = "<label for = \"$label\" \"sr-only\" > ".ucwords($label)." </label><select id = \"$label\" name = \"$name_of_field\" class = \"$class_name\">";
+	$select_result = "<label for = \"$label\" class = \"$lable_class\" > ".ucwords($label)." </label><select id = \"$label\" name = \"$name_of_field\" class = \"$select_class\">";
 	if($L == 1) {	//it a one column one or more rows array
 		$L = $L- 1;
 		for($i = 0; $i < $rows; $i++) {

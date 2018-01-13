@@ -18,14 +18,9 @@ $display = <<<end
     <fieldset>
       <form class = "form-group" method = "POST" action = "login.php" >
       <p id = "validation-notice">Fields mark below are required</p>
-      <!--
-      <legend>Log In As</legend>
-      <input type = "radio" name = "user_type" class = "user-type" id = 'lecturer' value = "lecturer" /><label for = "lecturer" >Lecturer</label>
-      <input type = "radio" name = "user_type" class = "user-type" id = 'student' value = "student" /><label for = "student" >Student</label><br />
-      -->
-      <label for = "username">Username</label>
-      <input type = "text" name = "username" id = 'username' class = 'requiredFields form-control'  size = "30" /><br />
-      <label for = "password" >Password</label>
+      <label for = "username" class = "sr-only">Username</label>
+      <input type = "text" class = 'requiredFields form-control' placeholder = "username" name = "username" id = 'username'  size = "30" /><br />
+      <label for = "password" class = "sr-only" >Password</label>
       <input type = "password" id = 'password' placeholder = "password" class = 'requiredFields form-control'  name = "password" /><br />
       <input type = "submit" value = "Log-In" class = "btn btn-success form-control" name = "login" /><br />
       </form>

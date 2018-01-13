@@ -12,7 +12,7 @@ $display = "";
 if(isset($_GET["dashboard"])){
 
 $nav_buttons = <<<block
-<div id = "prynav" class = "page-header navbar">
+<div id = "prynav">
     <ul class = "nav">
       <li class = "link_buttons nav-item">
         <a id = "save_course" href = "./save_course.php?save_courses" class = "nav-link">Save Courses</a>

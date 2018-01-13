@@ -18,10 +18,12 @@ const DataStorage = class {
 					const userType = userData["user_type"];
 	        if(userType === 'lecturer') {
 	        	console.log(`you are a ${userType}`);
-	        	  ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
+	        	ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true);
+	        	setTimeout(ajaxCall.getMethod, 5000, './../instructors/home.php', handleContent.display, true);
 	        } else if(userType === 'student') {
 	        	console.log(`you are a ${userType}`);
-	        	  ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
+	        	ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true);
+	        	setTimeout(ajaxCall.getMethod, 1000, './../students/home.php', handleContent.display, true);
 	        } else {
 	        	console.log('Unknown user_type');
 	        }	
