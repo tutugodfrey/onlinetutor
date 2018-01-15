@@ -15,11 +15,14 @@ const request = new Request();
 const chats = new Chats();
 
 listener.popState(handlePopState);
-
+let quoteDisplayed = false;
 const domNotifier = function() {
 // listener.popState(handlePopState);
 if(document.getElementById('side-bar')) {
-	getQuotes();
+	if(!quoteDisplayed){
+		quoteDisplayed = true;
+		getQuotes();
+	}
 }  
 
 if(document.getElementById('get-more-quote')) {

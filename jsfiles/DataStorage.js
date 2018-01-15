@@ -51,10 +51,10 @@ const DataStorage = class {
 	        	if(document.getElementById("instructor-profile-link")) {
 	        		const profileLink = document.getElementById("instructor-profile-link");
 	        		const hrefItem = document.getElementById("profile-link");
-	        		console.log(hrefItem)
-	        		 let hrefValue = hrefItem.getAttribute("href");
-	        		 hrefValue = `${hrefValue}${instructorId}`;
-	        		 hrefItem.setAttribute("href", hrefValue);
+	        		let hrefValue = hrefItem.getAttribute("href");
+	        		hrefValue = hrefValue.substring(0, hrefValue.lastIndexOf("=") + 1);
+	        		hrefValue = `${hrefValue}${instructorId}`;
+	        		hrefItem.setAttribute("href", hrefValue);
 	        		profileLink.setAttribute("class", "link_buttons show-item");
 	        	}
 	        } else {
