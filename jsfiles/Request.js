@@ -28,7 +28,8 @@ const Request = class {
   hrefRequest(hrefEle){
     const data = getElementValue.linkValue(hrefEle);
     const href = data[0];
-    if(href.indexOf("signup") > 0 || href.indexOf("login") > 0 || href.indexOf("default") > 0 || href.indexOf("home") > 0 ) {
+    if(href.indexOf("signup") >= 0 || href.indexOf("login") >= 0 || href.indexOf("default") >= 0 || href.indexOf("home") > 0  
+      || href.indexOf("forget_password") >= 0 || href.indexOf("change") >= 0 ) {
       ajaxCall.getMethod(href, handleContent.display)
     } else {
       ajaxCall.getMethod(href, handleContent.mainContent)
@@ -37,7 +38,7 @@ const Request = class {
 
   formRequest(method, url, formInfo) {
     if(method === 'post') {
-      console.log(formInfo)
+      // console.log(formInfo)
       if(formInfo.indexOf('login') >= 0){
         const indexOfEqualSign = formInfo.lastIndexOf('=');
         const newUsername = formInfo.substring(indexOfEqualSign + 1, formInfo.length);
@@ -65,7 +66,6 @@ const Request = class {
           ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, false);
         }
       } else if (formInfo.indexOf('send_chat_msg') >= 0) {
-        console.log("what to send chat message");
         ajaxCall.postMethod(url, formInfo, handleContent.chatMessage, false, false);
       } else {  // include more if else block if need be to do something other than display with post result
         ajaxCall.postMethod(url, formInfo, handleContent.display, true, false);

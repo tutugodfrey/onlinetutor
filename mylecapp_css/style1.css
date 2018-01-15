@@ -20,7 +20,7 @@ body 		{
 
 #showcase {
 	line-height: 20px; display:flex; flex-direction:column; justify-content:center; align-items:center;
-	text-align: center; padding:0 25px; background-color:#bed7e5; height:60vh; position:relative; top:59px;
+	text-align: center; padding:0 25px; background-color:#bed7e5; height:60vh;   position:relative; top:-70px; 
 }
 
 #footer-div {
@@ -32,15 +32,15 @@ img	{
 }
 
 #content-area {
-	position:relative; top:-12px;
+	/*background-color:red; */ position:relative; top:47px; padding:70px 10px 70px 10px; 
 }
-
+/*
 #main-page {
 	display:grid; grid-template-columns:70% 30%; position:relative; top:59px;
 }
-
+*/
 #main-content-area {
-	background-color:#acacbb; height:100vh; padding:10px, 20; display:grid; grid-template-columns: 100%; justify-items:center;
+	background-color:#acacbb; height:100vh; /*padding:30px, */ 20; display:grid; grid-template-columns: 100%; justify-items:center;
 }
 
 #side-bar {
