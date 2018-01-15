@@ -15,7 +15,6 @@ $display = <<<end
   <div class = "container">
     <div class "row">
       <div class = "card col-12 col-sm-12 col-md-4 col-lg-4"
-        <p>Please Enter Your Username and Password</p>
         <div id = "login">
           <h3 class = "form-heading card-title">Log in</h3>
           <fieldset>
