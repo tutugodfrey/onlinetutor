@@ -95,26 +95,14 @@ if(isset($_GET["dashboard"])){
 				</li>
 				<li class = "link-buttons nav_item">
 					<form id = "search_lec_form" class = "form-inline mr-auto" method = "GET" action = "/onlinetutor/common/search_names.php" >
-						<ul>
-						<li class = "link-buttons">
-							<input type = "text" class = "link_buttons" id = "enter_lecturer_name" name = "name_like_js" placeholder = "search for lecturer"/>
-						</li>
-						<li class = "link-buttons">
-							<input type = "submit" id = "search_lec" class = "submit_buttons nojsi_show" name = "search_lecturers" value = "Search" />
-						</li>
-					</ul>
+						<input type = "text" class = "link_buttons form-control form-control-sm" id = "search-lecturers" name = "name_like" placeholder = "search for lecturer"/>
+					<input type = "submit" id = "search_lec" class = "btn btn-success hide-item" name = "search_lecturers" value = "Search" />
 					</form>
 				</li>
 				<li class = "link_buttons nav-item">
-					<form name = "reg_lecturer" id = "reg_lec_form" method = "GET" action = "/onlinetutor/common/profile.php" >
-						<ul>
-							<li class = "link_butto">
-								<div id = "lecturers_name" class = "link_buttons"></div>
-							</li>
-							<li class = "link_buttons">
-								<input type = "submit"  id = "registerLecturer" class = "submit_buttons nojsi_show" name = "register_lecturer" value = "Register" />
-							</li>
-						</ul>
+					<form name = "reg_lecturer" id = "reg_lec_form" class = "form-inline" method = "POST" action = "/onlinetutor/common/profile.php" >
+						<div id = "lecturers-name" class = "link_buttons"></div>
+						<input type = "submit"  id = "register-lecturer" class = "btn btn-success hide-item" name = "register_lecturer" value = "Register" />
 					</form>
 				</li>
 			</ul>

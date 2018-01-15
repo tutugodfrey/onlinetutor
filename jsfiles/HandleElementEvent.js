@@ -1,3 +1,5 @@
+import formValueCollector from "./formValueCollector";
+import changeAttribute from "./changeAttribute";
 
 const HandleElementEvent = class {
 	selectLecturer(eleType){
@@ -34,12 +36,42 @@ function timer(timeDuration, displayEle, timeupFunc){
 			}
 		}
 	}
-
-	
 }
+
+//when search for lecturer result returns
+function returnedLecturers (returnedLecturers) {
+	const newLec = document.getElementById("lecturers-name");
+	const registerBtn = document.getElementById("register-lecturer");
+	console.log("returned", returnedLecturers);
+	console.log(typeof returnedLecturers);
+	if((returnedLecturers === "p") || (returnedLecturers.indexOf("Not Found") >= 0 )) {
+		console.log("No lecturer returned");
+		console.log(returnedLecturers);
+		changeAttribute(registerBtn, "class", "hide-item", "no");
+	} else {
+		newLec.innerHTML =  returnedLecturers;
+		changeAttribute(newLec, "class", "show-item", "no");
+		changeAttribute(registerBtn, "class", "btn btn-success btn-sm show-item", "no");
+	}
+}
+
+function clearRegBtn (eleObj) {
+	const eleValue = eleObj.value.trim();
+	const newLec = document.getElementById("lecturers-name");
+	const registerBtn = document.getElementById("register-lecturer");
+	if(eleValue === "" ){
+		changeAttribute(newLec, "class", "hide-item", "no");
+		changeAttribute(registerBtn, "class", "hide-item", "no");
+	}	else	{
+		console.log(eleValue);
+	}
+}
+
 
 
 export default HandleElementEvent;
 export {
-	timer
+	timer,
+	returnedLecturers,
+	clearRegBtn
 }

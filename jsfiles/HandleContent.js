@@ -1,5 +1,6 @@
 import domNotifier from './domNotifier';
 import LocalStorage from './LocalStorage';
+import { returnedLecturers } from "./HandleElementEvent";
 const storeData = new LocalStorage();
 
 
@@ -52,6 +53,10 @@ const HandleContent = class {
 			}
 		  domNotifier();
 		}
+	}
+
+	showLecturers(content) {
+		returnedLecturers(content);
 	}
 
 	notice(content) {
