@@ -18,7 +18,11 @@ const handlePopState = function(poppedHistortData) {
     // will need to further modulate handling true false case for file
     ajaxCall.postMethod(url, msg,  handleContent.display, true, fileAvailable,  poppedHistortData);
   } else if(methodIndicator.indexOf("get") > 1 ){
-    ajaxCall.getMethod(urlString, handleContent.display, true, poppedHistortData);
+    if(urlString.indexOf("signup") > 0 || urlString.indexOf("login") > 0 || urlString.indexOf("default") > 0 || href.indexOf("home") > 0 ) {
+      ajaxCall.getMethod(urlString, handleContent.display, true, poppedHistortData);
+    } else {
+      ajaxCall.getMethod(urlString, handleContent.mainContent, true, poppedHistortData);
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 <?php
 //include functions to connect to database and run queries
-include "db_connect2.php";
-include "function2.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
 
 if(!isset($_POST["login"])){
 
@@ -12,31 +12,31 @@ session_destroy();
 }
 
 $display = <<<end
-  <p>Please Enter Your Username and Password</p>
-  <div id = "login">
-    <h3 class = "form-heading">Log in</h3>
-    <fieldset>
-      <form class = "form-group" method = "POST" action = "login.php" >
-      <p id = "validation-notice">Fields mark below are required</p>
-      <!--
-      <legend>Log In As</legend>
-      <input type = "radio" name = "user_type" class = "user-type" id = 'lecturer' value = "lecturer" /><label for = "lecturer" >Lecturer</label>
-      <input type = "radio" name = "user_type" class = "user-type" id = 'student' value = "student" /><label for = "student" >Student</label><br />
-      -->
-      <label for = "username">Username</label>
-      <input type = "text" name = "username" id = 'username' class = 'requiredFields form-control'  size = "30" /><br />
-      <label for = "password" >Password</label>
-      <input type = "password" id = 'password' placeholder = "password" class = 'requiredFields form-control'  name = "password" /><br />
-      <input type = "submit" value = "Log-In" class = "btn btn-success form-control" name = "login" /><br />
-      </form>
-    </fieldset>
-    <div>
-      <p> Don't have an Account? <a href = "signup.php" >Sign Up</a></p>
-    </div>
-    <div>
-    <fieldset>
-      <p>I<a href = "reset_password.php?forget_password=yes"> forgot my password?</a>   I want to <a href = "reset_password.php?change=yes">Change password</a></p>
-    </fieldset>
+  <div class = "container">
+    <div class "row">
+      <div class = "card col-12 col-sm-12 col-md-4 col-lg-4"
+        <div id = "login">
+          <h3 class = "form-heading card-title">Log in</h3>
+          <fieldset>
+            <form class = "form-group" method = "POST" action = "login.php" >
+            <p id = "validation-notice">Fields mark below are required</p>
+            <label for = "username" class = "sr-only">Username</label>
+            <input type = "text" class = 'requiredFields form-control' placeholder = "username" name = "username" id = 'username'  size = "30" /><br />
+            <label for = "password" class = "sr-only" >Password</label>
+            <input type = "password" id = 'password' placeholder = "password" class = 'requiredFields form-control'  name = "password" /><br />
+            <input type = "submit" value = "Log-In" class = "btn btn-success form-control" name = "login" /><br />
+            </form>
+          </fieldset>
+          <div>
+            <p> Don't have an Account? <a href = "signup.php" >Sign Up</a></p>
+          </div>
+          <div>
+          <fieldset>
+            <p>I<a href = "reset_password.php?forget_password"> forgot my password?</a>   I want to <a href = "reset_password.php?change">Change password</a></p>
+          </fieldset>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 end;

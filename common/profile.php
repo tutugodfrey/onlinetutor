@@ -1,8 +1,8 @@
 <?php
 //this script will get infomation from the lecturer's database
-include "db_connect2.php";
-include "function2.php";
-include "date_function.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
+include "./../includes/date_function.php";
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
@@ -160,30 +160,29 @@ $display = "<p>The Update is successful</p>";
 
 
 
-if(isset($_GET["register_lecturer"]) || isset($_GET["register_friend"])){
-$user_id = $_GET["user_id"];
-$friends_table = "user".$user_id."_friends";
-$query_string = "select * from $friends_table where friend_id = '$owner_id'";
-run_query($query_string);
-if($row_num2 == 0){
-if(isset($_GET["register_lecturer"])){
-//say this lecturer in the student's table
-$query_string = array ("insert into $owner_friend values(null, \"$user_id\", \"no\", \"$owner_id\", \"lecturer\")", "insert into $friends_table values (null, \"$owner_id\", \"no\", \"$owner_id\", \"student\")");
+if(isset($_POST["register_lecturer"]) || isset($_POST["register_friend"])){
+	$user_id = $_POST["user_id"];
+	$friends_table = "user".$user_id."_friends";
+	$query_string = "select * from $friends_table where friend_id = '$owner_id'";
+	run_query($query_string);
+	if($row_num2 == 0){
+		if(isset($_GET["register_lecturer"])){
+		//say this lecturer in the student's table
+		$query_string = array ("insert into $owner_friend values(null, \"$user_id\", \"no\", \"$owner_id\", \"lecturer\")", "insert into $friends_table values (null, \"$owner_id\", \"no\", \"$owner_id\", \"student\")");
+		}
 
-}
-
-if(isset($_GET["register_friend"])) {
-$query_string = array ("insert into $owner_friend values(null, \"$user_id\", \"no\", \"$owner_id\", null)", "insert into $friends_table values (null, \"$owner_id\", \"no\", \"$owner_id\", null)");
-}
-run_query($query_string);
-if($row_num2 == 0 && $row_num3 == 0){
-$display = "<p>the registration could not be process</p>";
-}	else	{
-$display = "<p>your registration is successful</p>";
-}
-}	else {
-$display  = "<p>your are already registered with this lecturer</p>";
-}
+		if(isset($_GET["register_friend"])) {
+		$query_string = array ("insert into $owner_friend values(null, \"$user_id\", \"no\", \"$owner_id\", null)", "insert into $friends_table values (null, \"$owner_id\", \"no\", \"$owner_id\", null)");
+		}
+		run_query($query_string);
+		if($row_num2 == 0 && $row_num3 == 0){
+			$display = "<p>the registration could not be process</p>";
+		}	else	{
+			$display = "<p>your registration is successful</p>";
+		}
+	}	else {
+		$display  = "<p>your are already registered with this lecturer</p>";
+	}
 }
 
 
@@ -191,38 +190,31 @@ $display  = "<p>your are already registered with this lecturer</p>";
 
 
 if(isset($_GET["confirm"])){
-$user_id = trim($_GET["user_id"]);
-$confirm = trim($_GET["confirm"]);
-
-if(empty($_GET["user_type"])){
-
-}	else	{
-
-$user_type = $_GET["user_type"];
-}
-if($user_id == "" || $confirm == ""){
-$display = "<p>There is an error in the request. please go back and try again</p>";
-}	else	{
-
-$friends_table = "user".$user_id."_friends";
-
-if($confirm == "no"){
-$query_string = array ("delete from $owner_friend where friend_id = \"$user_id\"", "delete from $friends_table where friend_id = \"$owner_id\"");
-}
-if($confirm == "yes"){
-//insert yes in the two tables since it will be the basis for display of names
-$query_string = array ("update $owner_friend set confirm = \"yes\" where friend_id = \"$user_id\"",
-		"update $friends_table set confirm = \"yes\" where friend_id = \"$owner_id\"");
-}
-
-run_query($query_string);
-if($row_num2 == 0 && $row_num3 == 0){
-$display = "<p>Your request could not be process now please try again late</p>";
-}	else	{
-$display = "<p>Your request is process successfully</p>";
-}
-
-}
+	$user_id = trim($_GET["user_id"]);
+	$confirm = trim($_GET["confirm"]);
+	if(empty($_GET["user_type"])){
+	}	else	{
+		$user_type = $_GET["user_type"];
+	}
+	if($user_id == "" || $confirm == ""){
+		$display = "<p>There is an error in the request. please go back and try again</p>";
+	}	else	{
+		$friends_table = "user".$user_id."_friends";
+		if($confirm == "no"){
+			$query_string = array ("delete from $owner_friend where friend_id = \"$user_id\"", "delete from $friends_table where friend_id = \"$owner_id\"");
+		}
+		if($confirm == "yes"){
+			//insert yes in the two tables since it will be the basis for display of names
+			$query_string = array ("update $owner_friend set confirm = \"yes\" where friend_id = \"$user_id\"",
+				"update $friends_table set confirm = \"yes\" where friend_id = \"$owner_id\"");
+		}
+		run_query($query_string);
+		if($row_num2 == 0 && $row_num3 == 0){
+			$display = "<p>Your request could not be process now please try again late</p>";
+		}	else	{
+			$display = "<p>Your request is process successfully</p>";
+		}
+	}
 }		//end confirm
 
 

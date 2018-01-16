@@ -11,23 +11,29 @@ const handleContent = new HandleContent();
 
 const Request = class {
   loadHeader(hrefEle){
-    const url = '/onlinetutor/common/header1.html';
+    const url = 'common/header1.html';
    setTimeout(ajaxCall.getMethod, 100, url, handleContent.header, false)
   }
 
   loadDefault(hrefEle){
-    const url = '/onlinetutor/common/default.html';
-    setTimeout(ajaxCall.getMethod, 300, url, handleContent.display)
+    const url = 'common/default.html';
+    setTimeout(ajaxCall.getMethod, 500, url, handleContent.display)
   }
 
   loadFooter(hrefEle){
-    const url = '/onlinetutor/common/footer1.html';
-    setTimeout(ajaxCall.getMethod, 500, url, handleContent.footer, false)
+    const url = 'common/footer1.html';
+    setTimeout(ajaxCall.getMethod, 1000, url, handleContent.footer, false)
   }
 
   hrefRequest(hrefEle){
     const data = getElementValue.linkValue(hrefEle);
-    ajaxCall.getMethod(data[0], handleContent.display)
+    const href = data[0];
+    if(href.indexOf("signup") >= 0 || href.indexOf("login") >= 0 || href.indexOf("default") >= 0 || href.indexOf("home") > 0  
+      || href.indexOf("forget_password") >= 0 || href.indexOf("change") >= 0 ) {
+      ajaxCall.getMethod(href, handleContent.display)
+    } else {
+      ajaxCall.getMethod(href, handleContent.mainContent)
+   }
   } 
 
   formRequest(method, url, formInfo) {
@@ -48,17 +54,21 @@ const Request = class {
             console.log('username already in store')
             if(userType === "student") {
               // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard'
-              ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
+              ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true);
+              setTimeout(ajaxCall.getMethod, 5000, './../students/home.php', handleContent.display, true);
+             // ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
             } else if (userType === "lecturer") {
-              ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
+              ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true);
+              setTimeout(ajaxCall.getMethod, 5000, './../instructors/home.php', handleContent.display, true);
             }
           }
         } else {
           ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, false);
         }
       } else if (formInfo.indexOf('send_chat_msg') >= 0) {
-        console.log("what to send chat message");
         ajaxCall.postMethod(url, formInfo, handleContent.chatMessage, false, false);
+      } else if(formInfo.indexOf("register_lecturer") >= 0){
+        ajaxCall.postMethod(url, formInfo, handleContent.mainContent, false, false);
       } else {  // include more if else block if need be to do something other than display with post result
         ajaxCall.postMethod(url, formInfo, handleContent.display, true, false);
       }
@@ -67,7 +77,10 @@ const Request = class {
       if(fullUrl.indexOf("select=Select Lecturer") > 0) {
         // student select a lecturer
         ajaxCall.getMethod(fullUrl, dataStorage.storeInsturctorData, false);
-      } else {
+      }  else if(fullUrl.indexOf("search_lecturers")) {
+        console.log("what to search for lecturers");
+        ajaxCall.getMethod(fullUrl, handleContent.showLecturers, false);
+      }  else {
         ajaxCall.getMethod(fullUrl, handleContent.display, false);
       }
     }

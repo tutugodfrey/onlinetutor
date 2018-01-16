@@ -1,6 +1,6 @@
 <?php
-include "db_connect2.php";
-include "function2.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
 
 session_start();
 if(isset($_SESSION["owner_id"])){
@@ -12,11 +12,8 @@ $display = "";
 if(isset($_GET["dashboard"])){
 
 $nav_buttons = <<<block
-<div id = "prynav" class = "page-header navbar">
+<div id = "prynav">
     <ul class = "nav">
-      <li class = "link_buttons nav-item">
-        <a href = "./../common/profile.php?profile&user_id=$owner_id" class = "nav-link">Profile</a>
-      </li>
       <li class = "link_buttons nav-item">
         <a id = "save_course" href = "./save_course.php?save_courses" class = "nav-link">Save Courses</a>
       </li>

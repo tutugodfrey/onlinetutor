@@ -1,7 +1,7 @@
 <?php
 //this script will get infomation from the lecturer's database
-include "db_connect2.php";
-include "function2.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
 session_start();
 if(isset($_SESSION["privileged_user"])){
 $L_id = $_SESSION["L_id"];

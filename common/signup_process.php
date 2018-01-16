@@ -1,7 +1,7 @@
 <?php
 //include database connection file
-include "db_connect2.php";
-include "function2.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
 
 
 if(empty($_POST["agreement"])){
@@ -116,20 +116,21 @@ $query_string = array (
 );
 }
 if($user_type == "student"){
-$query_string = array (
-"CREATE TABLE $chat_table (post_id int not null primary key auto_increment, sender int not null, receiver int not null, post text not null, media_url varchar(120), post_date datetime not null)",
-"CREATE TABLE $friends_table (id int not null primary key auto_increment, friend_id int not null, confirm enum('yes', 'no'), requestor_id int not null, user_type varchar(10))",
-"CREATE TABLE $note_table  (id int not null primary key auto_increment, course_id tinyint not null, title varchar (100), note text not null, note_date datetime not null)"
-);
+	$query_string = array (
+	"CREATE TABLE $chat_table (post_id int not null primary key auto_increment, sender int not null, receiver int not null, post text not null, media_url varchar(120), post_date datetime not null)",
+	"CREATE TABLE $friends_table (id int not null primary key auto_increment, friend_id int not null, confirm enum('yes', 'no'), requestor_id int not null, user_type varchar(10))",
+	"CREATE TABLE $note_table  (id int not null primary key auto_increment, course_id tinyint not null, title varchar (100), note text not null, note_date datetime not null)"
+	);
 }
 
 //run the queries
 run_query($query_string);
 if($row_num2 === 0 ) {
-$display = "<p>An error has occured please try again</p>";
+	$display = "<p>An error has occured please try again</p>";
 }	else {
 
 //handle uploaded photo
+$doc_root = $_SERVER[DOCUMENT_ROOT];
 mkdir("C:/xampp/htdocs/onlinetutor/personal_data/user$user_id"); //create a directory to store the url to the picture
 mkdir("C:/xampp/htdocs/onlinetutor/personal_data/user$user_id/images"); //create a directory to store other images that user will use for other purposes
 mkdir("C:/xampp/htdocs/onlinetutor/personal_data/user$user_id/videos"); //create a directory to store the images that the user will use for other purposes

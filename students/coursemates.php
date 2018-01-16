@@ -1,7 +1,7 @@
 <?php
 //include db_connect function
-include "db_connect2.php";
-include "function2.php";
+include "./../includes/db_connect.php";
+include "./../includes/functions.php";
 
 session_start();
 if(isset($_SESSION["owner_id"])){

@@ -18,10 +18,12 @@ const DataStorage = class {
 					const userType = userData["user_type"];
 	        if(userType === 'lecturer') {
 	        	console.log(`you are a ${userType}`);
-	        	  ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true)
+	        	ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true);
+	        	setTimeout(ajaxCall.getMethod, 5000, './../instructors/home.php', handleContent.display, true);
 	        } else if(userType === 'student') {
 	        	console.log(`you are a ${userType}`);
-	        	  ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true)
+	        	ajaxCall.getMethod('./../students/dashboard.php?dashboard', handleContent.header, true);
+	        	setTimeout(ajaxCall.getMethod, 1000, './../students/home.php', handleContent.display, true);
 	        } else {
 	        	console.log('Unknown user_type');
 	        }	
@@ -49,10 +51,10 @@ const DataStorage = class {
 	        	if(document.getElementById("instructor-profile-link")) {
 	        		const profileLink = document.getElementById("instructor-profile-link");
 	        		const hrefItem = document.getElementById("profile-link");
-	        		console.log(hrefItem)
-	        		 let hrefValue = hrefItem.getAttribute("href");
-	        		 hrefValue = `${hrefValue}${instructorId}`;
-	        		 hrefItem.setAttribute("href", hrefValue);
+	        		let hrefValue = hrefItem.getAttribute("href");
+	        		hrefValue = hrefValue.substring(0, hrefValue.lastIndexOf("=") + 1);
+	        		hrefValue = `${hrefValue}${instructorId}`;
+	        		hrefItem.setAttribute("href", hrefValue);
 	        		profileLink.setAttribute("class", "link_buttons show-item");
 	        	}
 	        } else {

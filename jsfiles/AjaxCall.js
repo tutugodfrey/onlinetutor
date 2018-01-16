@@ -14,7 +14,7 @@ const AjaxCall = class {
 				//add condition to avoid displaying progress bar
 				console.log(url)
 				if(url.indexOf("last_post_time") >= 0) {
-					// do no indicate progress
+					// do not indicate progress
 					console.log("do not display busy indicator");
 					if(document.getElementById("ajax_busy")) {
 						const indicator = document.getElementById("ajax_busy");
@@ -22,7 +22,6 @@ const AjaxCall = class {
 					}
 				} else {
 					//processing indicator
-					console.log("i also got here")
 					ajaxBusy(xmlHttp);
 			  }
 				
