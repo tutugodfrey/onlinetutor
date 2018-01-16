@@ -16,7 +16,7 @@ echo <<<block
       <div id = 'header-div' class = 'page-header navbar' >
       </div>
       <div><p id = "ajax_neutral">Processing ...</p></div>
-      <div id = 'main-content'>
+      <div id = 'content-area'>
         
       </div>
       <div id = 'footer-div'>
