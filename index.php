@@ -13,7 +13,7 @@ echo <<<block
   </head>
   <body>
     <div>
-      <div id = "header-div" class = "page-header navbar fixed-top" >
+      <div id = "header-div">
       </div>
       <div><p id = "ajax_neutral">Processing ...</p></div>
       <div id = "content-area"> 
@@ -21,6 +21,8 @@ echo <<<block
       <div id = "footer-div" class = "navbar fixed-bottom">
       </div>
     </div>
+    <script src = "jsfiles/tether-1.3.3/dist/js/tether.min.js" ></script>
+    <script src = "jsfiles/jquery-3.1.0.js" ></script>
     <script src = "jsfiles/bootstrap4_js/bootstrap.min.js" ></script>
     <script src = "./dist/bundle.js"></script>
   </body>

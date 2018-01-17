@@ -11,12 +11,14 @@ const handleContent = new HandleContent();
 
 const Request = class {
   loadHeader(hrefEle){
-    const url = '/common/header1.html';
+    // const url = '/common/header1.html';
+    const url = 'common/header1.html';
    setTimeout(ajaxCall.getMethod, 100, url, handleContent.header, false)
   }
 
   loadDefault(hrefEle){
-    const url = '/common/default.html';
+    // const url = '/common/default.html';
+    const url = 'common/default.html';
     setTimeout(ajaxCall.getMethod, 500, url, handleContent.display)
   }
 

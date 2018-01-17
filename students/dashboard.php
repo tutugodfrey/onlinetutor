@@ -52,69 +52,76 @@ if(isset($_GET["dashboard"])){
 
 	//an html to display some command
 	$display = <<<end
-		<div id = "pry-nav" class = "navbar">
-			<ul class = "nav">
-				<!-- hide this element display when a user select a lecturer and construct thefull url or get from localStorage -->
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/home.php?" class = "nav-link">Home</a>
-				</li>
-				<li id = "instructor-profile-link" class = "link_buttons nav-item hide-item" >
-					<a  id = "profile-link" href = "/onlinetutor/common/profile.php?profile&user_id=" class = "nav-link">Instructor Profile</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<form method = "GET" action = "$_SERVER[PHP_SELF]" >
-						<div> $select_result </div>
-						<input type = "submit" id = "choose_lec" class = "submit-buttons hide-item" value = "Select Lecturer" name = "select" />
-						<!-- <input type = "submit" id = "del_lec" class = "submit-buttons" value = "Delete" name = "delete" /> -->
-					</form>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/coursemates.php?coursemates" class = "nav-link">Coursemates</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/courses.php?registered_courses" class = "nav-link">Your Courses</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/courses.php?courses" class = "nav-link">Courses</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/test.php?tests" class = "nav-link">Tests</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/scores.php?scores" class = "nav-link">Scores</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/discussions.php?discussions" class = "nav-link">Discussions</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/announcements.php?announcements" class = "nav-link">Announcemnts</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/common/friends.php?friends" class = "nav-link">Friends</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/lecture_note.php?lecture_note" class = "nav-link">Lecture Notes</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/videos.php?view_videos" class = "nav-link">Videos</a>
-				</li>
-				<li class = "link-buttons nav-item">
-					<a href = "/onlinetutor/students/mynote.php?mynote" class = "nav-link">Notes</a>
-				</li>
-				<li class = "link-buttons nav_item">
-					<form id = "search_lec_form" class = "form-inline mr-auto" method = "GET" action = "/onlinetutor/common/search_names.php" >
-						<input type = "text" class = "link_buttons form-control form-control-sm" id = "search-lecturers" name = "name_like" placeholder = "search for lecturer"/>
-					<input type = "submit" id = "search_lec" class = "btn btn-success hide-item" name = "search_lecturers" value = "Search" />
-					</form>
-				</li>
-				<li class = "link_buttons nav-item">
-					<form name = "reg_lecturer" id = "reg_lec_form" class = "form-inline" method = "POST" action = "/onlinetutor/common/profile.php" >
-						<div id = "lecturers-name" class = "link_buttons"></div>
-						<input type = "submit"  id = "register-lecturer" class = "btn btn-success hide-item" name = "register_lecturer" value = "Register" />
-					</form>
-				</li>
-			</ul>
-		</div>
+		<nav class="navbar navbar-toggleable-md navbar-light">
+      <a class="navbar-brand" href="#">L</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#prynav" aria-controls="prynav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="prynav">
+        <ul class="navbar-nav mr-auto">
+        <!-- hide this element display when a user select a lecturer and construct thefull url or get from localStorage -->
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/home.php?" class = "nav-link">Home</a>
+        </li>
+        <li id = "instructor-profile-link" class = "link_buttons nav-item hide-item" >
+          <a  id = "profile-link" href = "/onlinetutor/common/profile.php?profile&user_id=" class = "nav-link">Instructor Profile</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <form method = "GET" action = "$_SERVER[PHP_SELF]" >
+            <div> $select_result </div>
+            <input type = "submit" id = "choose_lec" class = "submit-buttons hide-item" value = "Select Lecturer" name = "select" />
+            <!-- <input type = "submit" id = "del_lec" class = "submit-buttons" value = "Delete" name = "delete" /> -->
+          </form>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/coursemates.php?coursemates" class = "nav-link">Coursemates</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/courses.php?registered_courses" class = "nav-link">Your Courses</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/courses.php?courses" class = "nav-link">Courses</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/test.php?tests" class = "nav-link">Tests</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/scores.php?scores" class = "nav-link">Scores</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/discussions.php?discussions" class = "nav-link">Discussions</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/announcements.php?announcements" class = "nav-link">Announcemnts</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/common/friends.php?friends" class = "nav-link">Friends</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/lecture_note.php?lecture_note" class = "nav-link">Lecture Notes</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/videos.php?view_videos" class = "nav-link">Videos</a>
+        </li>
+        <li class = "link-buttons nav-item">
+          <a href = "/onlinetutor/students/mynote.php?mynote" class = "nav-link">Notes</a>
+        </li>
+        <li class = "link-buttons nav_item">
+          <form id = "search_lec_form" class = "form-inline my-2 my-lg-0 mr-auto" method = "GET" action = "/onlinetutor/common/search_names.php" >
+            <input type = "text" class = "link_buttons form-control mr-sm-2 form-control-sm" id = "search-lecturers" name = "name_like" placeholder = "search for lecturer"/>
+          <input type = "submit" id = "search_lec" class = "btn btn-success my-2 my-sm-0 hide-item" name = "search_lecturers" value = "Search" />
+          </form>
+        </li>
+        <li class = "link_buttons nav-item">
+          <form name = "reg_lecturer" id = "reg_lec_form" class="form-inline my-2 my-lg-0" method = "POST" action = "/onlinetutor/common/profile.php" >
+            <div id = "lecturers-name" class = "link_buttons"></div>
+            <input type = "submit"  id = "register-lecturer" class = "btn btn-success hide-item" name = "register_lecturer" value = "Register" />
+          </form>
+        </li>
+      </ul>
+    </div>
+    </nav>
 	<!-- <div id = "secnavdiv" class = "page-header navbar">
 		<ul id = "secnav" class = "nav" >
 			<li class = "nav-item">
