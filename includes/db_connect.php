@@ -2,6 +2,7 @@
 
 function admin_connect($run_as_admin = "yes", $user = "req", $passw = "req", $domain = "localhost"){
 	/*
+>>>>>>> add-style1
 	if($run_as_admin == "yes"){
 		$domain = "localhost";
 		$user = "root";
@@ -14,7 +15,7 @@ function admin_connect($run_as_admin = "yes", $user = "req", $passw = "req", $do
 		$user = "l2m6izbhqueg0mih";
 		$passw = "rvsegg5ufaxgbtbs";
 	}
-	
+
 
 	global $mysqli;
 	$mysqli = mysqli_connect($domain, $user, $passw);

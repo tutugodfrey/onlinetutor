@@ -6,8 +6,16 @@ include "./../includes/functions.php";
 
 session_start();
 if(isset($_SESSION["owner_id"])){
-$owner_id = $_SESSION["owner_id"];
-//$user_image_url = $_SESSION["user_image_url"];
+	$owner_id = $_SESSION["owner_id"];
+	//$user_image_url = $_SESSION["user_image_url"];
+} else if (isset($_GET["user_id"])) {
+	$owner_id = $_GET["user_id"];
+	$_SESSION["owner_id"] = $owner_id;
+} else	{
+  header("Location: /onlinetutor/common/login.php");  		//user do not have an active session
+  exit();
+}
+
 $display = "";
 if(isset($_GET["dashboard"])){
 	$friends_table = "user".$owner_id."_friends";
@@ -174,10 +182,6 @@ if(isset($_GET["delete"]))	{
 	}
 }
 
-} 	else	{
- header("Location: /onlinetutor/common/login.php");  		//user do not have an active session
- exit();
-}
 ?>
 
 
