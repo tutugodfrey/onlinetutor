@@ -57,10 +57,10 @@ const Request = class {
             console.log('username already in store')
             if(userType === "student") {
               // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard'
-              ajaxCall.getMethod(`./../students/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, true);
+              ajaxCall.getMethod(`./../students/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
               setTimeout(ajaxCall.getMethod, 5000, './../students/home.php', handleContent.display, true);
             } else if (userType === "lecturer") {
-              ajaxCall.getMethod('./../instructors/dashboard.php?dashboard', handleContent.header, true);
+              ajaxCall.getMethod(`./../instructors/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
               setTimeout(ajaxCall.getMethod, 5000, './../instructors/home.php', handleContent.display, true);
             }
           }
