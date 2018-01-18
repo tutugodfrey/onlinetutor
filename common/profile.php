@@ -6,7 +6,6 @@ include "./../includes/date_function.php";
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$owner_class = $_SESSION["class"];
 $owner_friend = "user".$owner_id."_friends";
 if($owner_id === ""){
 $display = "<p>You do not have an active user setion to view ths page</p>";

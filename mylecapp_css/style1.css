@@ -3,14 +3,30 @@ body 		{
 	margin:0px;
 	padding:0px;
 }
-#header-div {
-	background-color:#e4eaa7; position:relative; top:0px; height:45px; 
-}
-/*
-#pry-nav {
-	display:flex; flex-direction:column; justify-content:right;
+
+.btn-primary, .bg-primary {
+	background-color:#e4eaa7;
 }
 
+#brand-logo {
+	border:solid white 2px;width:40px; height:40px; position:relative; top:-5px; text-align:center; vertical-align:middle; border-radius:10%;
+}
+
+#toggler-btn {
+	/*position:relative; top:-5px; */
+}
+#header-div {
+	background-color:#e4eaa7; position:relative; top:0px; height:45px; z-index:10;
+}
+
+.navbar {
+	height:45px; position:relative; top:0px;
+}
+
+#pry-nav {
+	position:absolute; top:0px; left:5%; width:80vw;
+}
+/*
 #sec-nav {
 	display:flex; flex-direction:column; position:relative; top: -15px; 
 }
@@ -22,7 +38,7 @@ body 		{
 
 #showcase {
 	line-height: 20px; display:flex; flex-direction:column; justify-content:center; align-items:center;
-	text-align: center; padding:0 25px; background-color:#bed7e5; height:60vh;   position:relative; top:-70px; 
+	text-align: center; background-color:#bed7e5; height:100vh;  position:relative; top: -68px;
 }
 
 #footer-div {
@@ -34,19 +50,27 @@ img	{
 }
 
 #content-area {
-	/*background-color:red; */ position:relative; top:47px; padding:70px 10px 70px 10px; 
+	/*background-color:red; */ position:relative; top:0px; padding:70px 0px 0px 0px; 
 }
-/*
+
 #main-page {
-	display:grid; grid-template-columns:70% 30%; position:relative; top:59px;
+	position:relative; top:-68px;
 }
-*/
+
+#reg-lecturer-form-group {
+	position:absolute; top:-2px; right:-90px; z-index:4;
+}
+
+#reg_lec_form {
+	position:relative; top:-30px;
+}
+
 #main-content-area {
-	background-color:#acacbb; height:100vh; /*padding:30px, */ 20; display:grid; grid-template-columns: 100%; justify-items:center;
+	background-color:#acacbb; height:100vh; padding:50px 10px; display:grid; grid-template-columns: 100%; justify-items:center;
 }
 
 #side-bar {
-	background-color:#ccddaa; height:100vh;
+	background-color:#ccddaa; height:100vh; padding:50px 10px;
 }
 
 p#validation-notice {
