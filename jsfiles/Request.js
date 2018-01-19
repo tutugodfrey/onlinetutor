@@ -30,7 +30,9 @@ const Request = class {
   hrefRequest(hrefEle){
     const data = getElementValue.linkValue(hrefEle);
     const href = data[0];
-    if(href.indexOf("signup") >= 0 || href.indexOf("login") >= 0 || href.indexOf("default") >= 0 || href.indexOf("home") > 0  
+    if(href.substring(href.length-1) === "#") {
+      // ignore the link
+    } else if(href.indexOf("signup") >= 0 || href.indexOf("login") >= 0 || href.indexOf("default") >= 0 || href.indexOf("home") > 0  
       || href.indexOf("forget_password") >= 0 || href.indexOf("change") >= 0 ) {
       ajaxCall.getMethod(href, handleContent.display)
     } else {
