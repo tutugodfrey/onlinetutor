@@ -52,8 +52,9 @@ if(isset($_GET["dashboard"])){
 
 	//an html to display some command
 	$display = <<<end
-
-			<nav class="navbar nav-tabs navbar-toggleable-md navbar-light">
+		<div class = "container-fluid">
+			<div class = "row">
+			<nav class="navbar nav-tabs navbar-toggleable-md navbar-light col-md-9 pr-0">
 			<a id = "brand-logo" class="navbar-brand" href="#">L</a>
       <button id = "toggler-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#pry-nav" aria-controls="pry-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -63,9 +64,6 @@ if(isset($_GET["dashboard"])){
 	        <!-- hide this element display when a user select a lecturer and construct thefull url or get from localStorage -->
 	        <li class = "link-buttons nav-item">
 	          <a href = "/onlinetutor/students/home.php?" class = "nav-link active">Home</a>
-	        </li>
-	        <li id = "instructor-profile-link" class = "link_buttons nav-item hide-item" >
-	          <a  id = "profile-link" href = "/onlinetutor/common/profile.php?profile&user_id=" class = "nav-link">Instructor Profile</a>
 	        </li>
 	        <li class = "link-buttons nav-item">
 	          <form method = "GET" action = "$_SERVER[PHP_SELF]" >
@@ -114,6 +112,8 @@ if(isset($_GET["dashboard"])){
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="more-menu">
 							<a href = "/onlinetutor/common/profile.php?profile&user_id=$owner_id" class = "nav-link">Your Profile</a>
+	         		<a  id = "profile-link" href = "/onlinetutor/common/profile.php?profile&user_id=" class = "nav-link">Instructor Profile</a>
+
 							<a href = "/onlinetutor/students/announcements.php?announcements" class = "nav-link">News</a>
 							<a href = "/onlinetutor/common/feedback.php?feedback" class = "nav-link">Feedback</a>
 							<a href = "/onlinetutorp/common/login.php?log_out" class = "nav-link">Logout</a>
@@ -124,6 +124,24 @@ if(isset($_GET["dashboard"])){
 	      </ul>
 	    </div>
 	  </nav>
+	  <div id = "reg-lecturer-form-group" class = "col-sm-12 col-md-3 px-0 align-self-end">
+	  	<div class = "d-flex flex-row">
+	  	<div class = "align-self-start">
+		  	<form name = "reg_lecturer" id = "reg_lec_form" class="form-inline" method = "POST" action = "/onlinetutor/common/profile.php" >
+		      <div id = "lecturers-name" class = "link_buttons"></div>
+		      <input type = "submit"  id = "register-lecturer" class = "btn btn-success hide-item" name = "register_lecturer" value = "Register" />
+		    </form>
+	    </div>
+	    <div class = "align-self-end">
+		    <form id = "search_lec_form" class = "form-inline" method = "GET" action = "/onlinetutor/common/search_names.php" >
+		      <input type = "search" class = "link_buttons form-control mr-sm-2 form-control-sm" id = "search-lecturers" name = "name_like" placeholder = "search for lecturer"/>
+		    <input type = "submit" id = "search_lec" class = "btn btn-success my-2 my-sm-0 hide-item" name = "search_lecturers" value = "Search" />
+		    </form>
+	    </div>
+	    </div>
+    </div>
+	</div>
+	</div>
 
 end;
 }

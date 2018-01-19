@@ -9,7 +9,7 @@ body 		{
 }
 
 #brand-logo {
-	border:solid white 2px;width:40px; height:40px; position:relative; top:-5px; text-align:center; vertical-align:middle; border-radius:10%;
+	border:solid white 2px; width:40px; height:40px; position:relative; top:-5px; text-align:center; vertical-align:middle; border-radius:10%;
 }
 
 #toggler-btn {
@@ -19,13 +19,19 @@ body 		{
 	background-color:#e4eaa7; position:relative; top:0px; height:45px; z-index:10;
 }
 
-#header-div > .navbar {
-	height:45px; position:relative; top:0px;
+#header-div .navbar {
+	height:45px; position:relative; top:0px; padding-bottom:0px; padding-top:0px;
 }
 
-#pry-nav {
-	position:absolute; top:0px; left:5%; width:80vw;
+#pry-nav .nav-item {
+	height:45px;
 }
+
+/*
+#pry-nav {
+	position:absolute; top:0px; left:5%; width:80vw; 
+}
+*/
 /*
 #sec-nav {
 	display:flex; flex-direction:column; position:relative; top: -15px; 
@@ -33,7 +39,7 @@ body 		{
 */
 
 .link-buttons .nav-link {
-	font-size:15px; padding:2px;
+	/* font-size:15px; padding:2px; */
 }
 
 #showcase {
@@ -50,13 +56,18 @@ img	{
 }
 
 #content-area {
-	/*background-color:red; */ position:relative; top:0px; padding:70px 0px 0px 0px; 
+position:relative; top:0px; padding:70px 0px; 
 }
 
 #main-page {
 	position:relative; top:-68px;
 }
 
+#main-content-area {
+	background-color:#acacbb; padding:50px 10px; display:grid; grid-template-columns: 100%; justify-items:center;
+}
+
+/*
 #reg-lecturer-form-group {
 	position:absolute; top:-2px; right:-90px; z-index:4;
 }
@@ -64,10 +75,7 @@ img	{
 #reg_lec_form {
 	position:relative; top:-30px;
 }
-
-#main-content-area {
-	background-color:#acacbb; padding:50px 10px; display:grid; grid-template-columns: 100%; justify-items:center;
-}
+*/
 
 #side-bar {
 	background-color:#ccddaa; display:flex; flex-direction:column; align-items:center; padding:50px 20px;
@@ -81,11 +89,7 @@ p#validation-notice {
 	text-align:center;
 }
 */
-/*
-#modificationNotice {
-	font-weight:bold; position:relative; top:8px;
-}
-*/
+
 .fail-validation {
 	 border: 1px solid red;
 }
