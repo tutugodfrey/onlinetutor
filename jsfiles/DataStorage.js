@@ -48,14 +48,12 @@ const DataStorage = class {
 					const instructorId = instructorData["id"];
 	        if(userType === 'lecturer') {
 	        	console.log(`you selected a ${userType}`);
-	        	if(document.getElementById("instructor-profile-link")) {
-	        		const profileLink = document.getElementById("instructor-profile-link");
+	        	if(document.getElementById("profile-link")) {
 	        		const hrefItem = document.getElementById("profile-link");
 	        		let hrefValue = hrefItem.getAttribute("href");
 	        		hrefValue = hrefValue.substring(0, hrefValue.lastIndexOf("=") + 1);
 	        		hrefValue = `${hrefValue}${instructorId}`;
 	        		hrefItem.setAttribute("href", hrefValue);
-	        		profileLink.setAttribute("class", "link_buttons show-item");
 	        	}
 	        } else {
 	        	console.log('Unknown user_type');
