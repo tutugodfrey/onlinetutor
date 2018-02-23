@@ -57,11 +57,12 @@ const Request = class {
           } else {
             // userData already in localStorage; use userData to make request and display appropriate content
             console.log('username already in store')
-            if(userType === "student") {
-              // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard'
+            if(userType.toLowerCase() === "student") {
+
+              // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard' ./../students/dashboard.php?dashboard
               ajaxCall.getMethod(`./../students/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
               setTimeout(ajaxCall.getMethod, 5000, './../students/home.php', handleContent.display, true);
-            } else if (userType === "lecturer") {
+            } else if (userType.toLowerCase() === "lecturer") {
               ajaxCall.getMethod(`./../instructors/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
               setTimeout(ajaxCall.getMethod, 5000, './../instructors/home.php', handleContent.display, true);
             }

@@ -45,7 +45,6 @@ end;
 } elseif(isset($_POST["login"])) {
   $username = trim($_POST["username"]);
   $password = $_POST["password"];
-
   if($username == "" || $password == "password" || $password == ""){
     $display = "<p>Please Enter your username and password to login<a href = \"login.php\">&lt;&lt; Back</a></p>";
   } else  {
@@ -56,7 +55,7 @@ end;
     run_query($query_string);   //use registration database. if access is denied the user authentication fails
     if($row_num2 == 0){
       //login not successful
-      $display = "<p>Your username or password is not con correct. please ensure you are duly registered to use this app</P>s";
+      $display = "<p>Your username or password is not con correct. please ensure you are duly registered to use this app</P>";
     } else if($row_num2 == 1){
 
       $user_info = build_array($row_num2);

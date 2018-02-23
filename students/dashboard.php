@@ -19,7 +19,7 @@ if(isset($_SESSION["owner_id"])){
 $display = "";
 if(isset($_GET["dashboard"])){
 	$friends_table = "user".$owner_id."_friends";
-	$query_string = "select friend_id from $friends_table where confirm = \"yes\" and user_type = \"lecturer\"";		//getting ids of lecturers
+	$query_string = "select lec_id from students where student_id = $owner_id and confirm = \"yes\"";		//getting ids of lecturers
 	run_query($query_string);
 	if($row_num2 == 0){
 		$select_result = "<select><option>No lecturer</option></select>";

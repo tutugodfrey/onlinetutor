@@ -1,6 +1,6 @@
 <?php 
 ////////////////////////////////////////////////////
-function run_query($query_string, $database = "lecturer_app"){
+function run_query($query_string, $database = "onlinetutor"){
 	global $mysqli;
 	//declare global variables
 	global $rows;
