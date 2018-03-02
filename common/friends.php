@@ -6,10 +6,6 @@ include "./../includes/functions.php";
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$friends_table = "user".$owner_id."_friends";
-$my_chat_table = "user".$owner_id."_chat";
-$owner_class  = $_SESSION["class"]; ;
-
 
 if($owner_id == ""){
 $display = "<p>An error occur. Please go back and try again</p>";
@@ -18,7 +14,7 @@ $display = "<p>An error occur. Please go back and try again</p>";
 if(isset($_GET["friends"])){
 	$display = "<h1>Your friends</h1>";
 	// unconfirmed friend
-	$query_string = "select friend_id from $friends_table where confirm = 'no' and requestor_id != \"$owner_id\"  and user_type is null";
+	$query_string = "select requestor_id from friends where confirm = 'no' and friend_id = \"$owner_id\"  and user_type is null";
 	run_query($query_string);
 	if($row_num2 == 0){
 		$display .= "<p>you do not have new friend request. <a id = \"search_friend\" href = \"/onlinetutor/common/search_names.php?new_friends=yes\" > search new friends</a></p>";
@@ -48,15 +44,24 @@ block;
 	}	//end select new friend
 
 	//  select already existing friends
-	$query_string = "select friend_id from $friends_table where confirm = \"yes\"";
+	$query_string = "select friend_id, requestor_id from friends where confirm = \"yes\" and requestor_id = \"$owner_id\" or friend_id = \"$owner_id\"";
 	run_query($query_string);
 	if($row_num2 == 0){
 		//$display = "<p>you have not added any friends. <a href = \" \">add friends</a></p>";
 	}	else	{
-		$friends_id  = build_array($row_num2);
+		$friends_pair  = build_array($row_num2);
 		if($row_num2 == 1){
-			$friends_id = [$friends_id];
+			$friends_pair = [$friends_pair];
 		}
+		// get id sof friends
+		foreach($friends_pair as $friend_pair){
+			$friends_id = [];
+			if($friend_pair[0] !== $owner_id){
+				$friends_id[] = $friend_pair[0];
+			}	else if($friend_pair[1] !== $owner_id)	{
+				$friends_id[] = $friend_pair[1];
+			}
+		}		//end foreach
 		$old_friends = [];
 		foreach($friends_id as $friend_id){
 			$query_string = "select id, picture, lastname, firstname from registered_users where id = \"$friend_id\"";
@@ -98,7 +103,7 @@ if(isset($_GET["choose_friend"])){
 
 		$sender = $owner_id;
 		$receiver = $friend_id;
-		$query_string = "select sender, post, media_url, post_date from $my_chat_table where (sender = \"$sender\" and receiver = \"$receiver\" ) or (sender = \"$receiver\" and receiver =\"$sender\") order by post_date desc limit 20";
+		$query_string = "select sender, post, media_url, post_date from chats where (sender = \"$sender\" and receiver = \"$receiver\" ) or (sender = \"$receiver\" and receiver =\"$sender\") order by post_date desc limit 20";
 		run_query($query_string);
 		if($row_num2 == 0 ){
 			$chats = "<p>No Posted Messages. Send you friend a message</p>";
@@ -177,28 +182,24 @@ if(isset($_POST["send_chat_msg"])){
 
 			admin_connect();
 			$post_text = mysqli_real_escape_string($mysqli, $post_text);
-
-			$friend_chat = "user".$friend_id."_chat";
-
-
 			$sender = $owner_id;
 			$receiver = $friend_id;
-			$query_string = "select * from  $my_chat_table where sender = \"$sender\" and receiver =  \"$receiver\" and post =  \"$post_text\"";
+			$query_string = "select * from  chats where sender = \"$sender\" and receiver =  \"$receiver\" and post =  \"$post_text\"";
 
 			run_query($query_string);
 			if($row_num2 == 1){
 				$display = "<p>The massage has already been posted</p>";
 			}	else	{
-				$query_string = array("insert into $my_chat_table values(null, \"$sender\", \"$receiver\", \"$post_text\", \"$media_url\", now())", 
+				$query_string = array("insert into chats values(null, \"$sender\", \"$receiver\", \"$post_text\", \"$media_url\", now())", 
 						"insert into $friend_chat values(null, \"$sender\", \"$receiver\", \"$post_text\", \"$media_url\", now())");
 				run_query($query_string);
 				if($row_num2 == 0 && $row_num3 == 0){
 					$display = "<p>There a problem posting your request. it might be due to network connection</p>";
 				}	else	{
 					if($last_post_time == ""){
-						$query_string = "select sender, post, media_url, post_date from  $my_chat_table where sender = \"$sender\" and receiver =  \"$receiver\" and post =  \"$post_text\"";
+						$query_string = "select sender, post, media_url, post_date from  chats where sender = \"$sender\" and receiver =  \"$receiver\" and post =  \"$post_text\"";
 					}	else	{
-						$query_string = "select sender, post, media_url, post_date from  $my_chat_table where sender = \"$sender\" and receiver =  \"$receiver\" and post_date > \"$last_post_time\" or sender = \"$receiver\" and receiver =  \"$sender\" and post_date > \"$last_post_time\"";
+						$query_string = "select sender, post, media_url, post_date from chats where sender = \"$sender\" and receiver =  \"$receiver\" and post_date > \"$last_post_time\" or sender = \"$receiver\" and receiver =  \"$sender\" and post_date > \"$last_post_time\"";
 					}
 					run_query($query_string);
 					if($row_num2 == 0) {
@@ -226,7 +227,7 @@ if(isset($_GET["get_recent_post"])){
 	}	else	{
 		$sender = $owner_id;
 		$receiver = $friend_id;
-		$query_string = "select sender, post, media_url, post_date from  $my_chat_table where sender = \"$sender\" and receiver =  \"$receiver\" and post_date > \"$last_post_time\" or sender = \"$receiver\" and receiver =  \"$sender\" and post_date > \"$last_post_time\"";
+		$query_string = "select sender, post, media_url, post_date from  chats where sender = \"$sender\" and receiver =  \"$receiver\" and post_date > \"$last_post_time\" or sender = \"$receiver\" and receiver =  \"$sender\" and post_date > \"$last_post_time\"";
 		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>No new chats messages</p>";
@@ -250,7 +251,7 @@ if (isset ($_POST["old_posts"])) {
 	}	else 	{
 		$sender = $owner_id;
 		$receiver = $friend_id;
-		$query_string = "select sender, post, media_url, post_date from $my_chat_table where( (sender = \"$sender\" and receiver = \"$receiver\") or (sender = \"$receiver\" and receiver =\"$sender\") ) and (post_date < \"$top_post_time\") order by post_date asc limit 20";
+		$query_string = "select sender, post, media_url, post_date from chats where( (sender = \"$sender\" and receiver = \"$receiver\") or (sender = \"$receiver\" and receiver =\"$sender\") ) and (post_date < \"$top_post_time\") order by post_date asc limit 20";
 		run_query($query_string);
 		if($row_num2 == 0 ){
 			$display = "<p>No more post</p>";

@@ -1,6 +1,8 @@
 <?php
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
 
 session_start();
 if(isset($_SESSION["owner_id"])){
@@ -30,7 +32,7 @@ if(isset($_POST["make_announcement"])){
 		$heading = "";
 		$display = "<p>Please type your message to make announcement</p>";
 	}	else	{
-	$query_string  = "insert into announcement value (null, \"$message\", now())";
+	$query_string  = "insert into announcement value (null, \"$message\", now()) where lec_id = \"$owner_id\"";
 		run_query($query_string, $lecturer_db);
 		if($row_num2 == 0){
 			$heading = "";

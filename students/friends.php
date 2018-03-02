@@ -2,6 +2,9 @@
 //include required files
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
+
 
 session_start();
 if(isset($_SESSION["privileged_user"])){

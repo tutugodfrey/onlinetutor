@@ -74,7 +74,6 @@ end;
 
       if($user_type == "lecturer"){
         $_SESSION["class"] = "lecturer";
-        $_SESSION["lecturer_db"] = "lec".$user_id;
         $_SESSION["owner_id"] = $user_id;
       }
     }

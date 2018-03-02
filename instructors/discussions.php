@@ -1,6 +1,9 @@
 <?php
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
+
 
 session_start();
 if(isset($_SESSION["owner_id"])){
@@ -13,7 +16,7 @@ if(isset($_GET["discussions"])) {
 	$heading = "<h1>Create a discussion</h1>";
 	//get the course that the lecturer is taking
 	$query_string = "select course_id, course_code from courses";
-	run_query($query_string, $lecturer_db);
+	run_query($query_string);
 	if($row_num2 == 0){
 		$display = "<p>No Course have been saved in the record</p>";
 	}	else	{
@@ -55,14 +58,14 @@ if($course_id == "" || $discussion_topic == ""){
 $display = "<p>Please fill out the required fields to create a discussion topic <a href = \"$_SERVER[PHP_SELF]\" >&lt;&lt; Back</a></p>";
 }	else 	{
 //check that this discussion topic does not already exist
-$query_string = "select discussion_topic from discussion where discussion_topic = \"$discussion_topic\" and type = \"$type\"";
-run_query($query_string, $lecturer_db);
+$query_string = "select discussion_topic from discussion where discussion_topic = \"$discussion_topic\" and type = \"$type\" and lec_id = \"$owner_id\"";
+run_query($query_string);
 if($row_num2 == 1){
 $display = "<p>This discussion topic and type already exit</p>";
 }	elseif($row_num2 == 0){ 			//create the discussion if it does not already exist
 $heading = "<h1>Discussion Creation Result</h1>";
-$query_string = "insert into discussion values (null, '".$course_id."', '".$discussion_topic."', now(), '".$type."')";
-run_query($query_string, $lecturer_db);
+$query_string = "insert into discussion values (null, '".$course_id."', '".$discussion_topic."', now(), '".$type."') where lec_id = \"$owner_id\"";
+run_query($query_string);
 if($row_num2 == 0){
 $display = "<p>The discussion could not be created</p>";
 }	else	{
@@ -73,8 +76,8 @@ $display = "<p>the discussion have been posted</p>";
 }		//end create discussion
 
 if(isset($_GET["view_discussions"])){
-	$query_string = "select distinct course_id from discussion";
-	run_query($query_string, $lecturer_db);
+	$query_string = "select distinct course_id from discussion where lec_id = \"$owner_id\"";
+	run_query($query_string);
 	if ($row_num2 == 0){
 		$display = "<p>No discussion have been posted<p>";
 	}	else	{
@@ -85,8 +88,8 @@ if(isset($_GET["view_discussions"])){
 
 	$course_codes = [];
 	foreach($course_ids as $course_id) {
-		$query_string = "select course_code from courses where course_id = \"$course_id\"";
-		run_query($query_string, $lecturer_db);
+		$query_string = "select course_code from courses where course_id = \"$course_id\" and lec_id = \"$owner_id\"";
+		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>The course code for created discussions could not be fetched</p>";
 		}	else 	{
@@ -101,8 +104,8 @@ if(isset($_GET["view_discussions"])){
 	}	else if ($size_of_course_codes === $size_of_course_ids)	{
 		$discussion_container = [];
 		for($i = 0; $i < $size_of_course_ids; $i++){
-			$query_string = "select discussion_id, discussion_topic, post_date, type from discussion where course_id = \"$course_ids[$i]\"";
-			run_query($query_string, $lecturer_db);
+			$query_string = "select discussion_id, discussion_topic, post_date, type from discussion where course_id = \"$course_ids[$i]\" and lec_id = \"$owner_id\"";
+			run_query($query_string);
 			if ($row_num2 == 0) {
 				$display = "<p>Error fetching discusssion details</p>";
 			}	else	{
@@ -139,8 +142,8 @@ if(isset($_POST["view_posts"])){
 		$display = "<p>Please mark the checkbox to select which discussion you want to view</p>";
 	}	else	{
 		$discussion_id = $_POST["discussion_id"][0];
-		$query_string = "select distinct student_id from post where discussion_id = \"$discussion_id\"";		//all student who has posted
-		run_query($query_string, $lecturer_db);
+		$query_string = "select distinct student_id from post where discussion_id = \"$discussion_id\" and lec_id = \"$owner_id\"";		//all student who has posted
+		run_query($query_string);
 		if($row_num2 == 0 ) {
 			$display = "<p>No post have been submitted for this discusion</p>";
 		}	else	{
@@ -168,9 +171,8 @@ if(isset($_POST["view_posts"])){
 			$discussion_info = [];
 			for($i = 0; $i < $size_of_student_ids; $i++){
 				//get all post by this student for this discussion
-				$query_string = "select post_id, student_id, post_date, post_text, graded from post where discussion_id = \"$discussion_id\" 
-						and student_id = \"$student_ids[$i]\"";
-				run_query($query_string, $lecturer_db);
+				$query_string = "select post_id, student_id, post_date, post_text, graded from post where discussion_id = \"$discussion_id\ and lec_id = \"$owner_id\" and student_id = \"$student_ids[$i]\"";
+				run_query($query_string);
 				if($row_num2 == 0 ){
 					$display = "<p>An error while fetching discussion information</p>";
 				}	else 	{
@@ -185,15 +187,15 @@ if(isset($_POST["view_posts"])){
 				}
 			}		//end for
 			//get information abt this discussion
-			$query_string = "select course_id, discussion_topic from discussion where discussion_id = \"$discussion_id\"";
-			run_query($query_string, $lecturer_db);
+			$query_string = "select course_id, discussion_topic from discussion where discussion_id = \"$discussion_id\" and lec_id = \"$owner_id\"";
+			run_query($query_string);
 			if($row_num2 == 0 ){
 				$display = "<p>Discussion details could not be fetched</p>";
 			}	else	{
 				$discussion_detail = build_array($row_num2);
 				//get the course code
-				$query_string = "select course_code from courses where course_id = \"$discussion_detail[0]\"";
-				run_query($query_string, $lecturer_db);
+				$query_string = "select course_code from courses where course_id = \"$discussion_detail[0]\" and lec_id = \"$owner_id\"";
+				run_query($query_string);
 				if($row_num2 == 0 ){
 					$display = "<p>Course code for this discussion could not be fetched</p>";
 				}	else 	{
@@ -231,8 +233,8 @@ if(isset($_POST["grade_student"])){
 		$post_id = trim($_POST["post_id"][0]);
 		$grade = trim($_POST["grade"]);
 		//verify the post exist
-		$query_string = "select discussion_id, student_id, course_id, graded from post where post_id = \"$post_id\"";
-		run_query($query_string, $lecturer_db);
+		$query_string = "select discussion_id, student_id, course_id, graded from post where post_id = \"$post_id\" and lec_id = \"$owner_id\"";
+		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>This post does not exist </p>";
 		}	else	{
@@ -244,9 +246,9 @@ if(isset($_POST["grade_student"])){
 			$graded = strtolower($result["graded"]);
 			if($graded == "no" )	{
 				//insert the data to the score_board and update the post table
-				$query_string = Array ("insert into score_board (score_id, course_id, student_id, discussion_id,  score, score_type) values (null, \"$course_id\", \"$student_id\", \"$discussion_id\",  \"$grade\", \"discussion\")",
-							"update post set graded = \"YES\" where discussion_id = \"$discussion_id\" and post_id = \"$post_id\"");
-				run_query($query_string, $lecturer_db);
+				$query_string = Array ("insert into score_board (score_id, course_id, student_id, discussion_id,  score, score_type) values (null, \"$course_id\", \"$student_id\", \"$discussion_id\",  \"$grade\", \"discussion\") where lec_id = \"$owner_id\"",
+							"update post set graded = \"YES\" where discussion_id = \"$discussion_id\" and post_id = \"$post_id\" and lec_id = \"$owner_id\"");
+				run_query($query_string);
 				if($row_num2 == 1 || $row_num3 == 1){
 					$display = "<p id = \"graded\">The grade has been recorded</p>";
 				}	else {

@@ -73,7 +73,8 @@ const domNotifier = function() {
 		// will work on updating chat uing web worker
 		setInterval(chats.updateChat, 10000)
 	}
-
+  
+  // when a user want to select a lecturer
 	getElementValue.elementEvents("lecturers", "change", formValueCollector);
 
 	if(document.getElementById("search-lecturers")){

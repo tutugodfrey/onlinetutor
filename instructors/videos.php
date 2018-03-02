@@ -2,6 +2,8 @@
 //include include required files
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
 
 session_start();
 if(isset($_SESSION["owner_id"])){
@@ -13,7 +15,7 @@ $lecturer_db = $_SESSION["lecturer_db"];
 if (isset($_GET["add_video"])) {
 
 $query_string = "select course_id, course_code from courses";
-run_query($query_string, $lecturer_db);
+run_query($query_string);
 if ($row_num2 == 0 ) {
 $display = "<p>You have not saved any course</p>";
 }	else {
@@ -57,7 +59,7 @@ admin_connect();
 $video_caption = mysqli_real_escape_string($mysqli, trim($_POST["video_caption"]));	//clean the data
 	//write query_string to databas
 $query_string = "insert into videos values(null, \"$course_id\", \"$video_url\", \"$video_name\", \"$video_caption\" )";
-run_query($query_string, $lecturer_db);
+run_query($query_string);
 if ($row_num2 == 1) {
 $display =  "<p>Video successfully uploaded</p>";
 }	else	{
@@ -71,7 +73,7 @@ $display =  "<p>No file found.</p>";
 
 
 if (isset ($_POST["uploaded_videos"])) {
-$videos = get_videos(" ", 2, $lecturer_db);
+$videos = get_videos(" ", 2);
 if(empty($videos)){
 $display = "<p>You have not uploaded any video</p>";
 }	else {

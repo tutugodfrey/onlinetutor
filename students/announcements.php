@@ -2,15 +2,18 @@
 //include required files
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
+
 
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$lecturer_db = $_SESSION["lecturer_db"];
+$lec_id = $_SESSION["lec_id"];
 $heading = "";
 if(isset($_GET["announcements"])){
-	$query_string = "select post_message, post_date from announcement";
-	run_query($query_string, $lecturer_db);
+	$query_string = "select post_message, post_date from announcement where lec_id = \"$lec_id\"";
+	run_query($query_string);
 	if($row_num2 == 0){
 		$display = "<p>No Announcement Now. Keep Checking</p>";
 	}	else	{

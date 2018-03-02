@@ -162,15 +162,20 @@ $display = "<p>The Update is successful</p>";
 if(isset($_POST["register_lecturer"]) || isset($_POST["register_friend"])){
 	$user_id = $_POST["user_id"];
 	$friends_table = "user".$user_id."_friends";
-	$query_string = "select * from $friends_table where friend_id = '$owner_id'";
+	if(isset($_POST["register_lecturer"])){
+		$query_string = "select * from students where student_id = '$owner_id' and lec_id = $user_id";
+	}
+	if(isset($_POST["register_friend"])) {
+		$query_string = "select * from $friends_table where friend_id = '$owner_id'";
+	}
 	run_query($query_string);
 	if($row_num2 == 0){
-		if(isset($_GET["register_lecturer"])){
+		if(isset($_POST["register_lecturer"])){
 		//say this lecturer in the student's table
-		$query_string = array ("insert into $owner_friend values(null, \"$user_id\", \"no\", \"$owner_id\", \"lecturer\")", "insert into $friends_table values (null, \"$owner_id\", \"no\", \"$owner_id\", \"student\")");
+		$query_string = "insert into students values(null, \"$user_id\", \"$owner_id\", \"no\")";
 		}
 
-		if(isset($_GET["register_friend"])) {
+		if(isset($_POST["register_friend"])) {
 		$query_string = array ("insert into $owner_friend values(null, \"$user_id\", \"no\", \"$owner_id\", null)", "insert into $friends_table values (null, \"$owner_id\", \"no\", \"$owner_id\", null)");
 		}
 		run_query($query_string);

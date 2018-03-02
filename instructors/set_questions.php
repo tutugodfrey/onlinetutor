@@ -2,6 +2,8 @@
 //include db_connect function
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
 
 session_start();
 if(isset($_SESSION["owner_id"])){
@@ -24,8 +26,8 @@ if(isset($_POST["edit"]) || isset($_GET["set_questions"])){
 
 
 	//get the course from the table of saved courses
-	$query_string = "select course_id, course_code from courses";
-	run_query($query_string, $lecturer_db);
+	$query_string = "select course_id, course_code from courses where lec_id = \"$owner_id\"";
+	run_query($query_string);
 	if($row_num2 == 0){
 		$form_text = "<p>You have not saved any course</p>";
 	} 	else	{
@@ -55,7 +57,7 @@ if(isset($_POST["edit"]) || isset($_GET["set_questions"])){
 		}	else	{
 			$question_id = trim($_POST["question_id"][0]);
 			$query_string = "select * from questions  where question_id = \"$question_id\"";
-			run_query($query_string, $lecturer_db);
+			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>An error occur we could not fetch the question right now</p>";
 			}	else	{
@@ -114,12 +116,12 @@ if(isset($_POST["save_question"]) || isset($_POST["update_question"])){
 
 		if(isset($_POST["save_question"])){
 			//before saving the question test that it does not already exist
-			$query_string = "select * from questions where test_id = \"$test_id\" and questions = \"$question\" and course_id = \"$course_id\"";
-			run_query($query_string, $lecturer_db);
+			$query_string = "select * from questions where test_id = \"$test_id\" and questions = \"$question\" and course_id = \"$course_id\" and lec_id = \"$owner_id\"";
+			run_query($query_string);
 			if($row_num2 == 1){
 				$display = "<p>This question already exist</p>";	//display this only if the want to re-save the question 
 			}	else 	{
-				$query_string = "insert into questions values (null, \"$course_id\", \"$test_id\", \"$question\", \"$optionA\", \"$optionB\", \"$optionC\", \"$optionD\", \"$correct_option\")";
+				$query_string = "insert into questions values (null, \"$owner_id\", \"$course_id\", \"$test_id\", \"$question\", \"$optionA\", \"$optionB\", \"$optionC\", \"$optionD\", \"$correct_option\")";
 				$failure_string = "<p>The question could not be saved now, please try again later</p>";
 			}
 		} //end save question
@@ -128,11 +130,11 @@ if(isset($_POST["save_question"]) || isset($_POST["update_question"])){
 			$question_id = $_POST["question_id"];
 			$query_string = "update questions set question_id = '".$question_id. "', course_id = '".$course_id."', test_id= '".$test_id.
 					"', questions = '".$question."', option_a = '".$optionA."', option_b =  '".$optionB."', option_c = '".$optionC.
-					"', option_d =  '".$optionD."', correct_option = '".$correct_option."' where question_id = '".$question_id."'";
+					"', option_d =  '".$optionD."', correct_option = '".$correct_option."' where question_id = '".$question_id."' and lec_id = '".$owner_id.'"';
 			$failure_string = "<p>The question could not be updated now, please try again later</p>";
 		}	//end update question
 
-		run_query($query_string, $lecturer_db);
+		run_query($query_string);
 		if($row_num2 == 0){
 		$display = $failure_string;
 		}	else	{
@@ -147,14 +149,14 @@ if(isset($_POST["view_questions"])){
 	if($course_id == ""){
 		$display = "<p>Please select a course code to see questions you have saved</p>";
 	} 	else		{
-		$query_string = "select course_code from courses where course_id = \"$course_id\"";
-		run_query($query_string, $lecturer_db);
+		$query_string = "select course_code from courses where course_id = \"$course_id\" and lec_id = \"$owner_id\"";
+		run_query($query_string);
 		if($row_num2 == 0 ){
 			$display = "<p>Course code could not be fetched</p>";
 		}	else 	{
 			$course_code = build_array($row_num2);
-			$query_string = "select question_id, test_id, questions, option_a, option_b, option_c, option_d, correct_option from questions where course_id = \"$course_id\"";
-			run_query($query_string, $lecturer_db);
+			$query_string = "select question_id, test_id, questions, option_a, option_b, option_c, option_d, correct_option from questions where course_id = \"$course_id\" and lec_id = \"$owner_id\"";
+			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>You have not saved any question for this course</p>";
 			}	else 	{
@@ -192,8 +194,8 @@ if(isset($_POST["delete"])){
 		$display  = "<p>Please use the checkbox to select a question to delete</p>";
 	}	else	{
 	$question_id = trim($_POST["question_id"][0]);
-		$query_string = "delete from questions where question_id = \"$question_id\"";
-		run_query($query_string, $lecturer_db);
+		$query_string = "delete from questions where question_id = \"$question_id\" and lec_id = \"$owner_id\"";
+		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>The action could not be completed. maybe the question does not exist</p>";
 		}	else {

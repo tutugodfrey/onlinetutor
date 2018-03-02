@@ -88,150 +88,6 @@ function build_array($row_num){
 
 
 
-//////////////////////////////////////////////////
-function mytable($values, $checkbox = "no", $display_col1 = "yes", $grade = "no"){
-	//declare global variables
-	$fields = array_shift($values); //fields in the table in array format
-	global $table_values;
-
-	$checkbox = trim(strtolower($checkbox));
-	$display_col1 = trim(strtolower($display_col1));
-	$grade = trim(strtolower($grade));
-
-	if($grade == "no"){
-		$grade = "";
-		$graded = "";
-	}
-
-	if($grade == "yes"){
-		$graded = "<tr><th></th><td colspan = \"2\">
-		<input type = \"radio\" name = \"grade\" value = \"1\" />
-		<input type = \"radio\" name = \"grade\" value = \"2\" />
-		<input type = \"radio\" name = \"grade\" value = \"3\" />
-		<input type = \"radio\" name = \"grade\" value = \"4\" />
-		<input type = \"radio\" name = \"grade\" value = \"5\" />
-		</td></tr>";
-		//a checkbox to indicate that a student has been graded or not
-		//$graded = "<input type = \"checkbox\" class = \"graded\" value = \"no\" name = \"graded[]\" checked = \"checked\" />";
-		//$graded = "<input type = \"checkbox\" class = \"graded\" value = \"yes\" name = \"graded[]\" checked = \"checked\" />";
-	}
-
-	//check to know how many field are in the table and build the table headings
-	if($checkbox == "yes"){
-		$table_values = "<table><tr><th> </th>";
-	} 	elseif($checkbox == "no"){
-		$table_values = "<table><tr>";		//in this case we do not need the empty colomn
-	}
-	if($display_col1 == "yes") {
-		for($i = 0; $i < sizeof($fields); $i++){
-			$table_values .= "<th>".ucwords($fields[$i])."</th>";
-		}
-	}	elseif($display_col1 == "no") {
-		for($i = 1; $i < sizeof($fields); $i++){
-			$table_values .= "<th>".ucwords($fields[$i])."</th>";
-		}
-	}
-	$table_values .= "</tr>";
-
-	if($checkbox == "yes"){
-		if($display_col1 == "yes"){
-			foreach($values as $value){
-				$identity = strtolower($fields[0]);
-				$table_values .= "<tr><td><input type = \"checkbox\" class = \"$identity\"  name = \"$identity"."[]\" value = \"$value[0]\" /></td>";
-				for($i = 0; $i < sizeof($fields); ++$i){
-					$table_values .= "<td>$value[$i]</td>";
-				}
-				$table_values .= "</tr>";
-			}
-		} elseif($display_col1 == "no") {
-			foreach($values as $value){
-				$identity = strtolower($fields[0]);
-				$table_values .= "<tr><td><input type = \"checkbox\" class = \"$identity\" name = \"$fields[0][]\" value = \"$value[0]\" /></td>";
-
-				if($grade == "yes" ) {
-					$length_of_field = sizeof($fields) - 1;
-				} 	else  {
-					$length_of_field = sizeof($fields);
-				}
-				for($i = 1; $i < $length_of_field; ++$i){
-					$table_values .= "<td>$value[$i]</td>";
-				}
-				if($grade == "yes") {			//this field is check by default but it will be hidden by css and revealed only if student have been graded
-					$table_values .= "<td><input type = \"checkbox\" class = \"graded\" id = \"grade$value[0]\" value = \"$value[4]\" name = \"graded[]\" checked = \"checked\" disabled = \"disabled\"/></td>";
-				}
-				$table_values .= "</tr>";
-				$table_values .= $graded;
-			}
-		}
-	}
-	if($checkbox == "no"){
-		foreach($values as $value){
-			$table_values .= "<tr>";
-			for($i = 0; $i < sizeof($fields); ++$i){
-				$table_values .= "<td>$value[$i]</td>";
-			}
-			$table_values .= "</tr>";
-		}
-	}
-	$table_values .= "</table><br />";
-
-	return $table_values;
-}
-
-
-
-/////////////////////////////////////////////////////
-//function to output result in a select option field
-function select_option($values, $label, $name_of_field, $select_class = "", $lable_class = ""){
-	$rows = sizeof($values);
-	global $select_result;
-	global $L;
-	//  echo $values;
-	$L = sizeof($values[0]);
-	// echo $L;
-	//if($rows == 1){
-	/**
-		it appear that when i select a select colomn and call mysqli_fetch_array(), the column returned is two
-	  likewise selected two column return 4 and selected 3 column return 6 ... so i have to device this
-	  this walk_around to get the appropriate column i am expecting from the result. since this happens
-	  when the rows returned i 1 i have to streamline it to only 1 rows return
-	*/
-	if($L == 2){		
-		$L = 1;			
-	} 			
-	if($L == 4){		
-		$L = 2;
-	}
-	if($L == 6){
-		$L = 3;
-	}
-	//}
-	//$rows = sizeof($values);
-	$select_result = "<label for = \"$label\" class = \"$lable_class\" > ".ucwords($label)." </label><select id = \"$label\" name = \"$name_of_field\" class = \"$select_class\">";
-	if($L == 1) {	//it a one column one or more rows array
-		$L = $L- 1;
-		for($i = 0; $i < $rows; $i++) {
-			$select_result .= "<option value =  \"".$values[$i][$L]."\">".$values[$i][$L]."</option>";
-		}
-	}  elseif($L == 2) {
-		$index0 = $L - 2; 	// == 0
-		$index1 = $L - 1; 	// ==1
-		for($i = 0; $i < $rows; $i++) {
-			$select_result .= "<option value =  \"".$values[$i][$index0]."\">".$values[$i][$index1]."</option>";
-		}
-	} elseif($L == 3) {
-		$index0 = $L -3;  	// ==0
-		$index1 = $L - 2; 	// == 1
-		$index2 = $L - 1; 	// ==2
-		for($i = 0; $i < $rows; $i++) {
-			$select_result .= "<option value =  \"".$values[$i][$index0]."\">".$values[$i][$index1]." ".$values[$i][$index2]."</option>";
-		}
-	}
-	$select_result .= "</select>";
-	return $select_result;
-}
-
-
 ///////////////////////////////////////////////////////////
 
 function get_chats($values, $sender, $receiver) {
@@ -332,33 +188,6 @@ echo "error2";
 
 }		//end file_download
 
-/*
-/////////////////////////////////////////////
-//to run iterative query on an array
-function query_iterator ($values) {
-$array_container = array ();
-foreach($values as $value ){
-echo "values = ".$value;
-$query_string = "select id, firstname, lastname from registered_students where id = \"$value\"";
-
-//$query_string = $query_string;
-run_query($query_string);
-echo $row_num2;
-if($row_num2 == 0){
-echo "no student";
-//$select_result = "<select><option>No lecturer</option></select>";
-}	else 	{ 
-$value = build_array($row_num2);
-$array_container[] = $value;		//push each lecturer info into  the array
-}
-}
-$return = $array_container;
-
-
-}
-
-*/
-
 ///////////////////////////////////////////////////////
 //function to provide multiple extentions for playing media
 function multi_source($file_source)	{
@@ -385,67 +214,26 @@ return $answers;
 }
 }
 
-////////////////////////////////////////////////////////////////////////////////
-//function to select the course_ids of students from registered_courses
-function registered_course_ids($S_id, $lecturer_db){
-global $row_num2;
-$query_string = "select course_id from registered_courses where student_id = \"$S_id\"";
-run_query($query_string, $lecturer_db);
-if($row_num2 == 0){
-return	[];		//return an empty array
-//"<p>You have not registered any course with this lecturer</p>"
-}	else	{
-$course_ids = build_array($row_num2);
-if($row_num2 == 1){
-$course_ids = [$course_ids];
-}
-return $course_ids;
-}
-}		//end student_courses
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////
-//function for selecting course_code and/or course_id from db
-// function get_course_code($course_id, $query_to_run = 1, $lecturer_db, $query_string = "default"){
-function get_course_code($course_id, $query_to_run = 1, $lecturer_db, $query_string = "default"){
-	global $row_num2;
-	if($query_string === "default"){
-		$query_string = "select course_code from courses where course_id = \"$course_id\"";
-		if($query_to_run === 2){
-			$query_string = "select course_id, course_code from courses where course_id = \"$course_id\"";
-		}  else if($query_to_run === 3){
-			$query_string = "select course_id, course_code, course_title, course_description, unit from courses where course_id = \"$course_id\"";
-		}
-	}	
-	run_query($query_string, $lecturer_db);
-	if($row_num2 == 0){
-		return "";
-		//<p>course code not available</p>
-	}	else	{
-		$course = build_array($row_num2);
-		if($row_num2 === 1) {
-			$course = [$course];
-		}
-		return $course;
-	}
-}		//end get_course_code
+
 
 
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //function for iterating an array to query db
-function foreach_iterator2($function_name, $to_iterate, $extra_condition = "no", $lecturer_db = "no" ){
+function foreach_iterator2($function_name, $to_iterate, $lec_id = "no", $extra_condition = "no" ){
 	$new_array = [];
 	foreach($to_iterate as $iterate){
-		if( $extra_condition !== "no" && $lecturer_db !== "no" ){
-			$value = $function_name($iterate, $extra_condition, $lecturer_db );
-		}	else if( $extra_condition === "no" && $lecturer_db !== "no"  ) {
-			$value = $function_name($iterate, $lecturer_db );
-		}	else if( $extra_condition !== "no" && $lecturer_db == "no" ) {
+		if( $extra_condition !== "no" && $lec_id !== "no" ){
+			$value = $function_name($iterate, $lec_id, $extra_condition);
+		}	else if( $extra_condition === "no" && $lec_id !== "no") {
+			$value = $function_name($iterate, $lec_id );
+		}	else if( $extra_condition !== "no" && $lec_id == "no") {
 			$value = $function_name($iterate, $extra_condition);
-		}	else if ( $extra_condition === "no" && $lecturer_db === "no"   ) {
+		}	else if ( $extra_condition === "no" && $lec_id === "no" ) {
 			$value = $function_name($iterate);
 		} 
 		if(empty($value)){
@@ -488,89 +276,5 @@ function foreach_iterator( $to_iterate, $extra_condition = "no", $lecturer_db = 
 	}		//end foreach
 	return $new_array;
 }		//end foreach_iterator
-
-
-
-
-
-/*
-//////////////////////////////////////////////////////////////////////////////////////////
-//function for iterating an array to query db
-function foreach_iterator( $lecturer_db, $to_iterate, $and_id = "no"){
-$new_array = [];
-foreach($to_iterate as $iterate){
-if(strtolower($and_id) === "yes"){
-$value = get_course_code($lecturer_db, $iterate, "yes");
-
-}	else	{
-$value = get_course_code($lecturer_db, $iterate);
-}
-$new_array[] = $value;
-}		//end foreach
-return $new_array;
-}		//end foreach_iterator
-
-*/
-
-////////////////////////////////////////////////////
-//function to get the names of student from registration table
-function get_names($user_id){
-	global $row_num2;
-	$query_string = "select lastname, firstname from registered_users where id = \"$user_id\"";
-	run_query($query_string);
-	if($row_num2 == 0){
-		$names = "";
-	}	else	{
-		$names = build_array($row_num2);
-		$names = $names[0]." ".$names[1];
-	}
-	return ucwords($names);
-}
-
-
-
-
-///////////////////////////////////////////////////////////////
-//function to get video
-function get_videos($course_id, $query_to_run = 1, $lecturer_db) {
-	global $row_num2;
-	if($query_to_run == 1) {
-		$query_string = "select id, video_url, video_name, video_caption, course_id from videos where course_id =\"$course_id\"";
-	}
-if($query_to_run === 2) {
-		$query_string = "select id, video_url, video_name, video_caption, course_id from videos";
-	}
-	run_query($query_string, $lecturer_db);
-	if($row_num2 == 0 ){
-	return;
-	}	else 	{
-	$video_details = build_array($row_num2);
-	if($row_num2 == 1){
-	$video_details = [$video_details];
-	}
-	$videos = [];
-	foreach($video_details as $video){
-	$video[4] = get_course_code($video[4], 1, $lecturer_db);
-	$videos[] = $video;
-	}
-	return $videos;
-	}
-}
-
-/*
-class student {
-public $student_id;
-//$this -> student_id = $student_id;
-function __construct($student_id){
-echo "i have a new student with id ".$student_id;
-}
-function get_course_code(){
-$this -> student_id = $student_id;
-echo "is your id $student_id";
-}
-}
-$me = new student(5);
-$me -> get_course_code();
-*/
 
 ?>

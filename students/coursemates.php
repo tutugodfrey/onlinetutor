@@ -2,17 +2,20 @@
 //include db_connect function
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
+
 
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$lecturer_db = $_SESSION["lecturer_db"];
+$lec_id = $_SESSION["lec_id"];
 
 $heading = "";
 
 if(isset($_GET["coursemates"])){
 	$query_string = "select distinct course_id from registered_courses where student_id = \"$owner_id\"";
-	run_query($query_string, $lecturer_db);
+	run_query($query_string);
 	if($row_num2 == 0){
 		$display = "<p>Your are not registered with this lecturer</p>";
 	}	else	{
@@ -23,7 +26,7 @@ if(isset($_GET["coursemates"])){
 		$all_student_ids = [];
 		foreach($course_ids as $course_id){
 			$query_string = "select student_id from registered_courses where course_id = \"$course_id\" and student_id != \"$owner_id\"";
-			run_query($query_string, $lecturer_db);
+			run_query($query_string);
 			if($row_num2 ==0 ){
 			//$display = "<p>No other student have registered this course</p>";
 			//no action needted
@@ -67,8 +70,8 @@ if(isset($_GET["coursemates"])){
 				<p id = "coursemate$student_info[0]">
 				<img src = "$student_info[3]" alt = "image" />
 				$student_info[1] $student_info[2]
-				<a href = "/mylecturerapp/common/profile.php?register_friend=yes&user_id=$student_info[0]">Add as Friend</a>
-				<a href = "/mylecturerapp/common/profile.php?profile=yes&user_id=$student_info[0]">View Profile</a>
+				<a href = "/onlinetutor/common/profile.php?register_friend=yes&user_id=$student_info[0]">Add as Friend</a>
+				<a href = "/onlinetutor/common/profile.php?profile=yes&user_id=$student_info[0]">View Profile</a>
 				</p>
 block;
 				}		//end foreach inside for block

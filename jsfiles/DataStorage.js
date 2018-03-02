@@ -46,6 +46,8 @@ const DataStorage = class {
 					storeData.setUserData('instructorData', content);
 					const userType = instructorData["user_type"];
 					const instructorId = instructorData["id"];
+					console.log(userType);
+					console.log(instructorId);
 	        if(userType === 'lecturer') {
 	        	console.log(`you selected a ${userType}`);
 	        	if(document.getElementById("profile-link")) {

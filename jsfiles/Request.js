@@ -30,17 +30,18 @@ const Request = class {
   hrefRequest(hrefEle){
     const data = getElementValue.linkValue(hrefEle);
     const href = data[0];
-    if(href.substring(href.length-1) === "#") {
+    if(href.substring(href.length - 1) === "#") {
       // ignore the link
     } else if(href.indexOf("signup") >= 0 || href.indexOf("login") >= 0 || href.indexOf("default") >= 0 || href.indexOf("home") > 0  
       || href.indexOf("forget_password") >= 0 || href.indexOf("change") >= 0 ) {
       ajaxCall.getMethod(href, handleContent.display)
     } else {
-      ajaxCall.getMethod(href, handleContent.mainContent)
+      ajaxCall.getMethod(href, handleContent.mainContent, true)
    }
   } 
 
   formRequest(method, url, formInfo) {
+    // console.log(url, formInfo)
     if(method === 'post') {
       console.log(formInfo)
       if(formInfo.indexOf('login') >= 0){
@@ -58,7 +59,6 @@ const Request = class {
             // userData already in localStorage; use userData to make request and display appropriate content
             console.log('username already in store')
             if(userType.toLowerCase() === "student") {
-
               // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard' ./../students/dashboard.php?dashboard
               ajaxCall.getMethod(`./../students/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
               setTimeout(ajaxCall.getMethod, 5000, './../students/home.php', handleContent.display, true);
@@ -79,10 +79,12 @@ const Request = class {
       }
     } else if (method === 'get' || "GET") {
       const fullUrl = `${url}?${formInfo}`;
+      // console.log(fullUrl);
       if(fullUrl.indexOf("select=Select Lecturer") > 0) {
         // student select a lecturer
         ajaxCall.getMethod(fullUrl, dataStorage.storeInsturctorData, false);
-      }  else if(fullUrl.indexOf("search_lecturers")) {
+      }  else if(fullUrl.indexOf("search_lecturers") >= 0) {
+        console.log(fullUrl)
         console.log("what to search for lecturers");
         ajaxCall.getMethod(fullUrl, handleContent.showLecturers, false);
       }  else {

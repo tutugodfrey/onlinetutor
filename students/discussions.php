@@ -2,19 +2,22 @@
 //include the common function
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
+
 
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$lecturer_db = $_SESSION["lecturer_db"];
+$lec_id = $_SESSION["lec_id"];
 $heading = "";
 
 if(isset($_GET["discussions"])){
-	$course_ids = registered_course_ids($owner_id, $lecturer_db);
+	$course_ids = registered_course_ids($owner_id, $lec_id);
 	if(empty($course_ids)){
 		$display = "<p>You have not registered any course with this lecturer yet</p>";
 	}	else {
-		$courses = foreach_iterator2("get_course_code", $course_ids, 2, $lecturer_db);
+		$courses = foreach_iterator2("get_course_code", $course_ids, $lec_id, 2);
 		if(empty($courses)){
 			$display  = "<p>Your registered courses could not be fetched<p>";
 		}	else	{
@@ -37,8 +40,8 @@ if(isset($_GET["view_discussions"])){
 	$course_id = $_GET["course_id"];
 	$heading = "<h1>Topics of Discussion</h1>";
 	//get the topics for discussion
-	$query_string = "select discussion_id, course_id, discussion_topic, post_date, type from discussion where course_id = \"$course_id\"";
-	run_query($query_string, $lecturer_db);
+	$query_string = "select discussion_id, course_id, discussion_topic, post_date, type from discussion where course_id = \"$course_id\" and lec_id = \"$lec_id\"";
+	run_query($query_string);
 	if($row_num2 == 0){
 		$display = "<p>No Discussion has been posted for this course</p>";
 	}	else	{
@@ -48,8 +51,8 @@ if(isset($_GET["view_discussions"])){
 		}
 		$all_discussions = [];
 		foreach($discussions as $discussion){
-			$query_string = "select course_code from courses where course_id = \"".$discussion[1]."\"";
-			run_query($query_string, $lecturer_db);
+			$query_string = "select course_code from courses where course_id = \"".$discussion[1]."\" and lec_id = \"$lec_id\"";
+			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>Course code for posted discussion could note be fetch</p>";
 			}	else	{
@@ -84,16 +87,16 @@ if(isset($_POST["respond"])){
 		if($post_text == "" ){
 			$display = "<p>Please fill out the required fields to post the topic</p>";
 		}	else 	{
-			$query_string = "select course_id, type from discussion where discussion_id = \"$discussion_id\"";
-			run_query($query_string, $lecturer_db);
+			$query_string = "select course_id, type from discussion where discussion_id = \"$discussion_id\" and lec_id = \"$lec_id\"";
+			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>The course code and the discussion id does not match. Please check and try again</p>";
 			}	else 	{
 				$result = build_array($row_num2);
 				$course_id = $result["course_id"];
 				$type = $result["type"];
-				$query_string = "insert into post values (null, \"$owner_id\", \"$discussion_id\", \"$course_id\", now(), \"$post_text\", \"$type\", \"no\")";
-				run_query($query_string, $lecturer_db);
+				$query_string = "insert into post values (null, \"$lec_id\", \"$owner_id\", \"$discussion_id\", \"$course_id\", now(), \"$post_text\", \"$type\", \"no\")";
+				run_query($query_string);
 				if($row_num2 == 0){
 					$display = "<p>Your reply could not be posted</p>";
 				}	else {
@@ -110,8 +113,8 @@ if(isset($_POST["view_post"])){
 	}	else	{
 		$discussion_id = $_POST["discussion_id"][0];
 			//this will display open discussions so student can see the post of all other students for the open type
-		$query_string = "select post_id, student_id, post_date, post_text from post where discussion_id = \"$discussion_id\" and type = \"open\" or discussion_id = \"$discussion_id\" and type = \"close\" and student_id = \"$owner_id\"";
-		run_query($query_string, $lecturer_db);
+		$query_string = "select post_id, student_id, post_date, post_text from post where discussion_id = \"$discussion_id\" and type = \"open\" or discussion_id = \"$discussion_id\" and type = \"close\" and student_id = \"$owner_id\" and lec_id = \"$lec_id\"";
+		run_query($query_string);
 		if($row_num2 == 0 ){
 			$display = "<p>No post have been submitted for this topic</p>";
 		}	else{

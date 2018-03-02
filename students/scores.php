@@ -2,18 +2,22 @@
 //include files of functions
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
+
+
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$lecturer_db = $_SESSION["lecturer_db"];
+$lec_id = $_SESSION["lec_id"];
 
 
 if(isset($_GET["scores"])){
-	$course_ids = registered_course_ids($owner_id, $lecturer_db);
+	$course_ids = registered_course_ids($owner_id, $lec_id);
 	if($course_ids == ""){
 		$display = "<p>You have not registered any course with this lecturer</p>";
 	}	else 	{
-		$courses = foreach_iterator2("get_course_code", $course_ids, 2, $lecturer_db);
+		$courses = foreach_iterator2("get_course_code", $course_ids, $lec_id, 2);
 		if(empty($courses)){
 			$courses = ["courses not found"];
 			$display = "<p>information about your registered courses could not be fetched</p>";
@@ -42,8 +46,8 @@ if(isset($_GET["view_scores"])){
 	if($course_id == ""){
 		$display = "<p>Please select a course to view scores</p>";
 	}	else	{
-		$query_string = "select score_type, test_id, discussion_id, score from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\"";
-		run_query($query_string, $lecturer_db);
+		$query_string = "select score_type, test_id, discussion_id, score from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\" and lec_id = \"$lec_id\"";
+		run_query($query_string);
 
 		if($row_num2 == 0 ){
 			$display = "<p>No score recorded for this course</p>";
@@ -108,10 +112,10 @@ if(isset($_GET["view_scores"])){
 			$scores = $new_array;
 			$average_scores = ["Average", "", "", ""];
 			$total_scores = ["Total", "", "", ""];
-			$query_string1 = "select sum(score), avg(score) from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\" and score_type = \"test\"";
-			$query_string2 = "select sum(score), avg(score) from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\" and score_type = \"discussion\"";
-			$query_string3 = "select sum(score), avg(score) from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\" and score_type = \"exam\"";
-			run_query($query_string1, $lecturer_db);
+			$query_string1 = "select sum(score), avg(score) from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\" and score_type = \"test\" and lec_id = \"$lec_id\"";
+			$query_string2 = "select sum(score), avg(score) from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\" and score_type = \"discussion\" and lec_id = \"$lec_id\"";
+			$query_string3 = "select sum(score), avg(score) from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\" and score_type = \"exam\" and lec_id = \"$lec_id\"";
+			run_query($query_string1);
 			if($row_num2 == 0 ){
 				$test_result =  "";
 			}	else	{
@@ -120,7 +124,7 @@ if(isset($_GET["view_scores"])){
 				$total_scores[1] = $test_result[0];
 			}
 
-			run_query($query_string2, $lecturer_db);
+			run_query($query_string2);
 			if($row_num2 == 0 ){
 				$discussion_result =  "";
 			}	else	{
@@ -141,8 +145,8 @@ if(isset($_GET["view_scores"])){
 			$grand_total = ["Grand total", "", "", ""];
 			$grand_average = ["Grand average", "", "", ""];
 			//work on averages and total
-			$query_string = "select sum(score), avg(score) from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\"";
-			run_query($query_string, $lecturer_db);
+			$query_string = "select sum(score), avg(score) from score_board where course_id = \"$course_id\" and student_id = \"$owner_id\" and lec_id = \"$lec_id\"";
+			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>Your data could not be fetch now. please try again later</p>";
 			}	else	{

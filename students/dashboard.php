@@ -2,6 +2,9 @@
 //include the db_connect function
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
+
 
 
 session_start();
@@ -152,12 +155,11 @@ end;
 // 
 if(isset($_GET["select"])){
 	if(!isset($_GET["user_id"])){
-		$L_id = "";
+		$lec_id = "";
 	}	else	{
-		$L_id = $_GET["user_id"];
-		$_SESSION["L_id"] = $L_id;		//set L_id to the global session variable
-		$_SESSION["lecturer_db"] = "lec".$L_id;
-		$query_string = "select id, lastname, firstname, user_type, picture from registered_users where id = \"$L_id\"";
+		$lec_id = $_GET["user_id"];
+		$_SESSION["lec_id"] = $lec_id;
+		$query_string = "select id, lastname, firstname, user_type, picture from registered_users where id = \"$lec_id\"";
 		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "Error setting the selected lecturer";
@@ -171,12 +173,12 @@ if(isset($_GET["select"])){
 
 if(isset($_GET["delete"]))	{
 	//the student choose to delete the lecturer
-	if($L_id == ""){
+	if($lec_id == ""){
 		$heading = ""; $L_image_url = "";	$nav_buttons = "";
 		$display = "<p>You can't perform this action because you are not registered with any lecturer</p>";
 	}	else	{
 		$lecturers_table = "std".$S_id."_lecturers";
-		$query_string = "delete from $lecuteres_table where lecturer_id = \"$L_id\"";
+		$query_string = "delete from $lecuteres_table where lecturer_id = \"$lec_id\"";
 		run_query();
 		if($rows == 1){
 			$display = "<p>The lecturer have be remove from your record</p>";

@@ -2,17 +2,20 @@
 //include db_connect function
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+include "./../includes/server-funcs.php";
+include "./../includes/views.php";
+
 
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$lecturer_db = $_SESSION["lecturer_db"];
+$lec_id = $_SESSION["lec_id"];
 $heading = "";
 
 if(isset($_GET["tests"])){
 	$heading = "<h1>Test</h1>";
-	$query_string = "select course_id from registered_courses where student_id = \"$owner_id\"";
-	run_query($query_string, $lecturer_db);
+	$query_string = "select course_id from registered_courses where student_id = \"$owner_id\" and lec_id = \"$lec_id\"";
+	run_query($query_string);
 	if($row_num2 == 0){
 		$display = "<p>You have not registered any course with this lecturer</p>";
 	}	else	{
@@ -21,19 +24,7 @@ if(isset($_GET["tests"])){
 			$course_ids = [$course_ids];
 		}
 		// $course_details = [];
-		$course_details = foreach_iterator2("get_course_code", $course_ids, 2, $lecturer_db);
-		/*
-		foreach($course_ids as $course_id){
-			$query_string = "select course_id, course_code from courses where course_id = \"$course_id\"";
-			run_query($query_string, $lecturer_db);
-			if($row_num2 == 0){
-			$display = "<p>Cousrse information could not be fetched</p>";
-			}	else 	{
-			$course_detail = build_array($row_num2);
-			$course_details[] = $course_detail;
-			}
-		}	// end foreach
-		*/
+		$course_details = foreach_iterator2("get_course_code", $course_ids, $lec_id, 2);
 		$select_result = select_option($course_details, "course code", "course_id",  "form-control");
 		$display = <<<block
 		<p>Please select a course to see which tests are avialable</p>
@@ -51,9 +42,9 @@ if(isset($_GET["view_tests"])){
 	if( $course_id == ""){
 		$display = "<p>please select a course to view tests or exams.</p>";
 	}	else	{
-		$course_code = get_course_code($course_id, 1, $lecturer_db);
-		$query_string = "select test_id, date_format(deadline, \"%D %M %Y\"), test_type from test where course_id = \"$course_id\" and test_status = \"opened\"";
-		run_query($query_string, $lecturer_db);
+		$course_code = get_course_code($course_id, $lec_id, 1);
+		$query_string = "select test_id, date_format(deadline, \"%D %M %Y\"), test_type from test where course_id = \"$course_id\" and test_status = \"opened\" and lec_id = \"$lec_id\"";
+		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>No test have been set for $course_code[0]</p>";
 		}	else	{
@@ -96,13 +87,13 @@ if(isset($_GET["test_spec"])){
 		if(empty($_GET["test_id"])){
 			$display = "<p>Please select a test to start test</p>";
 		}	else	{
-			$course_code = get_course_code($course_id, 1, $lecturer_db); 		//get the course_code
+			$course_code = get_course_code($course_id, 1); 		//get the course_code
 			$test_ind = $_GET["test_id"][0];	//a string that contain the id and the type test/exam
 			$test_ind = explode(" ", $test_ind);
 			$test_id = $test_ind[0];
 			$test_type = $test_ind[1];
-			$query_string = "select date_format(duration, \"%i\"), date_format(deadline, \"%H:%i %p. %W, %D of %M, %Y\"), mark, no_of_questions from test where test_id = \"$test_id\" and course_id = \"$course_id\" and test_type = \"$test_type\"";
-			run_query($query_string, $lecturer_db);
+			$query_string = "select date_format(duration, \"%i\"), date_format(deadline, \"%H:%i %p. %W, %D of %M, %Y\"), mark, no_of_questions from test where test_id = \"$test_id\" and course_id = \"$course_id\" and test_type = \"$test_type\" and lec_id = \"$lec_id\"";
+			run_query($query_string);
 			if($row_num2 == 0 ){
 				$display = "<p>Test specification could not be retrieved</p>";
 			}	else	{
@@ -157,15 +148,15 @@ if(isset($_POST["start_test"])){
 			|| $mark == "" || $no_of_questions == ""){
 		$display = "<p>An error error has occured. please go back and try again</p>";
 	}	else	{
-		$course_code = get_course_code($course_id, 1, $lecturer_db);
+		$course_code = get_course_code($course_id, 1);
 		if($test_type == "exam"){		//all question for this course_id
 			$query_string = "select questions, option_A, option_B, option_C, option_D, correct_option from
-				questions where course_id = \"$course_id\"";
+				questions where course_id = \"$course_id\" and lec_id = \"$lec_id\"";
 		}	else if ($test_type == "test") 	{
 			$query_string = "select questions, option_A, option_B, option_C, option_D, correct_option from
-				questions where test_id = \"$test_id\" and course_id = \"$course_id\"";
+				questions where test_id = \"$test_id\" and course_id = \"$course_id\" and lec_id = \"$lec_id\"";
 		}
-		run_query($query_string, $lecturer_db);
+		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>Questions for $course_code $test_type $test_id could not be fetch</p>";
 		}	else	{
@@ -234,14 +225,14 @@ if(isset($_POST["submit_test"])){
 		}		//end for
 		$total_score = $score;
 		$display = $total_score;
-		$query_string = "select * from score_board where student_id = \"$owner_id\" and test_id = \"$test_id\" and course_id = \"$course_id\" and score_type = \"$test_type\"";
-		run_query($query_string, $lecturer_db);
+		$query_string = "select * from score_board where student_id = \"$owner_id\" and test_id = \"$test_id\" and course_id = \"$course_id\" and score_type = \"$test_type\" and lec_id = \"$lec_id\"";
+		run_query($query_string);
 		if($row_num2 == 1){
 			$display = "<p>Weldone, the result has already been saved</p>";
 		}	else		{
-			$query_string = "insert into score_board(score_id, course_id, student_id, test_id, score, score_type)
-					 values(null, \"$course_id\", \"$owner_id\",  \"$test_id\", \"$total_score\", \"$test_type\")";
-			run_query( $query_string, $lecturer_db);
+			$query_string = "insert into score_board(score_id, lec_id, course_id, student_id, test_id, score, score_type)
+					 values(null, \"$lec_id\", \"$course_id\", \"$owner_id\",  \"$test_id\", \"$total_score\", \"$test_type\")";
+			run_query( $query_string);
 			if($row_num2 == 0 ){
 				$display = "<p>Score could not be saved. please try and take the test again</p>";
 			}	else	{

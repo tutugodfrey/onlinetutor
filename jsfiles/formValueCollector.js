@@ -6,7 +6,8 @@ const request = new Request()
 const elementType  = new  GetElementValue()
 
 const formValueCollector = function(formControl) {
-	// console.log('eletype', formControl)
+	console.log('eletype', formControl);
+  console.log('eletype', formControl.type)
 	const formElement = elementType.getFormElement(formControl)
 	const method = formElement.method;
 	const url = formElement.action;
@@ -24,125 +25,146 @@ const formValueCollector = function(formControl) {
   for(let elem of formControls){
     let eleValue;
     const eleType = elem.type;
-    // console.log(eleType)
     let eleName = elem.getAttribute('name');
-    if(elem.getAttribute('class')){
-      const eleClass = elem.getAttribute('class');
-     	if(eleClass.match(regex)){
-	      let eleId
-	      if(eleType === 'text'){
-	        eleValue = elem.value.trim();
-	        if(eleValue === '' || eleValue === ' '){
-	            changeAttribute(elem, 'class', 'fail-validation form-control');
-	            allFieldsValidated = false;
-	        } else {
-	        	if(eleName === 'email'){
-		          emailIsValid = emailRegExp.test(elem.value);
-		          if(!emailIsValid){
-		            changeAttribute(elem, 'class', 'fail-validation form-control');
-		            allFieldsValidated = false;
-		          };
-	        	} 
-	        	formInfo = `${eleName}=${eleValue}&${formInfo}`;
-	        	// formInfo[eleName] = eleValue
-	        }  
-	      } else if(eleType === "email") {
-	      	eleValue = elem.value.trim();
-	        if(eleValue === '' || eleValue === ' '){
-	            changeAttribute(elem, 'class', 'fail-validation form-control');
-	            allFieldsValidated = false;
-	        } else {
-	        	if(eleName === 'email'){
-		          emailIsValid = emailRegExp.test(elem.value);
-		          if(!emailIsValid){
-		            changeAttribute(elem, 'class', 'fail-validation form-control');
-		            allFieldsValidated = false;
-		          };
-	        	} 
-	        	formInfo = `${eleName}=${eleValue}&${formInfo}`;
-	        	// formInfo[eleName] = eleValue
-	        }
-	      } else if (eleType === 'password') {
-	      	eleValue = elem.value.trim()
-          if(eleValue === ''){
-            changeAttribute(elem, 'class', 'fail-validation form-control');
-            allFieldsValidated = false;
-	        }  else {
-	          passwordArray.push(eleValue);
-	          // formInfo[eleName] = eleValue
-	          formInfo = `${eleName}=${eleValue}&${formInfo}`;
-	        }    
-	      } else if (eleType === 'select-one'){
-          eleValue = elementType.selectedValue(eleName);
-          if(eleValue === "select" || eleValue === "default" || eleValue === ""){
-            changeAttribute(elem, 'class', 'fail-validation form-control');
-            allFieldsValidated = false;
-        	} else {
-        		// formInfo[eleName] = eleValue;
-        		formInfo = `${eleName}=${eleValue}&${formInfo}`;
-        	}
-	      } else if ( eleType === 'radio' || eleType === 'checkbox') {
-	      	if(checkFieldNames.indexOf(eleName) === -1) {
-	      		checkFieldNames.push(eleName)
-	      	}
-	      	
-          eleValue = elementType.getCheckboxValue(elem);
-          if(eleValue !== undefined) {
-            radioChecked = true;
-            if(!checkValues.eleName) {
-            	checkValues[eleName] = [eleValue];
+     // console.log(eleType);
+    if(eleType === 'submit') {
+      // handle multiple submit elements
+      if(formControl.type === 'submit' && formControl.name === eleName) {
+        eleValue = elem.value;
+        formInfo = `${eleName}=${eleValue}&${formInfo}`;
+      } else if(formControl.type !== 'submit') {
+        // form that auto-submit onChange
+        eleValue = elem.value;
+        formInfo = `${eleName}=${eleValue}&${formInfo}`;
+      }
+    } else {
+      if(elem.getAttribute('class')){
+        const eleClass = elem.getAttribute('class');
+        if(eleClass.match(regex)){
+          let eleId
+          if(eleType === 'text' || eleType === 'textarea' ){
+            eleValue = elem.value.trim();
+            if(eleValue === '' || eleValue === ' '){
+                changeAttribute(elem, 'class', 'fail-validation form-control');
+                allFieldsValidated = false;
             } else {
-            	checkValue[eleName].push(eleValue)
-            } 
-          } /*else {
-           	radioChecked = true;
-          }*/
-	      }
-	    } else {
-	    	// ele with class name but is not a requiredField
-	    	if ( eleType === 'radio' || eleType === 'checkbox') {
-	    		if(checkFieldNames.indexOf(eleName) === -1) {
-	      		checkFieldNames.push(eleName)
-	      	}
-          eleValue = elementType.getCheckboxValue(elem);
-          if(eleValue !== undefined) {
-            radioChecked = true;
-            if(!checkValues.eleName) {
-            	checkValues[eleName] = [eleValue];
+              if(eleName === 'email'){
+                emailIsValid = emailRegExp.test(elem.value);
+                if(!emailIsValid){
+                  changeAttribute(elem, 'class', 'fail-validation form-control');
+                  allFieldsValidated = false;
+                };
+              } 
+              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+              // formInfo[eleName] = eleValue
+            }  
+          } else if (eleType === 'number') {
+            eleValue = elem.value.trim();
+            if(eleValue === '' || eleValue === ' '){
+                changeAttribute(elem, 'class', 'fail-validation form-control');
+                allFieldsValidated = false;
             } else {
-            	checkValues[eleName].push(eleValue)
+              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+              // formInfo[eleName] = eleValue
+            }
+          } else if(eleType === "email") {
+            eleValue = elem.value.trim();
+            if(eleValue === '' || eleValue === ' '){
+                changeAttribute(elem, 'class', 'fail-validation form-control');
+                allFieldsValidated = false;
+            } else {
+              if(eleName === 'email'){
+                emailIsValid = emailRegExp.test(elem.value);
+                if(!emailIsValid){
+                  changeAttribute(elem, 'class', 'fail-validation form-control');
+                  allFieldsValidated = false;
+                };
+              } 
+              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+              // formInfo[eleName] = eleValue
+            }
+          } else if (eleType === 'password') {
+            eleValue = elem.value.trim()
+            if(eleValue === ''){
+              changeAttribute(elem, 'class', 'fail-validation form-control');
+              allFieldsValidated = false;
+            }  else {
+              passwordArray.push(eleValue);
+              // formInfo[eleName] = eleValue
+              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+            }    
+          } else if (eleType === 'select-one'){
+            eleValue = elementType.selectedValue(eleName);
+            if(eleValue === "select" || eleValue === "default" || eleValue === ""){
+              changeAttribute(elem, 'class', 'fail-validation form-control');
+              allFieldsValidated = false;
+            } else {
+              // formInfo[eleName] = eleValue;
+              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+            }
+          } else if ( eleType === 'radio' || eleType === 'checkbox') {
+            if(checkFieldNames.indexOf(eleName) === -1) {
+              checkFieldNames.push(eleName)
+            }
+            
+            eleValue = elementType.getCheckboxValue(elem);
+            if(eleValue !== undefined) {
+              radioChecked = true;
+              if(!checkValues.eleName) {
+                checkValues[eleName] = [eleValue];
+              } else {
+                checkValue[eleName].push(eleValue)
+              } 
+            } /*else {
+              radioChecked = true;
+            }*/
+          }
+        } else {
+          // ele with class name but is not a requiredField
+          if ( eleType === 'radio' || eleType === 'checkbox') {
+            if(checkFieldNames.indexOf(eleName) === -1) {
+              checkFieldNames.push(eleName)
+            }
+            eleValue = elementType.getCheckboxValue(elem);
+            if(eleValue !== undefined) {
+              radioChecked = true;
+              if(!checkValues.eleName) {
+                checkValues[eleName] = [eleValue];
+              } else {
+                checkValues[eleName].push(eleValue)
+              } 
             } 
-          } 
-	      } else if(eleType === "hidden") {
-	      	eleValue = elem.value;
-	      	formInfo = `${eleName}=${eleValue}&${formInfo}`;
-	    		// formInfo[eleName] = eleValue
-	      } else {
-	      	eleValue = elem.value;
-	      	formInfo = `${eleName}=${eleValue}&${formInfo}`;
-	    		// formInfo[eleName] = eleValue
-	      }    	
-	    }
-   	} else {
-   		// element with no class attributes
-   		 if (eleType === 'select-one'){
+          } else if(eleType === "hidden") {
+            eleValue = elem.value;
+            formInfo = `${eleName}=${eleValue}&${formInfo}`;
+            // formInfo[eleName] = eleValue
+          } else {
+            eleValue = elem.value;
+            formInfo = `${eleName}=${eleValue}&${formInfo}`;
+            // formInfo[eleName] = eleValue
+          }     
+        }
+      } else {
+        // element with no class attributes
+        if (eleType === 'select-one'){
           eleValue = elementType.selectedValue(eleName);
           if(eleValue === 'select' || eleValue === ''){
             changeAttribute(elem, 'class', 'fail-validation form-control');
             allFieldsValidated = false;
-        	} else {
-        		// formInfo[eleName] = eleValue;
-        		formInfo = `${eleName}=${eleValue}&${formInfo}`;
-        	}
-	      } else if(eleType === "hidden") {
-		      	eleValue = elem.value;
-		      	formInfo = `${eleName}=${eleValue}&${formInfo}`;
-		    		// formInfo[eleName] = eleValue
-		    } else {
-		    	eleValue = elem.value;
-	      	formInfo = `${eleName}=${eleValue}&${formInfo}`;
-		    }
-   	}
+          } else {
+            // formInfo[eleName] = eleValue;
+            formInfo = `${eleName}=${eleValue}&${formInfo}`;
+          }
+        } else if(eleType === "hidden") {
+          eleValue = elem.value;
+          formInfo = `${eleName}=${eleValue}&${formInfo}`;
+          // formInfo[eleName] = eleValue
+        } else {
+          eleValue = elem.value;
+          formInfo = `${eleName}=${eleValue}&${formInfo}`;
+        }
+      }
+    }
   }
 
   // get values checkValues to formInfo

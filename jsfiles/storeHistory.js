@@ -1,6 +1,6 @@
 
 const storeHistory = function(url, method, storeUrl = true, poppedHistortData, info) {
-		console.log('poppedHistoryData', poppedHistortData)
+		console.log('poppedHistoryData', poppedHistortData);
 		if(storeUrl === false) {
 			return
 		} else {
@@ -12,7 +12,7 @@ const storeHistory = function(url, method, storeUrl = true, poppedHistortData, i
 		  } else if (method === 'get') {
 		  	historyData = `${url}m=get`;
 		  }
-			if (typeof poppedHistortData === null) {
+			if (typeof poppedHistortData === "undefined") {
 				console.log('no pop data')
 			  history.pushState(historyData, "newurl", url);
 			}	else	{

@@ -11,8 +11,8 @@ const AjaxCall = class {
 			xmlHttp.open("GET", url, true);
 			xmlHttp.onreadystatechange = function()	{
 
-				//add condition to avoid displaying progress bar
-				console.log(url)
+				// add condition to avoid displaying progress bar
+				// console.log(url)
 				if(url.indexOf("last_post_time") >= 0) {
 					// do not indicate progress
 					console.log("do not display busy indicator");
@@ -37,6 +37,7 @@ const AjaxCall = class {
 							textResponse = xmlHttp.responseText;
 						}
 						// console.log(textResponse);
+						// console.log(callback);
 						callback(textResponse);
 					} else {
 					console.log(`There was a problem accessing the server:  ${ xmlHttp.statusText }`);
