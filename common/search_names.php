@@ -42,22 +42,25 @@ if(isset($_GET["search_friends"]) || isset($_GET["search_lecturers"])){
 			if(isset($_GET["search_friends"])){
 				$query_string = "select id, lastname, firstname from registered_users 
 						where firstname like \"$name%\" or lastname like \"$name%\" or username like \"$name%\"";
-				$register = "<input type = \"submit\" id = \"reg_lec\" class = \"btn btn-success btn-sm\" name = \"register_friend\" value = \"Register\" />";
+				$register = "<input type = \"submit\" id = \"add_friend\" class = \"btn btn-success btn-sm\" name = \"register_friend\" value = \"Register\" />";
 			}		//end search_friends
 			if(isset($_GET["search_lecturers"])){
 				$query_string = "select id, lastname, firstname from registered_users 
 						where (firstname like \"$name%\" or lastname like \"$name%\" or username like \"$name%\") and user_type = \"lecturer\"";
 				$register = "<input type = \"submit\" id = \"reg_lec\" class = \"btn btn-success btn-sm\" name = \"register_lecturer\" value = \"Register\" />";
 			}
-			run_query($query_string);
-			if($row_num2 == 0){
-				$display = "<select><option>Not Found</option></select>";
-			} 	else 	{
-				$values = build_array($row_num2);
-				if($row_num2 == 1){
-					$values = [$values];
+				run_query($query_string);
+				if($row_num2 == 0){
+					$display = "<select><option>Not Found</option></select>";
+				} 	else 	{
+					$values = build_array($row_num2);
+					if($row_num2 == 1){
+						$values = [$values];
 				}
-				$display = select_option($values, "", "user_id", "form-control form-control-sm");
+				$select_default = [0, "select", "default"];
+				array_push($values, $select_default);
+				$display = select_option($values, "friend_id", "user_id", "form-control form-control-sm", "sr-only");
+				$display .= $register;
 			}
 		}
 	}

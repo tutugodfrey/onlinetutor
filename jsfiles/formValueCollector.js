@@ -1,4 +1,5 @@
 
+import domNotifier from "./domNotifier";
 import GetElementValue from './GetElementValue';
 import changeAttribute from './changeAttribute';
 import Request from './Request';
@@ -6,8 +7,9 @@ const request = new Request()
 const elementType  = new  GetElementValue()
 
 const formValueCollector = function(formControl) {
-	console.log('eletype', formControl);
-  console.log('eletype', formControl.type)
+ // console.log("form submitted");
+ console.log(formControl);
+	// console.log('eletype', formControl);
 	const formElement = elementType.getFormElement(formControl)
 	const method = formElement.method;
 	const url = formElement.action;
@@ -23,6 +25,7 @@ const formValueCollector = function(formControl) {
   const emailRegExp = /\w+@\w+\.(net|com|org)/;
   const regex = /requiredFields/;
   for(let elem of formControls){
+    // console.log("elem", elem);
     let eleValue;
     const eleType = elem.type;
     let eleName = elem.getAttribute('name');
@@ -41,6 +44,7 @@ const formValueCollector = function(formControl) {
       if(elem.getAttribute('class')){
         const eleClass = elem.getAttribute('class');
         if(eleClass.match(regex)){
+          // console.log("check", elem);
           let eleId
           if(eleType === 'text' || eleType === 'textarea' ){
             eleValue = elem.value.trim();
@@ -165,6 +169,7 @@ const formValueCollector = function(formControl) {
         }
       }
     }
+    // console.log(allFieldsValidated);
   }
 
   // get values checkValues to formInfo
@@ -210,12 +215,14 @@ const formValueCollector = function(formControl) {
   if(allFieldsValidated === false){
     const pElement = document.getElementById('validation-notice');
     pElement.style.visibility = 'visible';
-    console.log('some fields require validation')
+    // console.log('some fields require validation')
+    domNotifier();
   }  else {
     // proceed with form submittion
     if(formInfo.lastIndexOf("&") === formInfo.length - 1){
-    	formInfo = formInfo.substring(0, formInfo.length-1)
+    	formInfo = formInfo.substring(0, formInfo.length - 1)
     }
+    //console.log("allFieldsValidated", allFieldsValidated);
     request.formRequest(method, url, formInfo)
   } 
 }

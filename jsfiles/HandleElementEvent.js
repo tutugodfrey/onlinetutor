@@ -1,9 +1,32 @@
 import formValueCollector from "./formValueCollector";
 import changeAttribute from "./changeAttribute";
+// import domNotifier from "./domNotifier";
 
 const HandleElementEvent = class {
 	selectLecturer(eleType){
 		console.log(eleType)
+	}
+
+	modifyInputClass(inputEle){
+		let classValue = inputEle.getAttribute("class");
+		const eleClasses = classValue.split(" ");
+		let newClassValue = "";
+		for(let eleClass of eleClasses) {
+			if(eleClass === "fail-validation"){
+				eleClass = "requiredFields"; 
+				newClassValue = `${newClassValue}${eleClass} `;
+			} else {
+				newClassValue = `${newClassValue}${eleClass} `;
+			}
+		} 
+			newClassValue = newClassValue.trim()
+		 	inputEle.setAttribute("class", newClassValue);
+		 	const failedInputs = document.getElementsByClassName("fail-validation");
+		 	if(failedInputs.length === 0) {
+		 		const pElement = document.getElementById('validation-notice');
+   			pElement.style.visibility = 'hidden';
+		 	}
+		 	// domNotifier();
 	}
 }
 
@@ -66,6 +89,7 @@ function clearRegBtn (eleObj) {
 		console.log(eleValue);
 	}
 }
+
 
 
 

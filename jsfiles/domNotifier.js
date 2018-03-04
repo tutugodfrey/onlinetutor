@@ -17,6 +17,7 @@ const chats = new Chats();
 listener.popState(handlePopState);
 let quoteDisplayed = false;
 const domNotifier = function() {
+	// console.log("dom notifier called");
 	// listener.popState(handlePopState);
 	if(document.getElementById('side-bar')) {
 		if(!quoteDisplayed){
@@ -45,7 +46,7 @@ const domNotifier = function() {
 		listener.newEvent(window, "load", request.loadFooter, footerDiv );
 	}
 
-	if(document.getElementsByTagName("a")){
+	if(document.getElementsByTagName("a")) {
 	const linkEles = document.getElementsByTagName("a");
 		for(let i = 0; i < linkEles.length; i++) {
 		listener.newEvent(linkEles[i], "click", request.hrefRequest, linkEles[i] );
@@ -53,14 +54,23 @@ const domNotifier = function() {
 	}
 
 	// handle all form submission; forms button class include submit-buttons
-	if(document.getElementsByClassName("btn")){
+	if(document.getElementsByClassName("btn")) {
 		const submitBtn = document.getElementsByClassName("btn");
 		for(let i = 0; i < submitBtn.length; i++ ) {
 		listener.newEvent(submitBtn[i], "click", formValueCollector, submitBtn[i]);
 		}
 	}
 
-	if(document.getElementById("test_duration")){
+	// when some input field fail validation
+	if(document.getElementsByClassName("fail-validation")) {
+		const inputEle = document.getElementsByClassName("fail-validation");
+		for(let i = 0; i < inputEle.length; i++ ) {
+		listener.newEvent(inputEle[i], "focus", handleElementEvent.modifyInputClass, inputEle[i]);
+		}
+	}
+
+
+	if(document.getElementById("test_duration")) {
 		const test_duration_id = document.getElementById("test_duration");
 		const test_duration = test_duration_id.value;
 		timer(test_duration, "time_left", formValueCollector);
@@ -71,11 +81,14 @@ const domNotifier = function() {
 		listener.newEvent(submitBtn, "click", formValueCollector, submitBtn);
 		// check for update to chats
 		// will work on updating chat uing web worker
-		setInterval(chats.updateChat, 10000)
+		setInterval(chats.updateChat, 10000);
 	}
   
   // when a user want to select a lecturer
 	getElementValue.elementEvents("lecturers", "change", formValueCollector);
+
+	// when a user want to add a new friend
+	getElementValue.elementEvents("friend_id", "change", formValueCollector);
 
 	if(document.getElementById("search-lecturers")){
 		const textField = document.getElementById("search-lecturers");
