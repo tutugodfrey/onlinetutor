@@ -1,5 +1,3 @@
-create database onlinetutor;
-use onlinetutor;
 
 create table registered_users (
 	id int signed not null primary key auto_increment,
@@ -40,7 +38,7 @@ create table friends (
 	user_type varchar(10)
 );
 
-create table chat (
+create table chats (
 	post_id int not null primary key auto_increment, 
 	sender int not null, 
 	receiver int not null, 
@@ -73,7 +71,7 @@ create table registered_courses (
 	course_status varchar (15) not null
 );
 
-create table test (
+create table tests (
 	id tinyint not null primary key auto_increment,
 	lec_id int not null,
 	test_id tinyint, 
@@ -110,7 +108,7 @@ create table score_board (
 	score_type enum('test', 'exam', 'discussion') not null
 );
 
-create table discussion ( 
+create table discussions ( 
 	discussion_id tinyint not null primary key auto_increment,
 	lec_id int not null, 
 	course_id tinyint not null, 
@@ -119,7 +117,7 @@ create table discussion (
 	type enum('open', 'close') not null 
 );
 
-create table post ( 
+create table posts ( 
 	post_id int not null primary key auto_increment,
 	lec_id int not null,
 	student_id int not null, 
@@ -131,13 +129,13 @@ create table post (
 	graded enum('yes', 'no') not null 
 );
 
-create table announcement( 
+create table announcements( 
 	lec_id int not null primary key,
 	post_message text not null, 
 	post_date datetime not null
 );
 
-create table note  (
+create table notes  (
 	user_id int not null primary key, 
 	course_id tinyint not null, 
 	title varchar (100), 
