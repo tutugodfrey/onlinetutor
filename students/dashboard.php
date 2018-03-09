@@ -15,7 +15,7 @@ if(isset($_SESSION["owner_id"])){
 	$owner_id = $_GET["user_id"];
 	$_SESSION["owner_id"] = $owner_id;
 } else	{
-  header("Location: /onlinetutor/common/login.php");  		//user do not have an active session
+  header("Location: /common/login.php");  		//user do not have an active session
   exit();
 }
 
@@ -66,7 +66,7 @@ if(isset($_GET["dashboard"])){
         <ul class="navbar-nav mr-auto">
 	        <!-- hide this element display when a user select a lecturer and construct thefull url or get from localStorage -->
 	        <li class = "link-buttons nav-item">
-	          <a href = "/onlinetutor/students/home.php?" class = "nav-link active">Home</a>
+	          <a href = "/students/home.php?" class = "nav-link active">Home</a>
 	        </li>
 	        <li class = "link-buttons nav-item">
 	          <form method = "GET" action = "$_SERVER[PHP_SELF]" >
@@ -76,15 +76,15 @@ if(isset($_GET["dashboard"])){
 	          </form>
 	        </li>
 	        <li class = "link-buttons nav-item">
-	          <a href = "/onlinetutor/students/coursemates.php?coursemates" class = "nav-link">Coursemates</a>
+	          <a href = "/students/coursemates.php?coursemates" class = "nav-link">Coursemates</a>
 	        </li>
 	        <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="#" id="courses-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	            Courses
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="courses-menu">
-							<a href = "/onlinetutor/students/courses.php?registered_courses" class = "nav-link">Your Courses</a>
-							<a href = "/onlinetutor/students/courses.php?courses" class = "nav-link">Courses</a>
+							<a href = "/students/courses.php?registered_courses" class = "nav-link">Your Courses</a>
+							<a href = "/students/courses.php?courses" class = "nav-link">Courses</a>
 	          </div>
 	        </li>
 	        <li class="nav-item dropdown">
@@ -92,36 +92,36 @@ if(isset($_GET["dashboard"])){
 	            Activities
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="activities-menu">
-							<a href = "/onlinetutor/students/test.php?tests" class = "nav-link">Tests</a>
-							<a href = "/onlinetutor/students/discussions.php?discussions" class = "nav-link">Discussions</a>
-							<a href = "/onlinetutor/students/scores.php?scores" class = "nav-link">Scores</a>
+							<a href = "/students/test.php?tests" class = "nav-link">Tests</a>
+							<a href = "/students/discussions.php?discussions" class = "nav-link">Discussions</a>
+							<a href = "/students/scores.php?scores" class = "nav-link">Scores</a>
 	          </div>
 	        </li>
 	        <li class = "link-buttons nav-item">
-	          <a href = "/onlinetutor/common/friends.php?friends" class = "nav-link">Friends</a>
+	          <a href = "/common/friends.php?friends" class = "nav-link">Friends</a>
 	        </li>
 	        <li class = "link-buttons nav-item">
-	          <a href = "/onlinetutor/students/lecture_note.php?lecture_note" class = "nav-link">Lecture Notes</a>
+	          <a href = "/students/lecture_note.php?lecture_note" class = "nav-link">Lecture Notes</a>
 	        </li>
 	        <li class = "link-buttons nav-item">
-	          <a href = "/onlinetutor/students/videos.php?view_videos" class = "nav-link">Videos</a>
+	          <a href = "/students/videos.php?view_videos" class = "nav-link">Videos</a>
 	        </li>
 	        <li class = "link-buttons nav-item">
-	          <a href = "/onlinetutor/students/mynote.php?mynote" class = "nav-link">Notes</a>
+	          <a href = "/students/mynote.php?mynote" class = "nav-link">Notes</a>
 	        </li>
 	         <li class="nav-item dropdown">
 	          <a class="nav-link dropdown-toggle" href="#" id="more-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	            More
 	          </a>
 	          <div class="dropdown-menu" aria-labelledby="more-menu">
-							<a href = "/onlinetutor/common/profile.php?profile&user_id=$owner_id" class = "nav-link">Your Profile</a>
-	         		<a  id = "profile-link" href = "/onlinetutor/common/profile.php?profile&user_id=" class = "nav-link">Instructor Profile</a>
+							<a href = "/common/profile.php?profile&user_id=$owner_id" class = "nav-link">Your Profile</a>
+	         		<a  id = "profile-link" href = "/common/profile.php?profile&user_id=" class = "nav-link">Instructor Profile</a>
 
-							<a href = "/onlinetutor/students/announcements.php?announcements" class = "nav-link">News</a>
-							<a href = "/onlinetutor/common/feedback.php?feedback" class = "nav-link">Feedback</a>
-							<a href = "/onlinetutorp/common/login.php?log_out" class = "nav-link">Logout</a>
-							<a href = "/onlinetutor/common/calculator.php?get_calculator" class = "nav-link">Calculator</a>
-							<a href = "/onlinetutor/common/help.php?get_help" class = "nav-link">Help</a>
+							<a href = "/students/announcements.php?announcements" class = "nav-link">News</a>
+							<a href = "/common/feedback.php?feedback" class = "nav-link">Feedback</a>
+							<a href = "/common/login.php?log_out" class = "nav-link">Logout</a>
+							<a href = "/common/calculator.php?get_calculator" class = "nav-link">Calculator</a>
+							<a href = "/common/help.php?get_help" class = "nav-link">Help</a>
 	          </div>
 	        </li>
 	      </ul>
@@ -130,13 +130,13 @@ if(isset($_GET["dashboard"])){
 	  <div id = "reg-lecturer-form-group" class = "col-sm-12 col-md-3 px-0 align-self-end">
 	  	<div class = "d-flex flex-row">
 	  	<div class = "align-self-start">
-		  	<form name = "reg_lecturer" id = "reg_lec_form" class="form-inline" method = "POST" action = "/onlinetutor/common/profile.php" >
+		  	<form name = "reg_lecturer" id = "reg_lec_form" class="form-inline" method = "POST" action = "/common/profile.php" >
 		      <div id = "lecturers-name" class = "link_buttons"></div>
 		      <input type = "submit"  id = "register-lecturer" class = "btn btn-success hide-item" name = "register_lecturer" value = "Register" />
 		    </form>
 	    </div>
 	    <div class = "align-self-end">
-		    <form id = "search_lec_form" class = "form-inline" method = "GET" action = "/onlinetutor/common/search_names.php" >
+		    <form id = "search_lec_form" class = "form-inline" method = "GET" action = "/common/search_names.php" >
 		      <input type = "search" class = "link_buttons form-control mr-sm-2 form-control-sm" id = "search-lecturers" name = "name_like" placeholder = "search for lecturer"/>
 		    <input type = "submit" id = "search_lec" class = "btn btn-success my-2 my-sm-0 hide-item" name = "search_lecturers" value = "Search" />
 		    </form>
