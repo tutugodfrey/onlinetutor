@@ -1,155 +1,154 @@
-CREATE DATABASE ONLINETUTOR;
+create database onlinetutor;
+use onlinetutor;
 
-USE ONLINETUTOR;
-
-CREATE TABLE REGISTERED_USERS (
-	ID INT SIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	MATRIC_NO VARCHAR (40) NOT NULL,
-	LASTNAME  VARCHAR (40) NOT NULL,
-	FIRSTNAME VARCHAR (40) NOT NULL,
-	GENDER VARCHAR (8) NOT NULL,
-	BIRTHDAY DATE NOT NULL,
-	TITLE VARCHAR (15) NOT NULL,
-	INSTITUTION VARCHAR (100) NOT NULL,
-	FACULTY VARCHAR (40) NOT NULL,
-	DEPARTMENT VARCHAR (40) NOT NULL,
-	DISCIPLINE VARCHAR (40) NOT NULL,
-	PICTURE VARCHAR (100),
-	AGREEMENT_STATUS VARCHAR (5) NOT NULL,
-	EMAIL VARCHAR (40) NOT NULL,
-	PHONE VARCHAR (20) NOT NULL,
-	USERNAME VARCHAR (20) NOT NULL UNIQUE,
-	PASSWORD VARCHAR (40) NOT NULL,
-	SECURITY_QUESTION VARCHAR (50) NOT NULL,
-	SECURITY_ANSWER VARCHAR (50) NOT NULL,
-	USER_TYPE ENUM('lecturer', 'student') NOT NULL
+create table registered_users (
+	id int signed not null primary key auto_increment,
+	matric_no varchar (40) not null,
+	lastname  varchar (40) not null,
+	firstname varchar (40) not null,
+	gender varchar (8) not null,
+	birthday date not null,
+	title varchar (15) not null,
+	institution varchar (100) not null,
+	faculty varchar (40) not null,
+	department varchar (40) not null,
+	discipline varchar (40) not null,
+	picture varchar (100),
+	agreement_status varchar (5) not null,
+	email varchar (40) not null,
+	phone varchar (20) not null,
+	username varchar (20) not null unique,
+	password varchar (40) not null,
+	security_question varchar (50) not null,
+	security_answer varchar (50) not null,
+	user_type enum('lecturer', 'student') not null
 );
 
-CREATE TABLE FEEDBACK (
-	ID INT SIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	SENDER INT NOT NULL,
-	SENDER_TYPE ENUM('lecturer', 'student') NOT NULL,
-	FEEDBACK_MESSAGE TEXT NOT NULL,
-	POST_DATE DATETIME NOT NULL
+create table feedback (
+	id int signed not null primary key auto_increment,
+	sender int not null,
+	sender_type enum('lecturer', 'student') not null,
+	feedback_message text not null,
+	post_date datetime not null
 );
 
-CREATE TABLE FRIENDS (
-	ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-	FRIEND_ID INT NOT NULL,
-	REQUESTOR_ID INT NOT NULL,
-	CONFIRM ENUM('YES', 'NO'), 
-	USER_TYPE VARCHAR(10)
+create table friends (
+	id int not null primary key auto_increment, 
+	friend_id int not null,
+	requestor_id int not null,
+	confirm enum('yes', 'no'), 
+	user_type varchar(10)
 );
 
-CREATE TABLE CHAT (
-	POST_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-	SENDER INT NOT NULL, 
-	RECEIVER INT NOT NULL, 
-	POST TEXT NOT NULL, 
-	MEDIA_URL VARCHAR(120), 
-	POST_DATE DATETIME NOT NULL
+create table chat (
+	post_id int not null primary key auto_increment, 
+	sender int not null, 
+	receiver int not null, 
+	post text not null, 
+	media_url varchar(120), 
+	post_date datetime not null
 );
 
-CREATE TABLE STUDENTS (
-	ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-	LEC_ID INT NOT NULL,
-	STUDENT_ID INT NOT NULL, 
-	CONFIRM ENUM('YES', 'NO')
+create table students (
+	id int not null primary key auto_increment, 
+	lec_id int not null,
+	student_id int not null, 
+	confirm enum('yes', 'no')
 );
 
-CREATE TABLE COURSES(
-	COURSE_ID TINYINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	LEC_ID INT NOT NULL,
-	COURSE_CODE VARCHAR(15) NOT NULL, 
-	COURSE_TITLE VARCHAR(100) NOT NULL, 
-	COURSE_DESCRIPTION TEXT, 
-	UNIT TINYINT NOT NULL
+create table courses(
+	course_id tinyint not null primary key auto_increment,
+	lec_id int not null,
+	course_code varchar(15) not null, 
+	course_title varchar(100) not null, 
+	course_description text, 
+	unit tinyint not null
 );
 
-CREATE TABLE REGISTERED_COURSES (
-	ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	LEC_ID INT NOT NULL, 
-	STUDENT_ID INT NOT NULL,  
-	COURSE_ID TINYINT NOT NULL, 
-	COURSE_STATUS VARCHAR (15) NOT NULL
+create table registered_courses (
+	id int not null primary key auto_increment,
+	lec_id int not null, 
+	student_id int not null,  
+	course_id tinyint not null, 
+	course_status varchar (15) not null
 );
 
-CREATE TABLE TEST (
-	ID TINYINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	LEC_ID INT NOT NULL,
-	TEST_ID TINYINT, 
-	COURSE_ID TINYINT NOT NULL, 
-	DURATION TIME NOT NULL, 
-	DEADLINE DATETIME,  
-	MARK TINYINT NOT NULL, 
-	NO_OF_QUESTIONS TINYINT NOT NULL, 
-	TEST_TYPE ENUM('TEST', 'EXAM') NOT NULL, 
-	TEST_STATUS ENUM('OPENED', 'CLOSED') NOT NULL
+create table test (
+	id tinyint not null primary key auto_increment,
+	lec_id int not null,
+	test_id tinyint, 
+	course_id tinyint not null, 
+	duration time not null, 
+	deadline datetime,  
+	mark tinyint not null, 
+	no_of_questions tinyint not null, 
+	test_type enum('test', 'exam') not null, 
+	test_status enum('opened', 'closed') not null
 );
 
-CREATE TABLE QUESTIONS (
-	QUESTION_ID TINYINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	LEC_ID INT NOT NULL,
-	COURSE_ID TINYINT NOT NULL, 
-	TEST_ID TINYINT NOT NULL, 
-	QUESTIONS TEXT NOT NULL, 
-	OPTION_A VARCHAR (100), 
-	OPTION_B VARCHAR (100), 
-	OPTION_C VARCHAR (100), 
-	OPTION_D VARCHAR (100), 
-	CORRECT_OPTION ENUM('A', 'B', 'C', 'D') 
+create table questions (
+	question_id tinyint not null primary key auto_increment,
+	lec_id int not null,
+	course_id tinyint not null, 
+	test_id tinyint not null, 
+	questions text not null, 
+	option_a varchar (100), 
+	option_b varchar (100), 
+	option_c varchar (100), 
+	option_d varchar (100), 
+	correct_option enum('a', 'b', 'c', 'd') 
 );
 
-CREATE TABLE SCORE_BOARD (
-	SCORE_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	LEC_ID INT NOT NULL,
-	STUDENT_ID INT NOT NULL, 
-	COURSE_ID TINYINT NOT NULL,  
-	TEST_ID TINYINT, 
-	DISCUSSION_ID TINYINT, 
-	SCORE TINYINT NOT NULL, 
-	SCORE_TYPE ENUM('TEST', 'EXAM', 'DISCUSSION') NOT NULL
+create table score_board (
+	score_id int not null primary key auto_increment,
+	lec_id int not null,
+	student_id int not null, 
+	course_id tinyint not null,  
+	test_id tinyint, 
+	discussion_id tinyint, 
+	score tinyint not null, 
+	score_type enum('test', 'exam', 'discussion') not null
 );
 
-CREATE TABLE DISCUSSION ( 
-	DISCUSSION_ID TINYINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	LEC_ID INT NOT NULL, 
-	COURSE_ID TINYINT NOT NULL, 
-	DISCUSSION_TOPIC TEXT NOT NULL, 
-	POST_DATE DATETIME NOT NULL, 
-	TYPE ENUM('OPEN', 'CLOSE') NOT NULL 
+create table discussion ( 
+	discussion_id tinyint not null primary key auto_increment,
+	lec_id int not null, 
+	course_id tinyint not null, 
+	discussion_topic text not null, 
+	post_date datetime not null, 
+	type enum('open', 'close') not null 
 );
 
-CREATE TABLE POST ( 
-	POST_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	LEC_ID INT NOT NULL,
-	STUDENT_ID INT NOT NULL, 
-	DISCUSSION_ID TINYINT NOT NULL, 
-	COURSE_ID TINYINT NOT NULL, 
-	POST_DATE DATETIME NOT NULL, 
-	POST_TEXT TEXT NOT NULL, 
-	TYPE ENUM('OPEN', 'CLOSE') NOT NULL, 
-	GRADED ENUM('YES', 'NO') NOT NULL 
+create table post ( 
+	post_id int not null primary key auto_increment,
+	lec_id int not null,
+	student_id int not null, 
+	discussion_id tinyint not null, 
+	course_id tinyint not null, 
+	post_date datetime not null, 
+	post_text text not null, 
+	type enum('open', 'close') not null, 
+	graded enum('yes', 'no') not null 
 );
 
-CREATE TABLE ANNOUNCEMENT( 
-	LEC_ID INT NOT NULL PRIMARY KEY,
-	POST_MESSAGE TEXT NOT NULL, 
-	POST_DATE DATETIME NOT NULL
+create table announcement( 
+	lec_id int not null primary key,
+	post_message text not null, 
+	post_date datetime not null
 );
 
-CREATE TABLE NOTE  (
-	USER_ID INT NOT NULL PRIMARY KEY, 
-	COURSE_ID TINYINT NOT NULL, 
-	TITLE VARCHAR (100), 
-	NOTE TEXT NOT NULL, 
-	NOTE_DATE DATETIME NOT NULL
+create table note  (
+	user_id int not null primary key, 
+	course_id tinyint not null, 
+	title varchar (100), 
+	note text not null, 
+	note_date datetime not null
 );
 
-CREATE TABLE VIDEOS (
-  LEC_ID INT NOT NULL PRIMARY KEY, 
-  COURSE_ID TINYINT NOT NULL, 
-  VIDEO_URL VARCHAR (150) NOT NULL, 
-  VIDEO_NAME VARCHAR  (100) NOT NULL, 
-  VIDEO_CAPTION VARCHAR (100) NOT NULL
+create table videos (
+  lec_id int not null primary key, 
+  course_id tinyint not null, 
+  video_url varchar (150) not null, 
+  video_name varchar  (100) not null, 
+  video_caption varchar (100) not null
 );
