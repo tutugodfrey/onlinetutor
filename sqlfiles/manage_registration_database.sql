@@ -25,7 +25,6 @@ create table registered_users (
 create table feedback (
 	id int signed not null primary key auto_increment,
 	sender int not null,
-	sender_type enum('lecturer', 'student') not null,
 	feedback_message text not null,
 	post_date datetime not null
 );

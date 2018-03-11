@@ -79,20 +79,20 @@ if(empty($_POST["agreement"])){
 						$user_id = mysqli_insert_id($mysqli);
 						$user_folder = "user".$user_id;
 						//handle uploaded photo
-						mkdir($doc_root."/onlinetutor/personal_data/user$user_id"); //create a directory to store the url to the picture
-						mkdir($doc_root."/onlinetutor/personal_data/user$user_id/images"); //create a directory to store other images that user will use for other purposes
-						mkdir($doc_root."/onlinetutor/personal_data/user$user_id/videos"); //create a directory to store the images that the user will use for other purposes
-						mkdir($doc_root."/onlinetutor/personal_data/user$user_id/profile_pix"); //create a directory to store the images that the user will use for other purposes
-						$store = $doc_root."/onlinetutor/personal_data/user$user_id/profile_pix";
+						mkdir($doc_root."/personal_data/user$user_id"); //create a directory to store the url to the picture
+						mkdir($doc_root."/personal_data/user$user_id/images"); //create a directory to store other images that user will use for other purposes
+						mkdir($doc_root."/personal_data/user$user_id/videos"); //create a directory to store the images that the user will use for other purposes
+						mkdir($doc_root."/personal_data/user$user_id/profile_pix"); // dirctory for user's profile-pix
+						$store = $doc_root."/personal_data/user$user_id/profile_pix";
 						if (is_uploaded_file($_FILES["photo"]['tmp_name'])){
 								//move the file from the tempatory folder to a local directory
 							move_uploaded_file($_FILES["photo"]['tmp_name'],      
 							"$store/".$_FILES["photo"]['name']) or die("Couldn't move file"); //can also be $store."/".
-							$picture = "/onlinetutor/personal_data/".$user_id."/profile_pix/".$_FILES["photo"]['name'];	//save the url to the database
+							$picture = "/personal_data/user".$user_id."/profile_pix/".$_FILES["photo"]['name'];	//save the url to the database
 							//echo "file was moved!";
 						}  	else	 {
 							//the user does not upload a photo so use the default photo
-							$picture = "/onlinetutor/personal_data/defaultpix.png";
+							$picture = "/personal_data/defaultpix.png";
 						}
 
 						$query_string = "update registered_users set picture = \"$picture\" where id = \"$user_id\"";
