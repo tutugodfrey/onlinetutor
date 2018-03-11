@@ -41,41 +41,47 @@ const Request = class {
   } 
 
   formRequest(method, url, formInfo) {
-    // console.log(url, formInfo)
+    console.log(url, formInfo);
+    console.log("type", typeof formInfo);
+
     if(method === 'post') {
       console.log(formInfo)
-      if(formInfo.indexOf('login') >= 0){
-        const indexOfEqualSign = formInfo.lastIndexOf('=');
-        const newUsername = formInfo.substring(indexOfEqualSign + 1, formInfo.length);
-        if(storeData.getData('userData')) {
-          const userData = storeData.getData('userData');
-         // storeData.deleteData('userData')
-          const username = JSON.parse(userData).username;
-          const userType = JSON.parse(userData).user_type;
-          const userId = JSON.parse(userData).id;
-          if (username !== newUsername) {
-            ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, false);
-          } else {
-            // userData already in localStorage; use userData to make request and display appropriate content
-            console.log('username already in store')
-            if(userType.toLowerCase() === "student") {
-              // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard' ./../students/dashboard.php?dashboard
-              ajaxCall.getMethod(`./../students/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
-              setTimeout(ajaxCall.getMethod, 5000, './../students/home.php', handleContent.display, true);
-            } else if (userType.toLowerCase() === "lecturer") {
-              ajaxCall.getMethod(`./../instructors/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
-              setTimeout(ajaxCall.getMethod, 5000, './../instructors/home.php', handleContent.display, true);
+      if(typeof formInfo === "object") {
+        ajaxCall.postMethod(url, formInfo, handleContent.display, true, true);
+      } else {
+        if(formInfo.indexOf('login') >= 0){
+          const indexOfEqualSign = formInfo.lastIndexOf('=');
+          const newUsername = formInfo.substring(indexOfEqualSign + 1, formInfo.length);
+          if(storeData.getData('userData')) {
+            const userData = storeData.getData('userData');
+           // storeData.deleteData('userData')
+            const username = JSON.parse(userData).username;
+            const userType = JSON.parse(userData).user_type;
+            const userId = JSON.parse(userData).id;
+            if (username !== newUsername) {
+              ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, false);
+            } else {
+              // userData already in localStorage; use userData to make request and display appropriate content
+              console.log('username already in store')
+              if(userType.toLowerCase() === "student") {
+                // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard' ./../students/dashboard.php?dashboard
+                ajaxCall.getMethod(`./../students/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
+                setTimeout(ajaxCall.getMethod, 5000, './../students/home.php', handleContent.display, true);
+              } else if (userType.toLowerCase() === "lecturer") {
+                ajaxCall.getMethod(`./../instructors/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
+                setTimeout(ajaxCall.getMethod, 5000, './../instructors/home.php', handleContent.display, true);
+              }
             }
+          } else {
+            ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, false);
           }
-        } else {
-          ajaxCall.postMethod(url, formInfo, dataStorage.storeUserData, false, false);
+        } else if (formInfo.indexOf('send_chat_msg') >= 0) {
+          ajaxCall.postMethod(url, formInfo, handleContent.chatMessage, false, false);
+        } else if(formInfo.indexOf("register_lecturer") >= 0){
+          ajaxCall.postMethod(url, formInfo, handleContent.mainContent, false, false);
+        } else {  // include more if else block if need be to do something other than display with post result
+          ajaxCall.postMethod(url, formInfo, handleContent.display, true, false);
         }
-      } else if (formInfo.indexOf('send_chat_msg') >= 0) {
-        ajaxCall.postMethod(url, formInfo, handleContent.chatMessage, false, false);
-      } else if(formInfo.indexOf("register_lecturer") >= 0){
-        ajaxCall.postMethod(url, formInfo, handleContent.mainContent, false, false);
-      } else {  // include more if else block if need be to do something other than display with post result
-        ajaxCall.postMethod(url, formInfo, handleContent.display, true, false);
       }
     } else if (method === 'get' || "GET") {
       const fullUrl = `${url}?${formInfo}`;

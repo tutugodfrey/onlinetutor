@@ -8,8 +8,6 @@ include "./../includes/views.php";
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$lecturer_db = "lec$owner_id";
-$lecturer_friend = "user".$owner_id."_friends";
 
 $heading = ""; $display = "";
 
@@ -44,7 +42,7 @@ $display = "<p>Your username is not set please go back and try again</p>";
 			foreach($values as $value){
 				$display .= "
 				<img src = \"$value[3]\" alt = \"image\" />
-				$value[1] $value[2]<a href = \"/onlinetutor/common/profile.php?profile=yes&user_id=$value[0]\">profile</a>
+				$value[1] $value[2]<a href = \"/common/profile.php?profile=yes&user_id=$value[0]\">profile</a>
 				<a href = \"$_SERVER[PHP_SELF]?decline=no&user_id=$value[0]&user_type=student\">decline</a>
 				<a href = \"$_SERVER[PHP_SELF]?confirm=yes&user_id=$value[0]&user_type=student\">confirm</a>";
 			}		//end foreach
@@ -83,7 +81,7 @@ $display = "<p>Your username is not set please go back and try again</p>";
 				foreach($values as $value) {
 					$display .= <<<block
 					<p>$value[2] $value[1]
-					<a href = "/onlinetutor/common/profile.php?profile=student&user_id=$value[0]">Profile</a>
+					<a href = "/common/profile.php?profile=student&user_id=$value[0]">Profile</a>
 					<a href = "$_SERVER[PHP_SELF]?registered_courses=yes&student_id=$value[0]" >courses</a>
 					</p>
 block;
@@ -140,11 +138,10 @@ block;
 			}
 		}
 	}		//end confirm
+}		//end verify owner_id
 
-
-}		//end verify L_id
 }	else {			
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/login.php");  		//user do not have an active session
 exit();
 }
 

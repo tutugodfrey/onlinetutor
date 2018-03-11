@@ -64,12 +64,12 @@ $nav_buttons = <<<block
             More
           </a>
           <div class="dropdown-menu" aria-labelledby="more-menu">
-            <a href = "/onlinetutor/common/profile.php?profile&user_id=$owner_id" class = "nav-link">Your Profile</a>
-            <a href = "/onlinetutor/students/announcements.php?announcements" class = "nav-link">News</a>
-            <a href = "/onlinetutor/common/feedback.php?feedback" class = "nav-link">Feedback</a>
-            <a href = "/onlinetutorp/common/login.php?log_out" class = "nav-link">Logout</a>
-            <a href = "/onlinetutor/common/calculator.php?get_calculator" class = "nav-link">Calculator</a>
-            <a href = "/onlinetutor/common/help.php?get_help" class = "nav-link">Help</a>
+            <a href = "/common/profile.php?profile&user_id=$owner_id" class = "nav-link">Your Profile</a>
+            <a href = "/students/announcements.php?announcements" class = "nav-link">News</a>
+            <a href = "/common/feedback.php?feedback" class = "nav-link">Feedback</a>
+            <a href = "/common/login.php?log_out" class = "nav-link">Logout</a>
+            <a href = "/common/calculator.php?get_calculator" class = "nav-link">Calculator</a>
+            <a href = "/common/help.php?get_help" class = "nav-link">Help</a>
           </div>
         </li>
       </ul>

@@ -4,13 +4,13 @@ import GetElementValue from './GetElementValue';
 import changeAttribute from './changeAttribute';
 import Request from './Request';
 const request = new Request()
-const elementType  = new  GetElementValue()
+const getElementValue = new  GetElementValue()
 
 const formValueCollector = function(formControl) {
  // console.log("form submitted");
- console.log(formControl);
+ // console.log(formControl);
 	// console.log('eletype', formControl);
-	const formElement = elementType.getFormElement(formControl)
+	const formElement = getElementValue.getFormElement(formControl)
 	const method = formElement.method;
 	const url = formElement.action;
 	let allFieldsValidated = true;
@@ -18,14 +18,23 @@ const formValueCollector = function(formControl) {
 	let passwordArray = [];
 	let checkValues = {};
 	let checkFieldNames = [];
+  let fileAvailable = false;
 	let emailIsValid = false;
+  let formData = new FormData();
   let formInfo = '';
 	// let formInfo = {};
 	let formControls = formElement.elements;
   const emailRegExp = /\w+@\w+\.(net|com|org)/;
   const regex = /requiredFields/;
   for(let elem of formControls){
-    // console.log("elem", elem);
+    if(elem.type === "file") {
+      fileAvailable = true;
+      formData = new FormData();
+    }
+  }
+
+  for(let elem of formControls){
+    console.log("elem", elem);
     let eleValue;
     const eleType = elem.type;
     let eleName = elem.getAttribute('name');
@@ -34,11 +43,19 @@ const formValueCollector = function(formControl) {
       // handle multiple submit elements
       if(formControl.type === 'submit' && formControl.name === eleName) {
         eleValue = elem.value;
-        formInfo = `${eleName}=${eleValue}&${formInfo}`;
+        if(fileAvailable) {
+          formData.append(eleName, eleValue);
+        } else {
+          formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+        }
       } else if(formControl.type !== 'submit') {
         // form that auto-submit onChange
         eleValue = elem.value;
-        formInfo = `${eleName}=${eleValue}&${formInfo}`;
+        if(fileAvailable) {
+          formData.append(eleName, eleValue);
+        } else {
+          formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+        }
       }
     } else {
       if(elem.getAttribute('class')){
@@ -59,7 +76,11 @@ const formValueCollector = function(formControl) {
                   allFieldsValidated = false;
                 };
               } 
-              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+              if(fileAvailable) {
+                formData.append(eleName, eleValue);
+              } else {
+                formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+              }
               // formInfo[eleName] = eleValue
             }  
           } else if (eleType === 'number') {
@@ -68,7 +89,11 @@ const formValueCollector = function(formControl) {
                 changeAttribute(elem, 'class', 'fail-validation form-control');
                 allFieldsValidated = false;
             } else {
-              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+              if(fileAvailable) {
+                formData.append(eleName, eleValue);
+              } else {
+                formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+              }
               // formInfo[eleName] = eleValue
             }
           } else if(eleType === "email") {
@@ -84,7 +109,11 @@ const formValueCollector = function(formControl) {
                   allFieldsValidated = false;
                 };
               } 
-              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+              if(fileAvailable) {
+                formData.append(eleName, eleValue);
+              } else {
+                formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+              }
               // formInfo[eleName] = eleValue
             }
           } else if (eleType === 'password') {
@@ -95,23 +124,36 @@ const formValueCollector = function(formControl) {
             }  else {
               passwordArray.push(eleValue);
               // formInfo[eleName] = eleValue
-              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+              if(fileAvailable) {
+                formData.append(eleName, eleValue);
+              } else {
+                formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+              }
             }    
+          } else if(eleType === "file") {
+            eleValue = getElementValue.fileUpload(elem)[1];
+            if(fileAvailable) {
+              formData.append(eleName, eleValue);
+            }
           } else if (eleType === 'select-one'){
-            eleValue = elementType.selectedValue(eleName);
+            eleValue = getElementValue.selectedValue(eleName);
             if(eleValue === "select" || eleValue === "default" || eleValue === ""){
               changeAttribute(elem, 'class', 'fail-validation form-control');
               allFieldsValidated = false;
             } else {
               // formInfo[eleName] = eleValue;
-              formInfo = `${eleName}=${eleValue}&${formInfo}`;
+              if(fileAvailable) {
+                formData.append(eleName, eleValue);
+              } else {
+                formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+              }
             }
           } else if ( eleType === 'radio' || eleType === 'checkbox') {
             if(checkFieldNames.indexOf(eleName) === -1) {
               checkFieldNames.push(eleName)
             }
             
-            eleValue = elementType.getCheckboxValue(elem);
+            eleValue = getElementValue.getCheckboxValue(elem);
             if(eleValue !== undefined) {
               radioChecked = true;
               if(!checkValues.eleName) {
@@ -129,7 +171,7 @@ const formValueCollector = function(formControl) {
             if(checkFieldNames.indexOf(eleName) === -1) {
               checkFieldNames.push(eleName)
             }
-            eleValue = elementType.getCheckboxValue(elem);
+            eleValue = getElementValue.getCheckboxValue(elem);
             if(eleValue !== undefined) {
               radioChecked = true;
               if(!checkValues.eleName) {
@@ -142,30 +184,52 @@ const formValueCollector = function(formControl) {
             eleValue = elem.value;
             formInfo = `${eleName}=${eleValue}&${formInfo}`;
             // formInfo[eleName] = eleValue
-          } else {
+          } else if(eleType === "file") {
+            console.log("file here");
+            eleValue = getElementValue.fileUpload(elem)[1];
+            if(fileAvailable) {
+              formData.append(eleName, eleValue);
+            }
+          }  else {
             eleValue = elem.value;
-            formInfo = `${eleName}=${eleValue}&${formInfo}`;
+            if(fileAvailable) {
+              formData.append(eleName, eleValue);
+            } else {
+              formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+            }
             // formInfo[eleName] = eleValue
           }     
         }
       } else {
         // element with no class attributes
         if (eleType === 'select-one'){
-          eleValue = elementType.selectedValue(eleName);
+          eleValue = getElementValue.selectedValue(eleName);
           if(eleValue === 'select' || eleValue === ''){
             changeAttribute(elem, 'class', 'fail-validation form-control');
             allFieldsValidated = false;
           } else {
             // formInfo[eleName] = eleValue;
-            formInfo = `${eleName}=${eleValue}&${formInfo}`;
+            if(fileAvailable) {
+              formData.append(eleName, eleValue);
+            } else {
+              formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+            }
           }
         } else if(eleType === "hidden") {
           eleValue = elem.value;
-          formInfo = `${eleName}=${eleValue}&${formInfo}`;
+          if(fileAvailable) {
+            formData.append(eleName, eleValue);
+          } else {
+            formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+          }
           // formInfo[eleName] = eleValue
         } else {
           eleValue = elem.value;
-          formInfo = `${eleName}=${eleValue}&${formInfo}`;
+          if(fileAvailable) {
+          formData.append(eleName, eleValue);
+          } else {
+            formInfo = `${eleName}=${eleValue}&${formInfo}`; 
+          }
         }
       }
     }
@@ -185,7 +249,11 @@ const formValueCollector = function(formControl) {
 	  				fieldValues.push(value[1])
 	  			}
   			}
-  		  formInfo = `${checkboxName}=${fieldValues}&${formInfo}`;
+        if(fileAvailable) {
+          formData.append(checkboxName, fieldValues);
+        } else {
+          formInfo = `${checkboxName}=${fieldValues}&${formInfo}`; 
+        }
   			// formInfo[checkboxName] = fieldValues
   		} else {
   			console.log('not checked data')
@@ -203,9 +271,9 @@ const formValueCollector = function(formControl) {
   if(passwordArray.length > 1){
     let confirmPassword;
     if(passwordArray.length === 2){
-      confirmPassword = elementType.confirmPasswordValues(passwordArray[0], passwordArray[1])
+      confirmPassword = getElementValue.confirmPasswordValues(passwordArray[0], passwordArray[1])
     } else if (passwordArray.length === 3) {
-      confirmPassword = elementType.confirmPasswordValues(passwordArray[1], passwordArray[2])
+      confirmPassword = getElementValue.confirmPasswordValues(passwordArray[1], passwordArray[2])
     }
     if(!confirmPassword){
       allFieldsValidated = false;
@@ -219,8 +287,13 @@ const formValueCollector = function(formControl) {
     domNotifier();
   }  else {
     // proceed with form submittion
-    if(formInfo.lastIndexOf("&") === formInfo.length - 1){
-    	formInfo = formInfo.substring(0, formInfo.length - 1)
+    if(fileAvailable) {
+      formInfo = formData;
+      console.log("length", formData["new_photo"]);
+    } else {
+      if(formInfo.lastIndexOf("&") === formInfo.length - 1){
+        formInfo = formInfo.substring(0, formInfo.length - 1);
+      }
     }
     //console.log("allFieldsValidated", allFieldsValidated);
     request.formRequest(method, url, formInfo)
