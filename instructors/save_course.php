@@ -103,7 +103,7 @@ if(isset($_POST["save_course"]) || isset($_POST["update_course"])){
 if(isset($_GET["view_courses"])){
 	$query_string = "select * from courses where lec_id = \"$owner_id\"";
 	$fields = array ("course_id", "Course code", "Course Title", "Course description", "unit");
-	$values = get_course_code("course_code", 1, $query_string);	//get the course details
+	$values = get_course_code("course_code", $owner_id, 1, $query_string);	//get the course details
 	if(empty($values)){
 		$display = "<p>You have not save any course yet<br />go to the <a href = \"$_SERVER[PHP_SELF]?save_courses=yes\">
 				Save Courses</a> page and begin adding courses</p>";
@@ -126,7 +126,6 @@ if(isset($_POST["delete_course"])){
 		$display = "<p>please enter a valid value in the required fields</p>";
 	}	else {
 		$course_id = $_POST["course_id"][0];
-		$display = "want to delete a course";
 		//admin_connect();
 		$query_string = "delete from courses where course_id = \"$course_id\" and lec_id = \"$owner_id\"";
 		run_query($query_string);

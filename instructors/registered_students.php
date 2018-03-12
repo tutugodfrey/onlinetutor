@@ -122,7 +122,6 @@ block;
 		if($user_id == "" || $confirm == ""){
 			$display = "<p>There is an error in the request. please go back and try again</p>";
 		}	else	{
-			$friends_table = "user".$user_id."_friends";
 			if($confirm == "no"){
 				$query_string = "delete from students where student_id = \"$user_id\" and lec_id = \"$owner_id\"";
 			}
@@ -141,7 +140,7 @@ block;
 }		//end verify owner_id
 
 }	else {			
-header("Location:/login.php");  		//user do not have an active session
+header("Location:/common/login.php");  		//user do not have an active session
 exit();
 }
 

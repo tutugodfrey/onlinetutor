@@ -8,7 +8,7 @@ if(empty($_POST["agreement"])){
 	$display = "<p>Please agree to our term of use and privacy policy<a href = \"signup.php\"> &lt;&lt; back</a></p>";
 }	else {
 	$title_display = "registration";
-	$success_string = "<p>Your rigistration is successful <a href =\"login.php\" >Log In</a>";
+	$success_string = "<p>Your rigistration is successful <a href =\"./login.php\" >Log In</a>";
 
 	//gather the require data from user
 	//clean up the user input

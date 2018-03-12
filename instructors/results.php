@@ -283,7 +283,7 @@ block;
 
 }		//end verify $L_id
 }	else {			
-header("Location:/onlinetutor/common/login.php");  		//user do not have an active session
+header("Location:/common/login.php");  		//user do not have an active session
 exit();
 }
 

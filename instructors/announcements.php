@@ -32,7 +32,7 @@ if(isset($_POST["make_announcement"])){
 		$heading = "";
 		$display = "<p>Please type your message to make announcement</p>";
 	}	else	{
-	$query_string  = "insert into announcement value (null, \"$message\", now()) where lec_id = \"$owner_id\"";
+	$query_string  = "insert into announcements value (null, \"$message\", now()) where lec_id = \"$owner_id\"";
 		run_query($query_string, $lecturer_db);
 		if($row_num2 == 0){
 			$heading = "";
@@ -47,7 +47,7 @@ if(isset($_POST["make_announcement"])){
 
 if(isset($_GET["view_announcement"])){
 	$fields = array ("announcement_id", "Announcement", "Post Date");
-	$query_string = "select id, post_message, post_date from announcement";
+	$query_string = "select announcement_id, post_message, post_date from announcements";
 	run_query($query_string, $lecturer_db);
 	if($row_num2 == 0){
 		$heading = "";
@@ -79,7 +79,7 @@ if(isset($_POST["delete"])){
 		$display = "<p>Action could not be completed please select an announce to delete</p>";
 	}	else	{
 		$announcement_id = trim($_POST["announcement_id"][0]);
-		$query_string = "delete from announcement where id = \"$announcement_id\"";
+		$query_string = "delete from announcements where announcement_id = \"$announcement_id\"";
 		run_query($L_id);
 		if($row_num2 == 0){
 			$heading = "";
@@ -94,7 +94,7 @@ if(isset($_POST["delete"])){
 }
 
 }	else {
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/common/login.php");  		//user do not have an active session
 exit();
 }
 ?>

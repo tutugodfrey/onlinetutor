@@ -38,10 +38,10 @@ create table friends (
 );
 
 create table chats (
-	post_id int not null primary key auto_increment, 
+	chat_id int not null primary key auto_increment, 
 	sender int not null, 
 	receiver int not null, 
-	post text not null, 
+	chat_text text not null, 
 	media_url varchar(120), 
 	post_date datetime not null
 );
@@ -129,13 +129,15 @@ create table posts (
 );
 
 create table announcements( 
-	lec_id int not null primary key,
+	announcement_id int not null primary key auto_increment,
+	lec_id int not null,
 	post_message text not null, 
 	post_date datetime not null
 );
 
 create table notes  (
-	user_id int not null primary key, 
+	note_id int not null primary key auto_increment, 
+	user_id int not null, 
 	course_id tinyint not null, 
 	title varchar (100), 
 	note text not null, 
@@ -143,7 +145,8 @@ create table notes  (
 );
 
 create table videos (
-  lec_id int not null primary key, 
+	video_id int not null primary key auto_increment,
+  lec_id int not null, 
   course_id tinyint not null, 
   video_url varchar (150) not null, 
   video_name varchar  (100) not null, 

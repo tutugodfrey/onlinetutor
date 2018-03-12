@@ -4,12 +4,12 @@ include "./../includes/db_connect.php";
 include "./../includes/functions.php";
 include "./../includes/server-funcs.php";
 include "./../includes/views.php";
+$doc_root = $_SERVER["DOCUMENT_ROOT"];
 
 
 session_start();
 if(isset($_SESSION["owner_id"])){
 $owner_id = $_SESSION["owner_id"];
-$lecturer_db = $_SESSION["lecturer_db"];
 
 if(isset($_GET["lecture_note"]) || isset($_POST["edit"])){
 	$heading = ""; $view_old_note = ""; $view_note_button = ""; $saved_courses = ""; $course_note = ""; $topic = ""; $save_button = ""; $post_text = "";
@@ -37,7 +37,7 @@ if(isset($_GET["lecture_note"]) || isset($_POST["edit"])){
 		$upload_image = "<label for = \"upload_iamge\">Upload Image</label><input type = \"file\" id = \"imageFile\" class = \"form-control\" accept = \"image/*\" multiple name = \"image_file[]\" />";
 		$save_button = "<input type = \"submit\" class = \"btn btn-success\" id = \"saveNote\" name = \"save_note\" value = \"SAVE\" />";
 		//work with already save notes
-		$query_string = "select course_id, title from note where user_id = \"$owner_id\"";
+		$query_string = "select note_id, course_id, title from notes where user_id = \"$owner_id\"";
 		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>You have no saved notes</p>";
@@ -49,7 +49,7 @@ if(isset($_GET["lecture_note"]) || isset($_POST["edit"])){
 			$saved_note_info = [];
 			foreach($note_details as $note_detail) {
 				$course_id = $note_detail[1];
-				$query_string = "select course_code from courses where course_id = \"$course_id\" and user_id = \"$owner_id\"";
+				$query_string = "select course_code from courses where course_id = \"$course_id\" and lec_id = \"$owner_id\"";
 				run_query($query_string);
 				if($row_num2 == 0) {
 					$display = "<p>Course detail could note be fetch</p>";
@@ -78,10 +78,12 @@ if(isset($_GET["lecture_note"]) || isset($_POST["edit"])){
 			$display = "<p>Please the checkbox to edit the note</p>";
 		}	else	{
 			$note_id = $_POST["note_id"][0];
+			$query_string = "select course_id, course_code from courses where lec_id = \"$owner_id\"";
+			$course_details = get_course_code($course_id, $owner_id, 1, $query_string);
 			$note_id = "<input type = \"hidden\" name = \"note_id\" value = \"$note_id\" />";
-			$text_area = "<label for = \"note_text\">Write your Note</label><br /><textarea rows = \"7\" cols = \"50\" name = \"post_text\" >$post_text</textarea><br />";
-			$topic = "<label for = \"topic\">Title</label><input type = \"text\" name = \"topic\" value = \"$title\" size = \"50\" /><br />";
-			$course_note = "<label for = \"course_code\">Course Code</label><input type = \"text\" name = \"course_code\" value = \"$course_note\"/><br />";
+			$text_area = "<label for = \"note_text\">Write your Note</label><br /><textarea rows = \"7\" cols = \"50\" class = \"form_control\" name = \"post_text\" >$post_text</textarea><br />";
+			$topic = "<label for = \"topic\">Title</label><input type = \"text\" class = \"form-control\" name = \"topic\" value = \"$title\" size = \"50\" /><br />";
+			$course_note = select_option($course_details, "course code", "course_id", "form-control");
 		}
 		$heading = "<h1>Edit Note</h1>";
 		$display = "<p>use the input fields below to edit you note, then click the update button</p>"; 
@@ -159,10 +161,10 @@ if(isset($_POST["save_note"]) || isset($_POST["update_note"])){
 
 	///////////////////////////
 	if(is_uploaded_file($_FILES["text_file"]["tmp_name"])) {
-		$store = "C:/xampp/htdocs/mylecturerapp/personal_data/".$lecturer_db;
+		$store = "$doc_root/personal_data/user".$owner_id;
 		move_uploaded_file($_FILES['text_file']['tmp_name'],      
 		"$store/".$_FILES["text_file"]['name']) or die("Couldn't move file"); //can also be $store."/".
-		$picture = "C:/xampp/htdocs/mylecturerapp/personal_data/".$lecturer_db."/".$_FILES["text_file"]['name'];	//save the url to the database
+		$picture = "$doc_root/personal_data/user".$owner_id."/".$_FILES["text_file"]['name'];	//save the url to the database
 		//$content = file_get_contents($picture);
 		$content = readfile($picture);
 		echo $content;
@@ -188,7 +190,7 @@ if(isset($_POST["save_note"]) || isset($_POST["update_note"])){
 		$display = "<p>Please fill out the required fields to save your note</p>";
 	}	elseif(isset($_POST["save_note"])){
 		$heading = "<h1>Save note result</h1>";
-		$query_string = "select id from note where course_id = \"$course_id\" and note = \"$post_text\" and user_id = \"$owner_id\"";
+		$query_string = "select note_id from notes where course_id = \"$course_id\" and note = \"$post_text\" and user_id = \"$owner_id\"";
 		run_query($query_string);
 		if($row_num2 == 1){
 			$note_id = build_array($row_num2);
@@ -203,7 +205,7 @@ if(isset($_POST["save_note"]) || isset($_POST["update_note"])){
 			</form>
 block;
 		}	else	{
-			//$query_string = "insert into note values (null, \"$course_id\", \"$title\", \"$post_text\", now())";
+			$query_string = "insert into notes values (null,\"$owner_id\", \"$course_id\", \"$title\", \"$post_text\", now())";
 			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>Your note could note be save now. please check your network connection</p>";
@@ -213,7 +215,7 @@ block;
 		}
 	}	elseif(isset($_POST["update_note"])){
 		$note_id = $_POST["note_id"];
-		$query_string = "update note set note = \"$post_text\", title = \"$title\", course_id = \"$course_id\" where id = \"$note_id\" and user_id = \"$owner_id\"";
+		$query_string = "update notes set note = \"$post_text\", title = \"$title\", course_id = \"$course_id\" where note_id = \"$note_id\" and user_id = \"$owner_id\"";
 		$heading = "<h1>Note Update result</h1>";
 		run_query($query_string);
 		if($row_num2 == 0){
@@ -232,7 +234,7 @@ if(isset($_POST["view_note"])){
 	if($note_id == ""){
 		$display  = "<p>An error occur. please go back and try again</p>";
 	}	else	{
-		$query_string = "select id,  course_id, title, note, note_date from note where id = \"$note_id\" and user_id = \"$owner_id\"";
+		$query_string = "select note_id,  course_id, title, note, note_date from notes where note_id = \"$note_id\" and user_id = \"$owner_id\"";
 		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>Your note could not be fetch now. please check your network connectivity and try again</p>";
@@ -261,10 +263,10 @@ if(isset($_POST["view_note"])){
 			<form name = "lecture_note" method = "POST" action = "$_SERVER[PHP_SELF]" >
 				<input type = "hidden" name = "post_text" value = "$post_text" />
 				<input type = "hidden" name = "topic" value = "$title" />
-				<input type = "hidden" name = "course_code" value = "$course_code" />
+				<input type = "hidden" name = "course_id" value = "$course_code" />
 				$table_values
 				<input type = "submit" class = "btn btn-success" id = "editNote" name = "edit" value = "EDIT" />
-				<input type = "submit" class = "inner_btns" id = "deleteNote" name = "delete" value = "Delete" />
+				<input type = "submit" class = "btn btn-danger" id = "deleteNote" name = "delete" value = "Delete" />
 			</form>
 block;
 		}
@@ -277,7 +279,7 @@ if(isset($_POST["delete"])){
 		$display = "<p>Please select the checkbox to delete the note</p>";
 	} 	else 	{
 		$note_id = trim($_POST["note_id"][0]);
-		$query_string = "delete from note where id = \"$note_id\" and user_id = \"$owner_id\"";
+		$query_string = "delete from notes where note_id = \"$note_id\" and user_id = \"$owner_id\"";
 		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>The note could note be deleted now. please try again</p>";
@@ -289,7 +291,7 @@ if(isset($_POST["delete"])){
 
 
 }	else {			
-header("Location:/mylecturerapp/login.php");  		//user do not have an active session
+header("Location:/login.php");  		//user do not have an active session
 exit();
 }
 ?>

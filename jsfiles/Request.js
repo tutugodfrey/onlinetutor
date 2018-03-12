@@ -34,20 +34,16 @@ const Request = class {
       // ignore the link
     } else if(href.indexOf("signup") >= 0 || href.indexOf("login") >= 0 || href.indexOf("default") >= 0 || href.indexOf("home") > 0  
       || href.indexOf("forget_password") >= 0 || href.indexOf("change") >= 0 ) {
-      ajaxCall.getMethod(href, handleContent.display)
+      ajaxCall.getMethod(href, handleContent.display);
     } else {
       ajaxCall.getMethod(href, handleContent.mainContent, true)
    }
   } 
 
   formRequest(method, url, formInfo) {
-    console.log(url, formInfo);
-    console.log("type", typeof formInfo);
-
     if(method === 'post') {
-      console.log(formInfo)
       if(typeof formInfo === "object") {
-        ajaxCall.postMethod(url, formInfo, handleContent.display, true, true);
+        ajaxCall.postMethod(url, formInfo, handleContent.mainContent, true, true);
       } else {
         if(formInfo.indexOf('login') >= 0){
           const indexOfEqualSign = formInfo.lastIndexOf('=');
@@ -80,7 +76,7 @@ const Request = class {
         } else if(formInfo.indexOf("register_lecturer") >= 0){
           ajaxCall.postMethod(url, formInfo, handleContent.mainContent, false, false);
         } else {  // include more if else block if need be to do something other than display with post result
-          ajaxCall.postMethod(url, formInfo, handleContent.display, true, false);
+          ajaxCall.postMethod(url, formInfo, handleContent.mainContent, true, false);
         }
       }
     } else if (method === 'get' || "GET") {
@@ -94,7 +90,7 @@ const Request = class {
         console.log("what to search for lecturers");
         ajaxCall.getMethod(fullUrl, handleContent.showLecturers, false);
       }  else {
-        ajaxCall.getMethod(fullUrl, handleContent.display, false);
+        ajaxCall.getMethod(fullUrl, handleContent.mainContent, false);
       }
     }
   }
