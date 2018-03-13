@@ -48,7 +48,6 @@ if (isset($_POST["upload_video"])) {
 	if (is_uploaded_file($_FILES["video_file"]['tmp_name'])){
 		$store = "$doc_root/personal_data/user$owner_id/videos/".$_FILES["video_file"]["name"]; 	//directory to store the file
 		move_uploaded_file($_FILES["video_file"]['tmp_name'], $store) or die("Couldn't move file"); //can also be $store."/".
-		echo "file was moved!";
 		$video_url = "$doc_root/personal_data/user$owner_id/videos/".$_FILES["video_file"]["name"]; 	//relative url for the file to save in db
 		$video_name =  $_FILES["video_file"]['name'];
 		//the file is upload fine! get other data
@@ -56,7 +55,7 @@ if (isset($_POST["upload_video"])) {
 		admin_connect();
 		$video_caption = mysqli_real_escape_string($mysqli, trim($_POST["video_caption"]));	//clean the data
 			//write query_string to databas
-		$query_string = "insert into videos values(null, \"$course_id\", \"$video_url\", \"$video_name\", \"$video_caption\" )";
+		$query_string = "insert into videos values(null, \"$owner_id\", \"$course_id\", \"$video_url\", \"$video_name\", \"$video_caption\" )";
 		run_query($query_string);
 		if ($row_num2 == 1) {
 			$display =  "<p>Video successfully uploaded</p>";
@@ -71,7 +70,7 @@ if (isset($_POST["upload_video"])) {
 
 
 if (isset ($_POST["uploaded_videos"])) {
-	$videos = get_videos(" ", 2);
+	$videos = get_videos(" ", $owner_id, 2);
 	if(empty($videos)){
 		$display = "<p>You have not uploaded any video</p>";
 	}	else {

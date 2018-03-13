@@ -44,8 +44,7 @@ block;
 			//file_download($path);
 			$path = $_GET["path"];
 			$path_array = explode ("/", $path);
-			$filename =  $path_array[5];
-			$path = $_SERVER["DOCUMENT_ROOT"].$path;
+			$filename =  $path_array[7];
 			file_download($path, $filename);
 		}
 

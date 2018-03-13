@@ -63,25 +63,25 @@ function get_names($user_id){
 function get_videos($course_id, $lec_id, $query_to_run = 1 ) {
 	global $row_num2;
 	if($query_to_run == 1) {
-		$query_string = "select id, video_url, video_name, video_caption, course_id from videos where course_id =\"$course_id\" and lec_id = \"$lec_id\"";
+		$query_string = "select video_id, video_url, video_name, video_caption, course_id from videos where course_id =\"$course_id\" and lec_id = \"$lec_id\"";
 	}
 if($query_to_run === 2) {
-		$query_string = "select id, video_url, video_name, video_caption, course_id from videos and lec_id = \"$lec_id\"";
+		$query_string = "select video_id, video_url, video_name, video_caption, course_id from videos where lec_id = \"$lec_id\"";
 	}
 	run_query($query_string);
 	if($row_num2 == 0 ){
-	return;
+		return;
 	}	else 	{
-	$video_details = build_array($row_num2);
-	if($row_num2 == 1){
-	$video_details = [$video_details];
-	}
-	$videos = [];
-	foreach($video_details as $video){
-	$video[4] = get_course_code($video[4], $lec_id, 1);
-	$videos[] = $video;
-	}
-	return $videos;
+		$video_details = build_array($row_num2);
+		if($row_num2 == 1){
+			$video_details = [$video_details];
+		}
+		$videos = [];
+		foreach($video_details as $video){
+			$video[4] = get_course_code($video[4], $lec_id, 1)[0];
+			$videos[] = $video;
+		}
+		return $videos;
 	}
 }
 

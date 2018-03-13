@@ -20,7 +20,7 @@ $owner_id = $_SESSION["owner_id"];
 			}	else	{
 				$courses = foreach_iterator2("get_course_code", $course_ids, $lec_id, 2);
 				$heading = "<h1>Your registered Courses</h1>";
-				$registered_courses = select_option($courses, "course code", "course_id");
+				$registered_courses = select_option($courses, "course code", "course_id", "form-control");
 				$display = <<<block
 				<form name = "lectureNoteForm" method = "POST" action = "$_SERVER[PHP_SELF]" >
 				<p>Select a course to see note</p>
@@ -36,11 +36,11 @@ block;
 			if($course_id == ""){
 				$display = "<p>Please select a course to see all available note for the course</p>";
 			}	else	{
-				$course_code = get_course_code( $course_id, $lec_id, 1);
+				$course_code = get_course_code( $course_id, $lec_id, 1)[0];
 				if($course_code == ""){
 					$display = "<p>course code not found</p>";
 				}	else	{
-					$query_string = "select id, title from note where course_id = \"$course_id\" and lec_id = \"$lec_id\"";
+					$query_string = "select note_id, title from notes where course_id = \"$course_id\" and user_id = \"$lec_id\"";
 					run_query($query_string);
 					if($row_num2 == 0){
 						$display = "<p>No Note have been saved for this course</p>";
@@ -74,7 +74,7 @@ block;
 				$note_id = trim($_POST["note_id"][0]);
 				$course_id = $_POST["course_id"];
 				$course_code = $_POST["course_code"];
-				$query_string = "select title, note, date_format(note_date, \"Posted %D %M %Y\") from note where id = \"$note_id\" and lec_id = \"$lec_id\"";
+				$query_string = "select title, note, date_format(note_date, \"Posted %D %M %Y\") from notes where note_id = \"$note_id\" and user_id = \"$lec_id\"";
 				run_query($query_string);
 				if($row_num2 == 0){
 					$display = "<p>Your note could not be fetch now. please check your network connectivity and try again</p>";
@@ -97,7 +97,7 @@ block;
 	}
 
 }	else {
-header("Location:/onlinetutor/login.php");  		//user do not have an active session
+header("Location:/common/login.php");  		//user do not have an active session
 exit();
 }
 ?>

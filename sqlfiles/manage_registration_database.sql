@@ -140,7 +140,8 @@ create table notes  (
 	user_id int not null, 
 	course_id tinyint not null, 
 	title varchar (100), 
-	note text not null, 
+	note text not null,
+	note_url varchar (200),
 	note_date datetime not null
 );
 

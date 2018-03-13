@@ -159,50 +159,42 @@ return $chat_xml;
 /////////////////////////////////////////////////////////////
 //for downloading files
 function file_download($path, $filename) {
-
-
-if(!$filename) {
-echo "error";
- }	else 	{
-//$path = $path . $filename;
-
-if(file_exists($path) && is_readable($path)) {
-
-$size  = filesize($path);
-header("Content-Type:application/Octet-Stream");
-header("Content-Length:$size");
-header("Content-Disposition:attachment; filename=$filename");
-header("Content-Transfer-encoding:binary");
-//open the file read and deliver
-$file = @fopen($path, "rb");
-if($file) {
-fpassthru($file);
-exit;
-} else	{
-echo "error1";
-}
-}	else	{
-
-echo "error2";
-}
-
-}
-
-
+	if(!$filename) {
+		echo "error";
+	 }	else 	{
+		//$path = $path . $filename;
+		if(file_exists($path) && is_readable($path)) {
+			$size  = filesize($path);
+			header("Content-Type:application/Octet-Stream");
+			header("Content-Length:$size");
+			header("Content-Disposition:attachment; filename=$filename");
+			header("Content-Transfer-encoding:binary");
+			//open the file read and deliver
+			$file = @fopen($path, "rb");
+			if($file) {
+				fpassthru($file);
+				exit;
+			} else	{
+				echo "error1";
+			}
+		}	else	{
+		echo "error2";
+		}
+	}
 }		//end file_download
 
 ///////////////////////////////////////////////////////
 //function to provide multiple extentions for playing media
 function multi_source($file_source)	{
-$ext_array = ["mvc", "ogg", "3gp", "mp4", "avi" ];
-$ext_size = sizeof($ext_array);
-$dot_pos = strpos($file_source, ".");
-$sources = "";
-for($i = 0; $i < $ext_size; $i++) {
-$source = substr_replace($file_source, $ext_array[$i], $dot_pos + 1);
-$sources .= "<source src = \"$source\" />";
-}		//end for block
-return $sources;
+	$ext_array = ["mvc", "ogg", "3gp", "mp4", "avi" ];
+	$ext_size = sizeof($ext_array);
+	$dot_pos = strpos($file_source, ".");
+	$sources = "";
+	for($i = 0; $i < $ext_size; $i++) {
+		$source = substr_replace($file_source, $ext_array[$i], $dot_pos + 1);
+		$sources .= "<source src = \"$source\" />";
+	}		//end for block
+	return $sources;
 }	//end multi_source
 
 

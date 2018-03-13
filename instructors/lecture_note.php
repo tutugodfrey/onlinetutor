@@ -114,28 +114,6 @@ block;
 
 if(isset($_POST["save_note"]) || isset($_POST["update_note"])){
 	$heading= "";
-	foreach($_FILES as $file_name => $file_array){
-		echo $file_array["tmp_name"][0];
-		echo "path: ".$file_array['tmp_name']."<br/>\n";
-		echo "name: ".$file_array['name'][0]."<br/>\n";
-		echo "name: ".$file_array['name'][1]."<br/>\n";
-		echo "type: ".$file_array['type'][0]."<br/>\n";
-		echo "type: ".$file_array['type'][1]."<br/>\n";
-		echo "type: ".$file_array['type'][2]."<br/>\n";
-		echo "size: ".$file_array['size']."<br/>\n";
-
-		/*
-		if (is_uploaded_file($file_array['tmp_name'])){
-		//move_uploaded_file($file_array['tmp_name'],
-		//"$store/".$file_array['name']) or die("Couldn't move file"); //can also be $store."/".;
-		echo "file was moved!";
-		} else {
-		echo "No file found.";
-		} */
-	}
-
-
-
 	/*
 	///////////////
 	//dealing with uploaded images
@@ -164,20 +142,16 @@ if(isset($_POST["save_note"]) || isset($_POST["update_note"])){
 		$store = "$doc_root/personal_data/user".$owner_id;
 		move_uploaded_file($_FILES['text_file']['tmp_name'],      
 		"$store/".$_FILES["text_file"]['name']) or die("Couldn't move file"); //can also be $store."/".
-		$picture = "$doc_root/personal_data/user".$owner_id."/".$_FILES["text_file"]['name'];	//save the url to the database
+		$note_url = "$doc_root/personal_data/user".$owner_id."/".$_FILES["text_file"]['name'];	//save the url to the database
 		//$content = file_get_contents($picture);
-		$content = readfile($picture);
-		echo $content;
-		echo "you just uploaded a file now ";
-		$post_text = $content;
-		$post_text = str_replace("insert_image", $image_html, $post_text);
-		admin_connect();
-		$post_text = mysqli_real_escape_string($mysqli, trim($post_text));
+		$post_text = ""; 
+		// $content = readfile($picture);
 	}	else	{
 		$post_text = trim($_POST["post_text"]);
 		$post_text = str_replace("insert_image", $image_html, $post_text);
 		admin_connect();
 		$post_text = mysqli_real_escape_string($mysqli, trim($post_text));
+		$note_url = "";
 	}
 
 	$course_id = trim($_POST["course_id"]);
@@ -186,11 +160,11 @@ if(isset($_POST["save_note"]) || isset($_POST["update_note"])){
 		$topic = "untitled";
 	}
 
-	if($course_id == "" || $post_text == ""){
+	if($course_id === "" && ($post_text === "" || $note_url === "")) {
 		$display = "<p>Please fill out the required fields to save your note</p>";
 	}	elseif(isset($_POST["save_note"])){
 		$heading = "<h1>Save note result</h1>";
-		$query_string = "select note_id from notes where course_id = \"$course_id\" and note = \"$post_text\" and user_id = \"$owner_id\"";
+		$query_string = "select note_id from notes where course_id = \"$course_id\" and note = \"$post_text\" and note_url = \"$note_url\" and  user_id = \"$owner_id\"";
 		run_query($query_string);
 		if($row_num2 == 1){
 			$note_id = build_array($row_num2);
@@ -205,7 +179,7 @@ if(isset($_POST["save_note"]) || isset($_POST["update_note"])){
 			</form>
 block;
 		}	else	{
-			$query_string = "insert into notes values (null,\"$owner_id\", \"$course_id\", \"$title\", \"$post_text\", now())";
+			$query_string = "insert into notes values (null,\"$owner_id\", \"$course_id\", \"$title\", \"$post_text\", \"$note_url\", now())";
 			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>Your note could note be save now. please check your network connection</p>";
@@ -234,7 +208,7 @@ if(isset($_POST["view_note"])){
 	if($note_id == ""){
 		$display  = "<p>An error occur. please go back and try again</p>";
 	}	else	{
-		$query_string = "select note_id,  course_id, title, note, note_date from notes where note_id = \"$note_id\" and user_id = \"$owner_id\"";
+		$query_string = "select note_id, course_id, title, note, note_url, note_date from notes where note_id = \"$note_id\" and user_id = \"$owner_id\"";
 		run_query($query_string);
 		if($row_num2 == 0){
 			$display = "<p>Your note could not be fetch now. please check your network connectivity and try again</p>";
@@ -242,6 +216,8 @@ if(isset($_POST["view_note"])){
 			$heading = "<h1>Your note</h1>";
 			$result = build_array($row_num2);
 			 $course_id = $result[1];
+			 $note_url = $result[4];
+			 $note = $result[3];
 			//get the course code 
 			$query_string = "select course_code from courses where course_id = \"$course_id\" and lec_id = \"$owner_id\"";
 			run_query($query_string);
@@ -250,27 +226,42 @@ if(isset($_POST["view_note"])){
 			}	else 	{
 				$course_code	= build_array($row_num2);
 			}
-
 			$result[1] = $course_code;
 			$result = [$result];
-			$post_text = trim($result[0]["note"]);		//obtain the note incase user want to edit it
-			$title = trim($result[0]["title"]);
-			$course_code = trim($result[0]["course_id"]);
-			$fields = array ("note_id", "Course code", "Title", "Note", "Post Date");
-			array_unshift($result, $fields);
-			$table_values = mytable($result, "Yes", "no");		//checkbox is display and id is hidden value of id is in the checkbox
-			$display = <<<block
-			<form name = "lecture_note" method = "POST" action = "$_SERVER[PHP_SELF]" >
-				<input type = "hidden" name = "post_text" value = "$post_text" />
-				<input type = "hidden" name = "topic" value = "$title" />
-				<input type = "hidden" name = "course_id" value = "$course_code" />
-				$table_values
-				<input type = "submit" class = "btn btn-success" id = "editNote" name = "edit" value = "EDIT" />
-				<input type = "submit" class = "btn btn-danger" id = "deleteNote" name = "delete" value = "Delete" />
-			</form>
+					//checkbox is display and id is hidden value of id is in the checkbox
+			if($note_url === "") {
+				$post_text = trim($result[0]["note"]);		//obtain the note incase user want to edit it
+				$title = trim($result[0]["title"]);
+				$course_code = trim($result[0]["course_id"]);
+				$fields = array ("note_id", "Course code", "Title", "Note", "Post Date");
+				array_unshift($result, $fields);
+				$table_values = mytable($result, "Yes", "no");
+				$display = <<<block
+				<form name = "lecture_note" method = "POST" action = "$_SERVER[PHP_SELF]" >
+					<input type = "hidden" name = "post_text" value = "$post_text" />
+					<input type = "hidden" name = "topic" value = "$title" />
+					<input type = "hidden" name = "course_id" value = "$course_code" />
+					$table_values
+					<input type = "submit" class = "btn btn-success" id = "editNote" name = "edit" value = "EDIT" />
+					<input type = "submit" class = "btn btn-danger" id = "deleteNote" name = "delete" value = "Delete" />
+				</form>
 block;
+			} else if ($note === "") {
+				$display = "<a href = \"$_SERVER[PHP_SELF]?download_note=yes&path=$note_url\"> Download Note</a>";
+			}
 		}
 	}
+}
+
+if(isset($_GET["download_note"])){
+	//file_download($path);
+	//$heading = "";
+	$path = $_GET["path"];
+	$path_array = explode ("/", $path);
+	$filename =  $path_array[6];
+	//echo $filename;
+	//$display= $path;
+	file_download($path, $filename);
 }
 
 if(isset($_POST["delete"])){
