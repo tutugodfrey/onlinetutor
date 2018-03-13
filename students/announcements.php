@@ -14,7 +14,7 @@ $owner_id = $_SESSION["owner_id"];
 		$lec_id = $_SESSION["lec_id"];
 
 		if(isset($_GET["announcements"])){
-			$query_string = "select post_message, post_date from announcement where lec_id = \"$lec_id\"";
+			$query_string = "select post_message, post_date from announcements where lec_id = \"$lec_id\"";
 			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>No Announcement Now. Keep Checking</p>";

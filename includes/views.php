@@ -176,4 +176,8 @@ function select_option($values, $label, $name_of_field, $select_class = "", $lab
 	return $select_result;
 }
 
+function create_form($form_body, $form_fields, $extra) {
+
+}
+
 ?>

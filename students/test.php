@@ -43,7 +43,7 @@ block;
 				$display = "<p>please select a course to view tests or exams.</p>";
 			}	else	{
 				$course_code = get_course_code($course_id, $lec_id, 1);
-				$query_string = "select test_id, date_format(deadline, \"%D %M %Y\"), test_type from test where course_id = \"$course_id\" and test_status = \"opened\" and lec_id = \"$lec_id\"";
+				$query_string = "select test_id, date_format(deadline, \"%D %M %Y\"), test_type from tests where course_id = \"$course_id\" and test_status = \"opened\" and lec_id = \"$lec_id\"";
 				run_query($query_string);
 				if($row_num2 == 0){
 					$display = "<p>No test have been set for $course_code[0]</p>";
@@ -91,7 +91,7 @@ block;
 					$test_ind = explode(" ", $test_ind);
 					$test_id = $test_ind[0];
 					$test_type = $test_ind[1];
-					$query_string = "select date_format(duration, \"%i\"), date_format(deadline, \"%H:%i %p. %W, %D of %M, %Y\"), mark, no_of_questions from test where test_id = \"$test_id\" and course_id = \"$course_id\" and test_type = \"$test_type\" and lec_id = \"$lec_id\"";
+					$query_string = "select date_format(duration, \"%i\"), date_format(deadline, \"%H:%i %p. %W, %D of %M, %Y\"), mark, no_of_questions from tests where test_id = \"$test_id\" and course_id = \"$course_id\" and test_type = \"$test_type\" and lec_id = \"$lec_id\"";
 					run_query($query_string);
 					if($row_num2 == 0 ){
 						$display = "<p>Test specification could not be retrieved</p>";
@@ -256,7 +256,7 @@ block;
 	}
 	
 }	else {
-header("Location:/login.php");  		//user do not have an active session
+header("Location:/common/login.php");  		//user do not have an active session
 exit();
 }
 

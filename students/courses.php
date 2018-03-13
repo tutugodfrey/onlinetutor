@@ -56,7 +56,7 @@ block;
 				$course_status = $_POST["course_status"];
 				$query_string = "select course_id from registered_courses where student_id = \"$owner_id\" and course_id = \"$course_id\" and lec_id = \"$lec_id\"";
 				run_query($query_string);
-				if($row_num2 > 1){
+				if($row_num2 === 1){
 					$display  = "<p>You have already registered this course</p>";
 				}	else{
 					$query_string = "insert into registered_courses values(null, \"$lec_id\", \"$owner_id\", \"$course_id\", \"$course_status\")";

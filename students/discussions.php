@@ -40,7 +40,7 @@ block;
 			$course_id = $_GET["course_id"];
 			$heading = "<h1>Topics of Discussion</h1>";
 			//get the topics for discussion
-			$query_string = "select discussion_id, course_id, discussion_topic, post_date, type from discussion where course_id = \"$course_id\" and lec_id = \"$lec_id\"";
+			$query_string = "select discussion_id, course_id, discussion_topic, post_date, type from discussions where course_id = \"$course_id\" and lec_id = \"$lec_id\"";
 			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>No Discussion has been posted for this course</p>";
@@ -86,7 +86,7 @@ block;
 				if($post_text == "" ){
 					$display = "<p>Please fill out the required fields to post the topic</p>";
 				}	else 	{
-					$query_string = "select course_id, type from discussion where discussion_id = \"$discussion_id\" and lec_id = \"$lec_id\"";
+					$query_string = "select course_id, type from discussions where discussion_id = \"$discussion_id\" and lec_id = \"$lec_id\"";
 					run_query($query_string);
 					if($row_num2 == 0){
 						$display = "<p>The course code and the discussion id does not match. Please check and try again</p>";
@@ -94,7 +94,7 @@ block;
 						$result = build_array($row_num2);
 						$course_id = $result["course_id"];
 						$type = $result["type"];
-						$query_string = "insert into post values (null, \"$lec_id\", \"$owner_id\", \"$discussion_id\", \"$course_id\", now(), \"$post_text\", \"$type\", \"no\")";
+						$query_string = "insert into posts values (null, \"$lec_id\", \"$owner_id\", \"$discussion_id\", \"$course_id\", now(), \"$post_text\", \"$type\", \"no\")";
 						run_query($query_string);
 						if($row_num2 == 0){
 							$display = "<p>Your reply could not be posted</p>";
@@ -112,7 +112,7 @@ block;
 			}	else	{
 				$discussion_id = $_POST["discussion_id"][0];
 					//this will display open discussions so student can see the post of all other students for the open type
-				$query_string = "select post_id, student_id, post_date, post_text from post where discussion_id = \"$discussion_id\" and type = \"open\" or discussion_id = \"$discussion_id\" and type = \"close\" and student_id = \"$owner_id\" and lec_id = \"$lec_id\"";
+				$query_string = "select post_id, student_id, post_date, post_text from posts where discussion_id = \"$discussion_id\" and type = \"open\" or discussion_id = \"$discussion_id\" and type = \"close\" and student_id = \"$owner_id\" and lec_id = \"$lec_id\"";
 				run_query($query_string);
 				if($row_num2 == 0 ){
 					$display = "<p>No post have been submitted for this topic</p>";
@@ -148,7 +148,7 @@ block;
 	}
 
 }	else {
-header("Location:/login.php");  		//user do not have an active session
+header("Location:/common/login.php");  		//user do not have an active session
 exit();
 }
 

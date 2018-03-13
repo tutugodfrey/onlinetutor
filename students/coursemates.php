@@ -69,8 +69,8 @@ $owner_id = $_SESSION["owner_id"];
 						<p id = "coursemate$student_info[0]">
 						<img src = "$student_info[3]" alt = "image" />
 						$student_info[1] $student_info[2]
-						<a href = "/onlinetutor/common/profile.php?register_friend=yes&user_id=$student_info[0]">Add as Friend</a>
-						<a href = "/onlinetutor/common/profile.php?profile=yes&user_id=$student_info[0]">View Profile</a>
+						<a href = "/common/profile.php?register_friend=yes&user_id=$student_info[0]">Add as Friend</a>
+						<a href = "/common/profile.php?profile=yes&user_id=$student_info[0]">View Profile</a>
 						</p>
 block;
 						}		//end foreach inside for block
@@ -88,7 +88,7 @@ block;
 
 
 }	else {
-header("Location:/login.php");  		//user do not have an active session
+header("Location:/common/login.php");  		//user do not have an active session
 exit();
 }
 
