@@ -17,7 +17,7 @@ $display = "<p>An error occurred while process your request please go back and t
 
 if(isset($_GET["results"])){
 	//get the course_code for which there are test result
-	$query_string = "select distinct course_id from score_board";
+	$query_string = "select distinct course_id from score_board where lec_id = \"$owner_id\"";
 	run_query($query_string);
 	if($row_num2 == 0){
 		$display = "<p>No recorded scores</p>";
@@ -26,8 +26,8 @@ if(isset($_GET["results"])){
 		if($row_num2 == 1){
 			$course_ids = [$course_ids];
 		}
-		$courses = foreach_iterator2("get_course_code", $course_ids, "yes");	//get an array of array of course_ids and course_code
-		$select_result1 = select_option($courses, "course code", "course_id");
+		$courses = foreach_iterator2("get_course_code", $course_ids, $owner_id, 2);	//get an array of array of course_ids and course_code
+		$select_result1 = select_option($courses, "course code", "course_id", "form-control");
 		$query_string = "select distinct score_type from score_board";
 		run_query($query_string);
 		if($row_num2 == 0){
@@ -42,7 +42,7 @@ if(isset($_GET["results"])){
 				$type[] = [$score_type];
 			}
 			//get the type from the score_board
-			$select_result2 = select_option($type, "type", "score_type");
+			$select_result2 = select_option($type, "type", "score_type", "form-control");
 		}
 		$display = <<< block
 		<h1>Results</h1>
@@ -168,7 +168,7 @@ if(isset($_GET["submitted_test"])){
 			array_unshift($score_info_collector, $fields);
 			$table = mytable($score_info_collector, "yes", "yes");
 			$score_type = ucwords($score_type);
-			$course_code = get_course_code($course_id);
+			$course_code = get_course_code($course_id, $owner_id, 1)[0];
 			$display = <<<block
 			<h1>student scores for $course_code $score_type</h1>
 			$table
@@ -212,7 +212,7 @@ if(isset($_GET["total_score"])){
 		$query_string = "select distinct student_id from score_board where course_id = \"$course_id\" and lec_id = \"$owner_id\"";	//all student who made submission for this course
 		run_query($query_string);
 		if($row_num2 == 0){
-			$display = "<p>No scores found in the record</p>";
+			$display = "$course_id $owner_id $row_num2<p>No scores found in the record</p>";
 		}	else	{
 		$student_ids = build_array($row_num2);
 		if($row_num2 == 1 ){
@@ -269,7 +269,7 @@ if(isset($_GET["total_score"])){
 		}	//end foreach
 		array_unshift($scores_collector, $fields);
 		$table = mytable($scores_collector, "yes", "yes");
-		$course_code = ucwords(get_course_code($course_id));
+		$course_code = ucwords(get_course_code($course_id, $owner_id, 1)[0]);
 		$display = <<<block
 		<h1>Student accumulated scores for $course_code</h1>
 		$table

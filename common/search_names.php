@@ -20,7 +20,7 @@ $display  = <<<block
 <form name = "new_friend" method = "GET" action = "$_SERVER[PHP_SELF]" >
 <label for = "name_field">Enter name</label>
 <input type = "text" id = "new_friend_name" name = "name_like" placeholder = "Search friends" />
-<input type = "submit" class = "btn btn-primary" id = "search_frnd" name = "search_friends" value = "search_friend"/>
+<input type = "submit" class = "btn btn-primary" id = "search_frnd" name = "search_friends" value = "Search Friend"/>
 </form> 
 </div><br />
 <div id = "matched_friend_list"></div>

@@ -2,6 +2,7 @@
 //include required files
 include "./../includes/db_connect.php";
 include "./../includes/functions.php";
+$doc_root = $_SERVER["DOCUMENT_ROOT"];
 
 session_start();
 if(isset($_SESSION["owner_id"])){
@@ -17,7 +18,7 @@ if(isset($_GET["friends"])){
 	$query_string = "select requestor_id from friends where confirm = 'no' and friend_id = \"$owner_id\"  and user_type is null";
 	run_query($query_string);
 	if($row_num2 == 0){
-		$display .= "<p>you do not have new friend request. <a id = \"search_friend\" href = \"/onlinetutor/common/search_names.php?new_friends=yes\" > search new friends</a></p>";
+		$display .= "<p>you do not have new friend request. <a id = \"search_friend\" href = \"/common/search_names.php?new_friends=yes\" class = \"btn btn-primary\"> search new friends</a></p>";
 	}	else	{
 		$friends_id = build_array($row_num2);
 		if($row_num2 == 1){
@@ -34,11 +35,11 @@ if(isset($_GET["friends"])){
 				array_push($friends_array, $friend_details);
 			}
 		}	// end foreach
-		$display .= "<a id = \"search_friend\" href = \"/onlinetutor/common/search_names.php?new_friends=yes\" > search new friends</a></p>";
+		$display .= "<a id = \"search_friend\" href = \"$doc_root/common/search_names.php?new_friends=yes\" > search new friends</a></p>";
 		$display .= "<div id = \"friend_requests\"><p>You have pending friend request </p>";
 		foreach($friends_array as $new_friend){
 			$display .= <<<block
-			<p class = "requests"><br /><img src = "$new_friend[1]" alt = "Photo" />$new_friend[2] $new_friend[3]<a class ="confirm" id ="conf$new_friend[0]" href = "/onlinetutor/common/profile.php?confirm=yes&friend_id=$new_friend[0]" >Confirm</a><a class = "decline" id ="decl$new_friend[0]" href = "onlinetutor/common/profile.php?confirm=no&friend_id=$new_friend[0]" >Decline</a><a class = "profile" id ="prof$new_friend[0]" href ="/onlinetutor/common/profile.php?profile=yes&&user_id=$new_friend[0]">Profile</a></p></div>
+			<p class = "requests"><br /><img src = "$new_friend[1]" alt = "Photo" />$new_friend[2] $new_friend[3]<a class ="confirm" id ="conf$new_friend[0]" href = "$doc_root/common/profile.php?confirm=yes&friend_id=$new_friend[0]" >Confirm</a><a class = "decline" id ="decl$new_friend[0]" href = "$doc_root/common/profile.php?confirm=no&friend_id=$new_friend[0]" >Decline</a><a class = "profile" id ="prof$new_friend[0]" href ="$doc_root/common/profile.php?profile=yes&&user_id=$new_friend[0]">Profile</a></p></div>
 block;
 		}		//end foreach
 	}	//end select new friend
@@ -98,7 +99,7 @@ if(isset($_GET["choose_friend"])){
 		}	else	{
 			$friend_detail = build_array($row_num2);
 			//display friend image and will be used to get the friend profile
-			$display = "<p class = \"friends\" ><img src = \"$friend_detail[0]\" alt = \"image\" /><a   id = \"choosen\" href = \"/onlinetutor/common/profile.php?profile=yes&user_id=$friend_id\">$friend_detail[1] $friend_detail[2]</a></p>";
+			$display = "<p class = \"friends\" ><img src = \"$friend_detail[0]\" alt = \"image\" /><a   id = \"choosen\" href = \"$doc_root/common/profile.php?profile=yes&user_id=$friend_id\">$friend_detail[1] $friend_detail[2]</a></p>";
 		}		//end query to select a friend info
 
 		$sender = $owner_id;
@@ -159,7 +160,7 @@ if(isset($_POST["send_chat_msg"])){
 				$media_type = $_FILES["media_file"]["type"];
 				if(in_array($media_type, $image_type)){
 					$file_type_indicator = "image";
-					$store = "C:/xampp/htdocs/onlinetutor/personal_data/user$owner_id/images/";
+					$store = "$doc_root/personal_data/user$owner_id/images/";
 					$type = "images";
 				}
 				if(in_array($media_type, $video_type)){
@@ -168,14 +169,14 @@ if(isset($_POST["send_chat_msg"])){
 					}	else if (strstr($media_type, "video")){
 						$file_type_indicator = "-video";
 					}
-					$store = "C:/xampp/htdocs/onlinetutor/personal_data/user$owner_id/videos/";
+					$store = "$doc_root/personal_data/user$owner_id/videos/";
 					$type = "videos";
 				}
 				echo $media_type;
 
 				move_uploaded_file($_FILES["media_file"]["tmp_name"], $store.$_FILES["media_file"]["name"]) or die("file could not be uploaded");
 
-				$media_url .= "\t/onlinetutor/personal_data/user$owner_id/$type/".$_FILES["media_file"]["name"]. "$file_type_indicator";
+				$media_url .= "\t$doc_root/personal_data/user$owner_id/$type/".$_FILES["media_file"]["name"]. "$file_type_indicator";
 			}	else {		//end foreach
 				$media_url = '';
 			}		//end uploaded file
@@ -190,8 +191,7 @@ if(isset($_POST["send_chat_msg"])){
 			if($row_num2 == 1){
 				$display = "<p>The massage has already been posted</p>";
 			}	else	{
-				$query_string = array("insert into chats values(null, \"$sender\", \"$receiver\", \"$post_text\", \"$media_url\", now())", 
-						"insert into $friend_chat values(null, \"$sender\", \"$receiver\", \"$post_text\", \"$media_url\", now())");
+				$query_string = "insert into chats values(null, \"$sender\", \"$receiver\", \"$post_text\", \"$media_url\", now())";
 				run_query($query_string);
 				if($row_num2 == 0 && $row_num3 == 0){
 					$display = "<p>There a problem posting your request. it might be due to network connection</p>";

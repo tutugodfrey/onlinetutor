@@ -18,7 +18,7 @@ $owner_id = $_SESSION["owner_id"];
 			$query_string = "select course_id from registered_courses where student_id = \"$owner_id\" and lec_id = \"$lec_id\"";
 			run_query($query_string);
 			if($row_num2 == 0){
-				$display = "<p>You have not registered any course with this lecturer</p>";
+				$display = "<p>You have not registered any course with this lecturer yet <a href = \"/students/courses.php?courses\" id = \"registerCourse\" class = \"btn btn-primary\" >Register a course now!</a></p>";
 			}	else	{
 				$course_ids = build_array($row_num2);
 				if($row_num2 == 1) {
@@ -108,7 +108,8 @@ block;
 						}
 						$heading = "<h1>Test Taker</h1>";
 						$instructions = "
-						<pre><h2>Instructions</h2><p>
+						<pre>
+						<h2>Instructions</h2><p>
 						This is $test_type $test_id for $course_code[0]. This $test_type will
 						last for $duration minutes and your are required to answer
 						$no_of_questions $question. Each question carry equal mark Please

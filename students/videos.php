@@ -17,7 +17,7 @@ $owner_id = $_SESSION["owner_id"];
 			//select the course the student is offers
 			$course_ids = registered_course_ids($owner_id, $lec_id);
 			if(empty($course_ids)){
-				$display = "<p> You have not registered any course with this lecturer</p>";
+				$display = "<p>You have not registered any course with this lecturer yet <a href = \"/students/courses.php?courses\" id = \"registerCourse\" class = \"btn btn-primary\" >Register a course now!</a></p>";
 			}	else	{
 				$videos = foreach_iterator2("get_videos", $course_ids, $lec_id, 1);
 				if(empty($videos)){

@@ -15,16 +15,17 @@ if(isset($_GET["discussions"])) {
 	$heading = "";
 	$heading = "<h1>Create a discussion</h1>";
 	//get the course that the lecturer is taking
-	$query_string = "select course_id, course_code from courses";
+	$query_string = "select course_id, course_code from courses where lec_id = \"$owner_id\"";
 	run_query($query_string);
 	if($row_num2 == 0){
-		$display = "<p>No Course have been saved in the record</p>";
+		$heading = "";
+		$display = "<p>No Course have been saved in the record <a href = \"/instructors/save_course.php?save_courses=yes\" id = \"saveCourse\" class = \"btn btn-primary\" >add a course now!</a></p>";
 	}	else	{
 		$values = build_array($row_num2);
 		if($row_num2 == 1){
 			$values = [$values];
 		}
-		$select_result = select_option($values, "course code", "course_id");
+		$select_result = select_option($values, "course code", "course_id", "form-control");
 		//write the html to display the input fields for the discussion
 		$display =  <<<block
 		<form method = "POST" class = "form-group" name = "discussion_form" action = "$_SERVER[PHP_SELF]" >
@@ -32,7 +33,7 @@ if(isset($_GET["discussions"])) {
 				$select_result
 			<br />
 			<label for = "type_of_discussion">Discussion type</label>
-			<select name = "type">
+			<select name = "type" class = "form-control">
 				<option name = "select_type" selected = "selected" value = "default">Select type</option>
 				<option value = "open">Open</option>
 				<option value = "close">Close</option>
@@ -64,7 +65,7 @@ if($row_num2 == 1){
 $display = "<p>This discussion topic and type already exit</p>";
 }	elseif($row_num2 == 0){ 			//create the discussion if it does not already exist
 $heading = "<h1>Discussion Creation Result</h1>";
-$query_string = "insert into discussions values (null, '".$course_id."', '".$discussion_topic."', now(), '".$type."') where lec_id = \"$owner_id\"";
+$query_string = "insert into discussions values (null, '".$owner_id."','".$course_id."', '".$discussion_topic."', now(), '".$type."')";
 run_query($query_string);
 if($row_num2 == 0){
 $display = "<p>The discussion could not be created</p>";
@@ -171,7 +172,7 @@ if(isset($_POST["view_posts"])){
 			$discussion_info = [];
 			for($i = 0; $i < $size_of_student_ids; $i++){
 				//get all post by this student for this discussion
-				$query_string = "select post_id, student_id, post_date, post_text, graded from posts where discussion_id = \"$discussion_id\ and lec_id = \"$owner_id\" and student_id = \"$student_ids[$i]\"";
+				$query_string = "select post_id, student_id, post_date, post_text, graded from posts where discussion_id = \"$discussion_id\" and lec_id = \"$owner_id\" and student_id = \"$student_ids[$i]\"";
 				run_query($query_string);
 				if($row_num2 == 0 ){
 					$display = "<p>An error while fetching discussion information</p>";
@@ -222,9 +223,7 @@ block;
 }		//end view_posts
 
 if(isset($_POST["grade_student"])){
-	if($L_id == ""){
-		$display = "<p>An error has occurred please go back and try again</p>";
-	}	elseif(empty($_POST["post_id"])){
+	if(empty($_POST["post_id"])){
 		$display = "<p>Please use the checkbox to select the student to grade</p>";
 	}	elseif(empty($_POST["grade"])){
 		$display = "<p>Use the check box to grade student performance from 1 to 5</p>";
@@ -246,7 +245,7 @@ if(isset($_POST["grade_student"])){
 			$graded = strtolower($result["graded"]);
 			if($graded == "no" )	{
 				//insert the data to the score_board and update the post table
-				$query_string = Array ("insert into score_board (score_id, course_id, student_id, discussion_id,  score, score_type) values (null, \"$course_id\", \"$student_id\", \"$discussion_id\",  \"$grade\", \"discussion\") where lec_id = \"$owner_id\"",
+				$query_string = Array ("insert into score_board (score_id, lec_id, student_id, course_id, test_id, discussion_id, score, score_type) values (null, \"$owner_id\", \"$student_id\", \"$course_id\", null, \"$discussion_id\", \"$grade\", 'discussion')",
 							"update posts set graded = \"YES\" where discussion_id = \"$discussion_id\" and post_id = \"$post_id\" and lec_id = \"$owner_id\"");
 				run_query($query_string);
 				if($row_num2 == 1 || $row_num3 == 1){

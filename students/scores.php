@@ -16,7 +16,7 @@ $owner_id = $_SESSION["owner_id"];
 		if(isset($_GET["scores"])){
 			$course_ids = registered_course_ids($owner_id, $lec_id);
 			if($course_ids == ""){
-				$display = "<p>You have not registered any course with this lecturer</p>";
+				$display = "<p>You have not registered any course with this lecturer yet <a href = \"/students/courses.php?courses\" id = \"registerCourse\" class = \"btn btn-primary\" >Register a course now!</a></p>";
 			}	else 	{
 				$courses = foreach_iterator2("get_course_code", $course_ids, $lec_id, 2);
 				if(empty($courses)){
@@ -127,7 +127,7 @@ block;
 						$total_scores[2] = $discussion_result[0];
 					}
 
-					run_query($query_string3, $lecturer_db);
+					run_query($query_string3);
 					if($row_num2 == 0 ){
 						$exam_result =  "";
 					}	else	{

@@ -105,8 +105,7 @@ if(isset($_GET["view_courses"])){
 	$fields = array ("course_id", "Course code", "Course Title", "Course description", "unit");
 	$values = get_course_code("course_code", $owner_id, 1, $query_string);	//get the course details
 	if(empty($values)){
-		$display = "<p>You have not save any course yet<br />go to the <a href = \"$_SERVER[PHP_SELF]?save_courses=yes\">
-				Save Courses</a> page and begin adding courses</p>";
+		$display = "<p>You have not save any course<a href = \"/instructors/save_course.php?save_courses=yes\" id = \"saveCourse\" class = \"btn btn-primary\" >add a course now!</a></p>";
 	}	else {
 		array_unshift($values, $fields);
 		$table_values = mytable($values, "yes", "no");
@@ -116,7 +115,7 @@ if(isset($_GET["view_courses"])){
 		$display .= "<input type = \"submit\" class = \"btn btn-success\" id = \"editCourse\" name = \"edit_course\" value = \"EDIT\" />";
 		$display .= "<input type = \"submit\" class = \"btn btn-danger\" id = \"deleteCourse\" name = \"delete_course\" value = \"DELETE\" />";
 		$display .= "</form>";
-		$display .= "<p>You want to <a href = \"$_SERVER[PHP_SELF]?save_courses=yes\" id = \"saveCourse\" class = \"btn btn-primary\" >add a course</a></p>";
+		$display .= "<p><a href = \"$_SERVER[PHP_SELF]?save_courses=yes\" id = \"saveCourse\" class = \"btn btn-primary\" >add a course</a></p>";
 	}
 }
 

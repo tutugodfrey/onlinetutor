@@ -14,9 +14,9 @@ $owner_id = $_SESSION["owner_id"];
 		$lec_id = $_SESSION["lec_id"];
 
 		if(isset($_GET["discussions"])){
-			$course_ids = registered_course_ids($owner_id, $lec_id);
+			$course_ids = registered_course_ids($owner_id, 5);
 			if(empty($course_ids)){
-				$display = "<p>You have not registered any course with this lecturer yet</p>";
+				$display = "<p>You have not registered any course with this lecturer yet <a href = \"/students/courses.php?courses\" id = \"registerCourse\" class = \"btn btn-primary\" >Register a course now!</a></p>";
 			}	else {
 				$courses = foreach_iterator2("get_course_code", $course_ids, $lec_id, 2);
 				if(empty($courses)){

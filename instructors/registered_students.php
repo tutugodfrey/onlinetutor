@@ -51,7 +51,7 @@ $display = "<p>Your username is not set please go back and try again</p>";
 		$query_string = "select student_id from students where confirm = \"yes\" and lec_id = \"$owner_id\"";
 		run_query($query_string);
 		if($row_num2 == 0 ) {
-			$display .= "<p>No student have registered with you yet</p>";
+			$display .= "<p>No student have registered with you yet<br /><strong>Invite your students to registered to enjoy effective interactions with your students!</strong></p>";
 		}	else 	{
 			$values = build_array($row_num2);
 			//$type = gettype($values);
@@ -98,8 +98,8 @@ block;
 		if($student_id == ""){
 			$display = "<p>Please select a student to view their registered courses</p>";
 		}	else	{
-			$course_ids = registered_course_ids($student_id, $lecturer_db);
-			$course_details  = foreach_iterator2("get_course_code", $course_ids, 3, $lecturer_db );
+			$course_ids = registered_course_ids($student_id, $owner_id);
+			$course_details  = foreach_iterator2("get_course_code", $course_ids, $owner_id, 3 );
 			if(sizeof($course_details) === 0){
 				$display = "<p>This student have not registered any course yet</p>";
 			}	else	{

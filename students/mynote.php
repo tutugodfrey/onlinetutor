@@ -17,20 +17,20 @@ $owner_id = $_SESSION["owner_id"];
       //offset all initial values
       $post_text = "";   $note_id = "";  $note_course_code = "";  $registered_course_code = "";  $title = ""; $saved_note_heading = "";
       $new_note_heading = ""; $heading = ""; $view_note_button = ""; $note_id = ""; $note_courses = "";  $registered_courses = ""; $topic = ""; $save_button = ""; $update_button = ""; $display = ""; $text_area = ""; $edit_note_heading = ""; $hidden_course_id = "";
-      $course_ids = registered_course_ids($owner_id, $lec_id);
-      if($course_ids == ""){
+      $course_ids = registered_course_ids($owner_id);
+      if($course_ids == []){
         $display = "<p>You have not registered any course with this lecturer</p>";
       } else  {
-        $courses = foreach_iterator2("get_course_code", $course_ids, 2);
+        $courses = foreach_iterator2("get_course_code", $course_ids, 0, 2);
         if($courses == ""){
           $display = "<p>information about your registered courses could not be fetched</p>";
         } else  {
-          $registered_courses = select_option($courses, "course code", "course_id");
+          $registered_courses = select_option($courses, "course code", "course_id", "form-control");
         }
       }
 
       if( isset($_GET["mynote"])){
-        $query_string = "select course_id, title from note where user_id = \"$owner_id\"";
+        $query_string = "select course_id, title from notes where user_id = \"$owner_id\"";
         run_query($query_string);
         if($row_num2 == 0 ){
           $note_courses = "<p>You have no saved notes</p>";
@@ -55,14 +55,14 @@ $owner_id = $_SESSION["owner_id"];
           array_unshift($notes, $fields);
           $saved_note_heading = "<h1>Select a note to read</h1>";
           $note_courses = mytable($notes, "yes", "no");
-          $view_note_button = "<input type = \"submit\" class = \"inner_btns\" id = \"viewNote\" name = \"view_note\" value = \"Read Note\" />
+          $view_note_button = "<input type = \"submit\" class = \"btn btn-success\" id = \"viewNote\" name = \"view_note\" value = \"Read Note\" />
           <input type = \"submit\" class = \"btn btn-success\" id = \"editNote\" name = \"edit_note\" value = \"Edit\" />
           <br /><br />";
         }
         $new_note_heading = "<h1>Take note</h1>";
-        $save_button = "<input type = \"submit\" class = \"inner_btns\" id = \"saveNote\" name = \"save_note\" value = \"SAVE\" />";
-        $topic = "<label for = \"topic\">Title</label><input type = \"text\" name = \"topic\" value = \"$title\" size = \"50\" /><br />";
-        $text_area = "<label for = \"note_text\">Write your Note</label><br /><textarea rows = \"7\" cols = \"50\" name = \"post_text\" >$post_text</textarea><br />";
+        $save_button = "<input type = \"submit\" class = \"btn btn-success\" id = \"saveNote\" name = \"save_note\" value = \"SAVE\" />";
+        $topic = "<label for = \"topic\">Title</label><input type = \"text\" class = \"form-control\" name = \"topic\" value = \"$title\" size = \"50\" /><br />";
+        $text_area = "<label for = \"note_text\">Write your Note</label><br /><textarea rows = \"7\" cols = \"50\" class = \"form-control\" name = \"post_text\" >$post_text</textarea><br />";
       }
 
       if(isset($_POST["edit"])){

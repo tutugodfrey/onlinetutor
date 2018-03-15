@@ -74,7 +74,7 @@ block;
 			$query_string = "select course_id, course_status from registered_courses where student_id = \"$owner_id\" and lec_id = \"$lec_id\"";
 			run_query($query_string);
 			if($row_num2 == 0){
-				$display = "<p>You have not registered any course with this lecturer</p>";
+				$display = "<p>You have not registered any course with this lecturer yet <a href = \"/students/courses.php?courses\" id = \"registerCourse\" class = \"btn btn-primary\" >Register a course now!</a></p>";
 			}	else	{
 				$course_ids = build_array($row_num2);
 				if($row_num2 == 1){
@@ -94,6 +94,15 @@ block;
 				}		//end for block
 				$fields = array ("course_id", "Course Code", "Course Title", "unit", "status");
 				array_unshift($all_courses, $fields);
+				/*$form = <<<block
+				<form name = "registered_courses" class = "form-inline" method = "POST" action = "$_SERVER[PHP_SELF]">
+				info_placeholder
+				<input type = "submit" class = "btn btn-success" id = "courseDiscription" name = "course_description" value = "Course Description" />
+				<input type = "submit" class = "btn btn-danger" id = "removeCourse" value = "Remove" name = "remove_course" />
+				</form>
+				
+block;
+*/
 				$table_values = mytable($all_courses, "yes", "no");
 				$display = <<<block
 				<form name = "registered_courses" method = "POST" action = "$_SERVER[PHP_SELF]">

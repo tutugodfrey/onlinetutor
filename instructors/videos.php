@@ -14,10 +14,10 @@ $lecturer_db = $_SESSION["lecturer_db"];
 
 
 if (isset($_GET["add_video"])) {
-	$query_string = "select course_id, course_code from courses";
+	$query_string = "select course_id, course_code from courses where lec_id = \"$owner_id\"";
 	run_query($query_string);
 	if ($row_num2 == 0 ) {
-		$display = "<p>You have not saved any course</p>";
+		$display = "<p>You have not saved any course <a href = \"/instructors/save_course.php?save_courses=yes\" id = \"saveCourse\" class = \"btn btn-primary\" >add a course now!</a></p>";
 	}	else {
 		$courses = build_array($row_num2);
 		if($row_num2 == 1){

@@ -109,7 +109,7 @@ function mytable($values, $checkbox = "no", $display_col1 = "yes", $grade = "no"
 			}
 		}
 	}
-	if($checkbox == "no"){
+	if($checkbox ===  "no"){
 		foreach($values as $value){
 			$table_values .= "<tr>";
 			for($i = 0; $i < sizeof($fields); ++$i){
@@ -176,8 +176,122 @@ function select_option($values, $label, $name_of_field, $select_class = "", $lab
 	return $select_result;
 }
 
+/*
+
+	//////////////////////////////////////////////////
+function mytable($values, $checkbox = "no", $display_col1 = "yes", $grade = "no", $add_form = "no"){
+	//declare global variables
+	$fields = array_shift($values); //fields in the table in array format
+	global $table_values;
+
+	$checkbox = trim(strtolower($checkbox));
+	$display_col1 = trim(strtolower($display_col1));
+	$grade = trim(strtolower($grade));
+
+	if($grade == "no"){
+		$grade = "";
+		$graded = "";
+	}
+
+	if($grade == "yes"){
+		$graded = "<tr><th></th><td colspan = \"2\">
+		<input type = \"radio\" name = \"grade\" value = \"1\" />
+		<input type = \"radio\" name = \"grade\" value = \"2\" />
+		<input type = \"radio\" name = \"grade\" value = \"3\" />
+		<input type = \"radio\" name = \"grade\" value = \"4\" />
+		<input type = \"radio\" name = \"grade\" value = \"5\" />
+		</td></tr>";
+		//a checkbox to indicate that a student has been graded or not
+		//$graded = "<input type = \"checkbox\" class = \"graded\" value = \"no\" name = \"graded[]\" checked = \"checked\" />";
+		//$graded = "<input type = \"checkbox\" class = \"graded\" value = \"yes\" name = \"graded[]\" checked = \"checked\" />";
+	}
+
+	//check to know how many field are in the table and build the table headings
+	if($checkbox == "yes"){
+		$table_values = "<table><tr><th> </th>";
+	} 	elseif($checkbox == "no"){
+		$table_values = "<table><tr>";		//in this case we do not need the empty colomn
+	}
+	if($display_col1 == "yes") {
+		for($i = 0; $i < sizeof($fields); $i++){
+			$table_values .= "<th>".ucwords($fields[$i])."</th>";
+		}
+	}	elseif($display_col1 == "no") {
+		for($i = 1; $i < sizeof($fields); $i++){
+			$table_values .= "<th>".ucwords($fields[$i])."</th>";
+		}
+	}
+	$table_values .= "</tr>";
+
+	if($checkbox == "yes"){
+		if($display_col1 == "yes"){
+			foreach($values as $value){
+				$identity = strtolower($fields[0]);
+				$table_values .= "<tr><td><input type = \"checkbox\" class = \"$identity\"  name = \"$identity"."[]\" value = \"$value[0]\" /></td>";
+				for($i = 0; $i < sizeof($fields); ++$i){
+					$table_values .= "<td>$value[$i]</td>";
+				}
+				$table_values .= "</tr>";
+			}
+		} elseif($display_col1 == "no") {
+			foreach($values as $value){
+				$identity = strtolower($fields[0]);
+				$table_values .= "<tr><td><input type = \"checkbox\" class = \"$identity\" name = \"$fields[0][]\" value = \"$value[0]\" /></td>";
+
+				if($grade == "yes" ) {
+					$length_of_field = sizeof($fields) - 1;
+				} 	else  {
+					$length_of_field = sizeof($fields);
+				}
+				for($i = 1; $i < $length_of_field; ++$i){
+					$table_values .= "<td>$value[$i]</td>";
+				}
+				if($grade == "yes") {			//this field is check by default but it will be hidden by css and revealed only if student have been graded
+					$table_values .= "<td><input type = \"checkbox\" class = \"graded\" id = \"grade$value[0]\" value = \"$value[4]\" name = \"graded[]\" checked = \"checked\" disabled = \"disabled\"/></td>";
+				}
+				$table_values .= "</tr>";
+				$table_values .= $graded;
+			}
+		}
+	}
+	if($checkbox ===  "no" && $add_form === "no"){
+		foreach($values as $value){
+			$table_values .= "<tr>";
+			for($i = 0; $i < sizeof($fields); ++$i){
+				$table_values .= "<td>$value[$i]</td>";
+			}
+			$table_values .= "</tr>";
+		}
+	}
+
+	// build inline-form for each collection
+	if($checkbox ===  "no" && $add_form !== "no" ){
+		// echo $add_form;
+		foreach($values as $value){
+			$table_value = "<tr>";
+			$table_info = "";
+			for($i = 0; $i < sizeof($fields); ++$i){
+				$table_info .= "<td>$value[$i]</td>";
+			}
+			$add_form = str_replace( "info_placeholder", $table_info, $add_form);
+
+			$table_value .= $add_form;
+			$table_value .= "</tr>";
+			echo $table_value;
+			$table_values .= $table_value;
+		}
+	}
+	$table_values .= "</table><br />";
+
+	return $table_values;
+}
+
+*/
+
 function create_form($form_body, $form_fields, $extra) {
 
 }
+
+
 
 ?>

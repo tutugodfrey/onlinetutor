@@ -21,14 +21,14 @@ block;
 	}
 
 	if(isset($_POST["submit_feedback"])){
-		$sender_id = $_POST["user_id"];
+		$user_id = $_POST["user_id"];
 		$message = trim($_POST["message"]);
 		if($message === ""){
 			$display = "<p>Please type a message to send as feedback.</p>";
 		}	else	{
 			admin_connect();
 			$message = mysqli_real_escape_string($mysqli, $message);
-			$query_string = "insert into feedback values(null, \"$user_id\", null, \"$message\", now())";
+			$query_string = "insert into feedback values(null, \"$user_id\", \"$message\", now())";
 			run_query($query_string);
 			if($row_num2 == 0){
 				$display = "<p>Your feedback could not be sent. Please try again later.</p>";

@@ -27,37 +27,37 @@ $nav_buttons = <<<block
     <div class="collapse navbar-collapse" id="pry-nav">
       <ul class="navbar-nav mr-auto">
         <li class = "link-buttons nav-item">
-          <a href = "/onlinetutor/students/home.php?" class = "nav-link active">Home</a>
+          <a href = "/students/home.php?" class = "nav-link active">Home</a>
         </li>
         <li class = "link_buttons nav-item">
-          <a id = "save_course" href = "./save_course.php?save_courses" class = "nav-link">Save Courses</a>
+          <a id = "save_course" href = "/instructors/save_course.php?save_courses" class = "nav-link">Save Courses</a>
         </li>
         <li class = "link_buttons nav-item">
-      <a id = "your_students" href = "./registered_students.php?registered_students" class = "nav-link">Students</a>
+      <a id = "your_students" href = "/instructors/registered_students.php?registered_students" class = "nav-link">Students</a>
     </li>
     <li class = "link_buttons nav-item">
-      <a id = "questions" href = "./set_questions.php?set_questions" class = "nav-link">Set Question</a>
+      <a id = "questions" href = "/instructors/set_questions.php?set_questions" class = "nav-link">Set Question</a>
     </li>
     <li class = "link_buttons nav-item">
-      <a id = "discussions" href = "./discussions.php?discussions" class = "nav-link">Discussions</a>
+      <a id = "discussions" href = "/instructors/discussions.php?discussions" class = "nav-link">Discussions</a>
     </li>
     <li class = "link_buttons nav-item">
-      <a id = "save_note" href = "./lecture_note.php?lecture_note" class = "nav-link">Save Note</a>
+      <a id = "save_note" href = "/instructors/lecture_note.php?lecture_note" class = "nav-link">Save Note</a>
     </li>
     <li class = "link_buttons nav-item">
-      <a id = "addVideo" href = "./videos.php?add_video" class = "nav-link">Add Videos</a>
+      <a id = "addVideo" href = "/instructors/videos.php?add_video" class = "nav-link">Add Videos</a>
     </li>
     <li class = "link_buttons nav-item">
-      <a id = "tests" href = "./opentest.php?tests" class = "nav-link">Test/Exams</a>
+      <a id = "tests" href = "/instructors/opentest.php?tests" class = "nav-link">Test/Exams</a>
     </li>
     <li class = "link_buttons nav-item">
-      <a id= "results" href = "./results.php?results" class = "nav-link">Results</a>
+      <a id= "results" href = "/instructors/results.php?results" class = "nav-link">Results</a>
     </li>
     <li class = "link_buttons nav-item">
-      <a id = "announcements" href = "./announcements.php?announcements" class = "nav-link">Announcements</a>
+      <a id = "announcements" href = "/instructors/announcements.php?announcements" class = "nav-link">Announcements</a>
     </li>
     <li class = "link_buttons nav-item">
-      <a id = "friends" href = "./../common/friends.php?friends" class = "nav-link">Friends</a>
+      <a id = "friends" href = "/common/friends.php?friends" class = "nav-link">Friends</a>
     </li>
          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="more-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

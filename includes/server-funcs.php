@@ -6,7 +6,9 @@ function get_course_code($course_id, $lec_id,  $query_to_run = 1, $query_string 
 	global $row_num2;
 	if($query_string === "default"){
 		$query_string = "select course_code from courses where course_id = \"$course_id\" and lec_id = \"$lec_id\"";
-		if($query_to_run === 2){
+		if($lec_id === 0 && $query_to_run === 2){
+			$query_string = "select course_id, course_code from courses where course_id = \"$course_id\"";
+		} else if($query_to_run === 2){
 			$query_string = "select course_id, course_code from courses where course_id = \"$course_id\" and lec_id = \"$lec_id\"";
 		}  else if($query_to_run === 3){
 			$query_string = "select course_id, course_code, course_title, course_description, unit from courses where course_id = \"$course_id\" and lec_id = \"$lec_id\"";
@@ -27,9 +29,13 @@ function get_course_code($course_id, $lec_id,  $query_to_run = 1, $query_string 
 
 ////////////////////////////////////////////////////////////////////////////////
 //function to select the course_ids of students from registered_courses
-function registered_course_ids($S_id, $lec_id){
+function registered_course_ids($S_id, $lec_id = 0){
 	global $row_num2;
-	$query_string = "select course_id from registered_courses where student_id = \"$S_id\" and lec_id = \"$lec_id\"";
+	if($lec_id === 0) {
+		$query_string = "select course_id from registered_courses where student_id = \"$S_id\"";
+	} else {
+		$query_string = "select course_id from registered_courses where student_id = \"$S_id\" and lec_id = \"$lec_id\"";
+	}
 	run_query($query_string);
 	if($row_num2 == 0){
 		return	[];		//return an empty array

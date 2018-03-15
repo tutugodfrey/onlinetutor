@@ -29,74 +29,73 @@ if(isset($_POST["edit"]) || isset($_GET["set_questions"])){
 	$query_string = "select course_id, course_code from courses where lec_id = \"$owner_id\"";
 	run_query($query_string);
 	if($row_num2 == 0){
-		$form_text = "<p>You have not saved any course</p>";
+		$display = "<p>You have not saved any course <a href = \"/instructors/save_course.php?save_courses=yes\" id = \"saveCourse\" class = \"btn btn-primary\" >add a course now!</a></p>";
 	} 	else	{
 		$courses = build_array($row_num2);
 		if($row_num2 == 1){
 			$courses = [$courses];
 		}
 		$course_code = select_option($courses, "course code", "course_id", "form-control requiredFields");
-	}
+		if(isset($_GET["set_questions"])){
+			$heading = "<h1>SET QUESTION</h1>";
+			$optionA .= "<input type = \"text\" id = \"optA\" class = \"form-control requiredFields\" name = \"optionA\" value = \"$optionAA\"/><br />";
+			$optionB .= "<input type = \"text\" id = \"optB\" class = \"form-control requiredFields\" name = \"optionB\" value = \"$optionBB\"/><br />";
+			$optionC .= "<input type = \"text\" id = \"optC\" class = \"form-control requiredFields\" name = \"optionC\" value = \"$optionCC\"/><br />";
+			$optionD .= "<input type = \"text\" id = \"optD\" class = \"form-control requiredFields\" name = \"optionD\" value = \"$optionDD\" />";
+			$form_text = "<h3>Use the form below to set the questions</h3>";
+			$test_id = "<br /><label for = \"test_id\" >Test No</label><input type = \"text\"  id = \"testId\" class = \"form-control requiredFields\" name = \"test_id\" value = \"$test_id\" /><br />";
+			$text_area = "<br /><label for = \"question\">Question</label><br /><textarea class = \"form-control requiredFields\" name = \"question\" rows = \"7\" cols = \"50\"></textarea><br />";
+			$save_question = "<input type = \"submit\" class = \"btn btn-success\" id = \"saveQuestion\" name = \"save_question\" value  = \"SAVE\" />";
+			$view_questions = "<input type = \"submit\" class = \"btn btn-success\" id = \"viewQuestions\" name = \"view_questions\" value = \"View Questions\" />";
+		}		//end set_questions
 
-	if(isset($_GET["set_questions"])){
-		$heading = "<h1>SET QUESTION</h1>";
-		$optionA .= "<input type = \"text\" id = \"optA\" class = \"form-control requiredFields\" name = \"optionA\" value = \"$optionAA\"/><br />";
-		$optionB .= "<input type = \"text\" id = \"optB\" class = \"form-control requiredFields\" name = \"optionB\" value = \"$optionBB\"/><br />";
-		$optionC .= "<input type = \"text\" id = \"optC\" class = \"form-control requiredFields\" name = \"optionC\" value = \"$optionCC\"/><br />";
-		$optionD .= "<input type = \"text\" id = \"optD\" class = \"form-control requiredFields\" name = \"optionD\" value = \"$optionDD\" />";
-		$form_text = "<h3>Use the form below to set the questions</h3>";
-		$test_id = "<br /><label for = \"test_id\" >Test No</label><input type = \"text\"  id = \"testId\" class = \"form-control requiredFields\" name = \"test_id\" value = \"$test_id\" /><br />";
-		$text_area = "<br /><label for = \"question\">Question</label><br /><textarea class = \"form-control requiredFields\" name = \"question\" rows = \"7\" cols = \"50\"></textarea><br />";
-		$save_question = "<input type = \"submit\" class = \"btn btn-success\" id = \"saveQuestion\" name = \"save_question\" value  = \"SAVE\" />";
-		$view_questions = "<input type = \"submit\" class = \"btn btn-success\" id = \"viewQuestions\" name = \"view_questions\" value = \"View Questions\" />";
-	}		//end set_questions
-
-	if(isset($_POST["edit"])){
-		if(empty($_POST["question_id"])){
-			$form_text = "<p>Please use the checkbox to select a question to edit</p>";
-		}	else	{
-			$question_id = trim($_POST["question_id"][0]);
-			$query_string = "select * from questions  where question_id = \"$question_id\"";
-			run_query($query_string);
-			if($row_num2 == 0){
-				$display = "<p>An error occur we could not fetch the question right now</p>";
+		if(isset($_POST["edit"])){
+			if(empty($_POST["question_id"])){
+				$form_text = "<p>Please use the checkbox to select a question to edit</p>";
 			}	else	{
-				$result = build_array($row_num2);
-				$course_id = $result["1"];
-				$correct_option  = $result["8"];		//unused
-				$test_id = "<label for = \"test_id\" >Test No</label><input type = \"text\" id = \"testId\" name = \"test_id\" value = \"".$result["2"]."\" /><br />";
-				$text_area = "<label for = \"question\">Question</label><br /><textarea name = \"question\" rows = \"7\" cols = \"50\">".$result['3']."</textarea><br/>";
-				$form_text = "<h3>Edit the questions as required to update it</h3>";
-				$question_no .= "<input type = \"hidden\" name = \"question_id\" value = \"".$result['0']."\"/><br />";
-				$optionA .= "<input type = \"text\" id = \"optA\" class = \"form-control requiredFields\" name = \"optionA\" value = \"".$result['4']."\"/><br />";
-				$optionB .= "<input type = \"text\" id = \"optB\" class = \"form-control requiredFields\" name = \"optionB\" value = \"".$result['5']."\"/><br />";
-				$optionC .= "<input type = \"text\" id = \"optC\" class = \"form-control requiredFields\" name = \"optionC\" value = \"".$result['6']."\"/><br />";
-				$optionD .= "<input type = \"text\" id = \"optD\" class = \"form-control requiredFields\" name = \"optionD\" value = \"".$result['7']."\" />";
-				$update = "<input type = \"submit\" class = \"btn btn -success\" id = \"updateQuestion\" name = \"update_question\" value = \"Update Question\" />";
+				$question_id = trim($_POST["question_id"][0]);
+				$query_string = "select * from questions  where question_id = \"$question_id\"";
+				run_query($query_string);
+				if($row_num2 == 0){
+					$display = "<p>An error occur we could not fetch the question right now</p>";
+				}	else	{
+					$result = build_array($row_num2);
+					$course_id = $result["1"];
+					$correct_option  = $result["8"];		//unused
+					$test_id = "<label for = \"test_id\" >Test No</label><input type = \"text\" id = \"testId\" name = \"test_id\" value = \"".$result["2"]."\" /><br />";
+					$text_area = "<label for = \"question\">Question</label><br /><textarea name = \"question\" rows = \"7\" cols = \"50\">".$result['3']."</textarea><br/>";
+					$form_text = "<h3>Edit the questions as required to update it</h3>";
+					$question_no .= "<input type = \"hidden\" name = \"question_id\" value = \"".$result['0']."\"/><br />";
+					$optionA .= "<input type = \"text\" id = \"optA\" class = \"form-control requiredFields\" name = \"optionA\" value = \"".$result['4']."\"/><br />";
+					$optionB .= "<input type = \"text\" id = \"optB\" class = \"form-control requiredFields\" name = \"optionB\" value = \"".$result['5']."\"/><br />";
+					$optionC .= "<input type = \"text\" id = \"optC\" class = \"form-control requiredFields\" name = \"optionC\" value = \"".$result['6']."\"/><br />";
+					$optionD .= "<input type = \"text\" id = \"optD\" class = \"form-control requiredFields\" name = \"optionD\" value = \"".$result['7']."\" />";
+					$update = "<input type = \"submit\" class = \"btn btn -success\" id = \"updateQuestion\" name = \"update_question\" value = \"Update Question\" />";
+				}
 			}
-		}
-	}		//end edit 
+		}		//end edit 
 
-	$display = <<<end
-	<form name = "setQuestion" method = "POST" action = "$_SERVER[PHP_SELF]" />
-	<p id = "validation-notice">Fields mark below are required</p>
-	$form_text 
-	$course_code
-	$test_id
-	$question_no
-	$text_area 
-	$start_fieldset
-	$option_legend
-	$optionA
-	$optionB 
-	$optionC
-	$optionD
-	$end_fieldset
-	$save_question 
-	$view_questions 
-	$update
-	</form>
+		$display = <<<end
+		<form name = "setQuestion" method = "POST" action = "$_SERVER[PHP_SELF]" />
+		<p id = "validation-notice">Fields mark below are required</p>
+		$form_text 
+		$course_code
+		$test_id
+		$question_no
+		$text_area 
+		$start_fieldset
+		$option_legend
+		$optionA
+		$optionB 
+		$optionC
+		$optionD
+		$end_fieldset
+		$save_question 
+		$view_questions 
+		$update
+		</form>
 end;
+	}
 }
 
 

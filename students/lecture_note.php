@@ -16,7 +16,7 @@ $owner_id = $_SESSION["owner_id"];
 		if(isset($_GET["lecture_note"])){
 			$course_ids = registered_course_ids($owner_id, $lec_id);		//get course_id of registered courses
 			if($course_ids == ""){
-				$display = "<p>You have not registered any course with this lecturer</p>";
+				$display = "<p>You have not registered any course with this lecturer yet <a href = \"/students/courses.php?courses\" id = \"registerCourse\" class = \"btn btn-primary\" >Register a course now!</a></p>";
 			}	else	{
 				$courses = foreach_iterator2("get_course_code", $course_ids, $lec_id, 2);
 				$heading = "<h1>Your registered Courses</h1>";
