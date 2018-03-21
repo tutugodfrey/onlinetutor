@@ -2,30 +2,49 @@
 body 		{
 	margin:0px;
 	padding:0px;
+	background-color:#ffffff;
 }
-
+/*
 .btn-primary, .bg-primary {
 	background-color:#e4eaa7;
 }
-
+*/  
+#brand-logo {
+	width:140px; height:80px; position:relative; top:-5px;
+}
+/*
 #brand-logo {
 	border:solid white 2px; width:40px; height:40px; position:relative; top:-5px; text-align:center; vertical-align:middle; border-radius:10%;
 }
+*/
 
 #toggler-btn {
-	/*position:relative; top:-5px; */
+	/*position:relative; top:-5px;*/
 }
 #header-div {
-	background-color:#e4eaa7; position:relative; top:0px; height:45px; z-index:10;
+	background-color:#e3a662; position:relative; top:0px; height:125px; z-index:10;
 }
 
 #header-div .navbar {
-	height:45px; position:relative; top:0px; padding-bottom:0px; padding-top:0px;
+	height:55px; position:relative; top:-10px; padding-bottom:0px; padding-top:0px; border:solid 2px red;
 }
 
+#top-header {
+	height:55px; border:solid red 2px;
+}
+
+#top-headerds ul li {
+	position:relative; right:-400px;
+}
+
+.nav-item {
+	height:45px; position:relative; top:5px;
+}
+/*
 #pry-nav .nav-item {
 	height:45px;
 }
+*/
 
 /*
 #pry-nav {
@@ -38,8 +57,8 @@ body 		{
 }
 */
 
-.link-buttons .nav-link {
-	/* font-size:15px; padding:2px; */
+.nav-link {
+	font-size:13px; height:45px;
 }
 
 #showcase {
@@ -47,16 +66,58 @@ body 		{
 	text-align: center; background-color:#bed7e5; height:100vh;  position:relative; top: -68px;
 }
 
+.showcase-sections {
+	line-height: 20px; display:flex; flex-direction:column; justify-content:center; align-items:center;
+	text-align: center; background-color:black; height:70vh;  position:relative; top: -68px; opacity:0.8;
+}
+
+#showcase-courses {
+	 background-color:#5b57d2;
+}
+
+#showcase-contents {
+	background-color:#d8b015;
+}
+
+#showcase-discussions {
+	background-color:#4d66ec;
+}
+
+#showcase-questions {
+	background-color:#8bee9d;
+}
+
+#showcase-results {
+	background-color:#d8d277;
+}
+
+#showcase-chats {
+	background-color:#8d9a95;
+}
+
+#showcase-chats {
+	background-color:#8d9a95;
+}
+
+#showcase-inspirations {
+	background-color:#e4eaa7;
+}
+
+
 #footer-div {
-	background-color:#e4eaa7; height:45px; display:flex; flex-direction:row; justify-content: center; align-items:center;
+	background-color:#e3a667; height:180px; display:flex; flex-direction:row; justify-content: center; align-items:center;
 }
 
 img	{
-	height:66px; width:5%; position:relative; left:9px; top:3px;  border:none; float:left;
+	height:70px; width:70px; position:relative; left:9px; top:3px;  border:none; float:left;
+}
+
+img#student-profile-pix, img#instructor-profile-pix	{
+	height:45px; width:45px; position:relative; left:9px; top:-6px;  border:none; float:left;
 }
 
 #content-area {
-position:relative; top:0px; padding:70px 0px; 
+	position:relative; top:0px; padding:70px 0px; 
 }
 
 #main-page {
@@ -76,7 +137,9 @@ position:relative; top:0px; padding:70px 0px;
 	position:relative; top:-30px;
 }
 */
-
+#lecturers-name  {
+	width:150px;
+}
 #side-bar {
 	background-color:#ccddaa; display:flex; flex-direction:column; align-items:center; padding:50px 20px;
 }
@@ -99,9 +162,38 @@ p#validation-notice {
 }
 
 .graded[value="yes"], .show-item, #ajax_busy	{
-				visibility:visible;
+				 visibility:visible; 
+				display:inline-block;
 }
 
 .graded[value="NO"], .hide-item, #ajax_neutral	{
-				visibility:hidden;
+				visibility:hidden; 
+				
 }
+
+
+
+@media only screen and (max-width:768px) {
+	/** medium size screen **/
+	#login-form-inline {
+		display:none;
+	}
+
+	#login-signin-links {
+		display:block;
+	}
+}
+
+@media only screen and (min-width:769px) {
+	/** medium size screen **/
+	#login-form-inline {
+		display:block;
+	}
+
+	#login-signin-links {
+		display:none;
+	}
+}
+
+
+

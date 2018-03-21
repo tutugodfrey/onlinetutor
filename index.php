@@ -13,11 +13,11 @@ echo <<<block
     <link type = "text/css" rel = "stylesheet" href = "mylecapp_css/style1.css" />
   </head>
   <body>
-    <div class = "container">
+    <div>
       <div id = "header-div">
       </div>
       <div><p id = "ajax_neutral">Processing ...</p></div>
-      <div id = "content-area" class = ""> 
+      <div id = "content-area" class = "container"> 
       </div>
       <div id = "footer-div" class = "navbar">
       </div>

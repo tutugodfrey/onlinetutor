@@ -46,6 +46,7 @@ const DataStorage = class {
 					storeData.setUserData('instructorData', content);
 					const userType = instructorData["user_type"];
 					const instructorId = instructorData["id"];
+					const instructorPhoto = instructorData["picture"];
 					console.log(userType);
 					console.log(instructorId);
 	        if(userType === 'lecturer') {
@@ -56,6 +57,11 @@ const DataStorage = class {
 	        		hrefValue = hrefValue.substring(0, hrefValue.lastIndexOf("=") + 1);
 	        		hrefValue = `${hrefValue}${instructorId}`;
 	        		hrefItem.setAttribute("href", hrefValue);
+	        	}
+	        	if(document.getElementById("instructor-profile-pix")) {
+	        		console.log(instructorPhoto);
+	        		const imgElem = document.getElementById("instructor-profile-pix");
+	        		changeAttribute(imgElem, "src", instructorPhoto);
 	        	}
 	        } else {
 	        	console.log('Unknown user_type');

@@ -10,7 +10,7 @@ include "./../includes/views.php";
 session_start();
 if(isset($_SESSION["owner_id"])){
 	$owner_id = $_SESSION["owner_id"];
-	//$user_image_url = $_SESSION["user_image_url"];
+	$user_image_url = $_SESSION["user_image_url"];
 } else if (isset($_GET["user_id"])) {
 	$owner_id = $_GET["user_id"];
 	$_SESSION["owner_id"] = $owner_id;
@@ -20,8 +20,7 @@ if(isset($_SESSION["owner_id"])){
 }
 
 $display = "";
-if(isset($_GET["dashboard"])){
-	$friends_table = "user".$owner_id."_friends";
+if(isset($_GET["dashboard"])) {
 	$query_string = "select lec_id from students where student_id = $owner_id and confirm = \"yes\"";		//getting ids of lecturers
 	run_query($query_string);
 	if($row_num2 == 0){
@@ -57,95 +56,109 @@ if(isset($_GET["dashboard"])){
 	$display = <<<end
 		<div class = "container-fluid">
 			<div class = "row">
-			<nav class="navbar nav-tabs navbar-toggleable-md navbar-light col-md-9 pr-0">
-			<a id = "brand-logo" class="navbar-brand" href="#">L</a>
-      <button id = "toggler-btn" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#pry-nav" aria-controls="pry-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="pry-nav">
-        <ul class="navbar-nav mr-auto">
-	        <!-- hide this element display when a user select a lecturer and construct thefull url or get from localStorage -->
-	        <li class = "link-buttons nav-item">
-	          <a href = "/students/home.php?" class = "nav-link active">Home</a>
-	        </li>
-	        <li class = "link-buttons nav-item">
-	          <form method = "GET" action = "$_SERVER[PHP_SELF]" >
-	            <div class = "form-group"> $select_result </div>
-	            <input type = "submit" id = "choose_lec" class = "submit-buttons hide-item" value = "Select Lecturer" name = "select" />
-	            <!-- <input type = "submit" id = "del_lec" class = "submit-buttons" value = "Delete" name = "delete" /> -->
-	          </form>
-	        </li>
-	        <li class = "link-buttons nav-item">
-	          <a href = "/students/coursemates.php?coursemates" class = "nav-link">Coursemates</a>
-	        </li>
-	        <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="courses-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	            Courses
-	          </a>
-	          <div class="dropdown-menu" aria-labelledby="courses-menu">
-							<a href = "/students/courses.php?registered_courses" class = "nav-link">Your Courses</a>
-							<a href = "/students/courses.php?courses" class = "nav-link">Courses</a>
-	          </div>
-	        </li>
-	        <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="activities-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	            Activities
-	          </a>
-	          <div class="dropdown-menu" aria-labelledby="activities-menu">
-							<a href = "/students/test.php?tests" class = "nav-link">Tests</a>
-							<a href = "/students/discussions.php?discussions" class = "nav-link">Discussions</a>
-							<a href = "/students/scores.php?scores" class = "nav-link">Scores</a>
-	          </div>
-	        </li>
-	        <li class = "link-buttons nav-item">
-	          <a href = "/common/friends.php?friends" class = "nav-link">Friends</a>
-	        </li>
-	        <li class = "link-buttons nav-item">
-	          <a href = "/students/lecture_note.php?lecture_note" class = "nav-link">Lecture Notes</a>
-	        </li>
-	        <li class = "link-buttons nav-item">
-	          <a href = "/students/videos.php?view_videos" class = "nav-link">Videos</a>
-	        </li>
-	        <li class = "link-buttons nav-item">
-	          <a href = "/students/mynote.php?mynote" class = "nav-link">Notes</a>
-	        </li>
-	         <li class="nav-item dropdown">
-	          <a class="nav-link dropdown-toggle" href="#" id="more-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	            More
-	          </a>
-	          <div class="dropdown-menu" aria-labelledby="more-menu">
-							<a href = "/common/profile.php?profile&user_id=$owner_id" class = "nav-link">Your Profile</a>
-	         		<a  id = "profile-link" href = "/common/profile.php?profile&user_id=" class = "nav-link">Instructor Profile</a>
+				<div id = "site-logo" class = "px-0 ml-sm-0 col-2 offset-sm-1">
+					<a href = './default.html' class = 'nav-lin' >
+						<img id = "brand-logo" class = "img-fluid" src = "/images/logo.png" alt ="site logo" />
+					</a>
+				</div>
+	  		<div id = "top-header" class = "ml-auto col-9 col-lg-7 col-xl-6 offset-1 offsetd-md-2 offset-lg-3 offset-xg-4">
+	  			<ul class = "nav">
+	  				<li class = "nav-item">
+		          <div id = "lecturers-name" class = "align-self-start">
+				    	</div>
+		        </li>
+	  				<li class = "nav-item">
+		          <form method = "GET" action = "$_SERVER[PHP_SELF]" >
+		            <div class = "form-group"> $select_result </div>
+		            <input type = "submit" id = "choose_lec" class = "submit-buttons hide-item" value = "Select Lecturer" name = "select" />
+		            <!-- <input type = "submit" id = "del_lec" class = "submit-buttons" value = "Delete" name = "delete" /> -->
+		          </form>
+		        </li>
+		        <li class = "nav-item">
+		        	  <!-- the full url to get the instructor profile will be generated with js when the student selects a lecturer-->
+		          <a  id = "profile-link" href = "/common/profile.php?profile&user_id=" class = "nav-link">
+		          	<img id = "instructor-profile-pix" class = "px-1 img-fluid img-thumbnail" src = "/personal_data/default-pix.jpeg" alt = "profile image" />
+		          </a>
+		        </li>
+		        <li class = "nav-item">
+		          <a href = "/common/profile.php?profile&user_id=$owner_id" class = "nav-link">
+		          	<img id = "student-profile-pix" class = "px-1 img-fluid img-thumbnail" src = "$user_image_url" alt = "profile image" />
+		          </a>
+		        </li>
+		        <li class = "nav-item">
+		          <a href = "/common/calculator.php?get_calculator" class = "px-1 nav-link">Calculator</a>
+		        </li>
+		        <li class = "nav-item">
+		          <a href = "/common/help.php?get_help" class = "px-1 nav-link">Help</a>
+		        </li>
+		        <li  id = "logout" class = "nav-item">
+		          <a href = "/common/login.php?log_out" class = "px-1 nav-link">Logout</a>
+		        </li>
+	  			</ul>
+	  	</div>
+		</div>
+	</div>
+	<div class = "container">
+		<div class = "row">
+			<nav class="navbar nav-tabs navbar-toggleable-md navbar-light col-3 col-md-9 pr-0 ml-auto">
 
-							<a href = "/students/announcements.php?announcements" class = "nav-link">News</a>
-							<a href = "/common/feedback.php?feedback" class = "nav-link">Feedback</a>
-							<a href = "/common/login.php?log_out" class = "nav-link">Logout</a>
-							<a href = "/common/calculator.php?get_calculator" class = "nav-link">Calculator</a>
-							<a href = "/common/help.php?get_help" class = "nav-link">Help</a>
-	          </div>
-	        </li>
-	      </ul>
-	    </div>
-	  </nav>
-	  <div id = "reg-lecturer-form-group" class = "col-sm-12 col-md-3 px-0 align-self-end">
-	  	<div class = "d-flex flex-row">
-	  	<div class = "align-self-start">
-		  	<form name = "reg_lecturer" id = "reg_lec_form" class="form-inline" method = "POST" action = "/common/profile.php" >
-		      <div id = "lecturers-name" class = "link_buttons"></div>
-		      <input type = "submit"  id = "register-lecturer" class = "btn btn-success hide-item" name = "register_lecturer" value = "Register" />
-		    </form>
-	    </div>
-	    <div class = "align-self-end">
-		    <form id = "search_lec_form" class = "form-inline" method = "GET" action = "/common/search_names.php" >
-		      <input type = "search" class = "link_buttons form-control mr-sm-2 form-control-sm" id = "search-lecturers" name = "name_like" placeholder = "search for lecturer"/>
+	      <button id = "toggler-btn" class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#pry-nav" aria-controls="pry-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	      </button>
+	      <a></a>
+	      <div class="collapse navbar-collapse" id="pry-nav">
+	        <ul class="navbar-nav mr-auto">
+		        <li class = "link-buttons nav-item">
+		          <a href = "/students/home.php?" class = "nav-link active">Home</a>
+		        </li>
+		        <li class = "link-buttons nav-item">
+		          <a href = "/students/coursemates.php?coursemates" class = "nav-link">Coursemates</a>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="courses-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		            Courses
+		          </a>
+		          <div class="dropdown-menu" aria-labelledby="courses-menu">
+								<a href = "/students/courses.php?registered_courses" class = "nav-link">Registered Courses</a>
+								<a href = "/students/courses.php?courses" class = "nav-link">Courses</a>
+		          </div>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" href="#" id="activities-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		            Activities
+		          </a>
+		          <div class="dropdown-menu" aria-labelledby="activities-menu">
+								<a href = "/students/test.php?tests" class = "nav-link">Tests</a>
+								<a href = "/students/discussions.php?discussions" class = "nav-link">Discussions</a>
+								<a href = "/students/scores.php?scores" class = "nav-link">Scores</a>
+		          </div>
+		        </li>
+		        <li class = "link-buttons nav-item">
+		          <a href = "/common/friends.php?friends" class = "nav-link">Friends</a>
+		        </li>
+		        <li class = "link-buttons nav-item">
+		          <a href = "/students/lecture_note.php?lecture_note" class = "nav-link">Lecture Notes</a>
+		        </li>
+		        <li class = "link-buttons nav-item">
+		          <a href = "/students/videos.php?view_videos" class = "nav-link">Videos</a>
+		        </li>
+		        <li class = "link-buttons nav-item">
+		          <a href = "/students/mynote.php?mynote" class = "nav-link">Notes</a>
+		        </li>
+		        <li class = "link-buttons nav-item">
+		          <a href = "/students/announcements.php?announcements" class = "nav-link">News</a>
+		        </li>
+		      </ul>
+		    </div>
+		  </nav>
+		  <div class = "col-9 col-md-3 mr-auto">
+		  	<form id = "search_lec_form" class = "form-inline" method = "GET" action = "/common/search_names.php" >
+		      <input type = "search" size = "22" class = "link_buttons form-control mr-sm-2 form-control-sm" id = "search-lecturers" name = "name_like" placeholder = "search your lecturers"/>
 		    <input type = "submit" id = "search_lec" class = "btn btn-success my-2 my-sm-0 hide-item" name = "search_lecturers" value = "Search" />
 		    </form>
-	    </div>
-	    </div>
-    </div>
+		  </div>
+		</div>
 	</div>
-	</div>
-
 end;
 }
 

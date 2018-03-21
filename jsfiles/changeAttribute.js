@@ -12,4 +12,4 @@ export const changeAttribute  = function(eleObject, attrToChange, newAttr, remov
   } 
 }		//end changeClass
 
-export default changeAttribute
+export default changeAttribute;

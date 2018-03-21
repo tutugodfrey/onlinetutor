@@ -43,31 +43,36 @@ if(isset($_GET["search_friends"]) || isset($_GET["search_lecturers"])){
 				$query_string = "select id, lastname, firstname from registered_users 
 						where firstname like \"$name%\" or lastname like \"$name%\" or username like \"$name%\"";
 				$register = "<input type = \"submit\" id = \"add_friend\" class = \"btn btn-success btn-sm\" name = \"register_friend\" value = \"Register\" />";
-			}		//end search_friends
-			if(isset($_GET["search_lecturers"])){
+			}	else if(isset($_GET["search_lecturers"])){
 				$query_string = "select id, lastname, firstname from registered_users 
 						where (firstname like \"$name%\" or lastname like \"$name%\" or username like \"$name%\") and user_type = \"lecturer\"";
 				$register = "<input type = \"submit\" id = \"reg_lec\" class = \"btn btn-success btn-sm\" name = \"register_lecturer\" value = \"Register\" />";
+			//	$register = "";
 			}
-				run_query($query_string);
-				if($row_num2 == 0){
-					$display = "<select><option>Not Found</option></select>";
-				} 	else 	{
-					$values = build_array($row_num2);
-					if($row_num2 == 1){
-						$values = [$values];
+			run_query($query_string);
+			if($row_num2 == 0){
+				$display = "<select><option>Not Found</option></select>";
+			} 	else 	{
+				$values = build_array($row_num2);
+				if($row_num2 == 1){
+					$values = [$values];
 				}
-				$select_default = [0, "select", "default"];
-				array_push($values, $select_default);
+				$select_default = [0, "select", "one"];
+				array_unshift($values, $select_default);
 				$display = select_option($values, "friend_id", "user_id", "form-control form-control-sm", "sr-only");
 				$display .= $register;
+				$display = <<<block
+				<form name = "reg_lecturer" id = "reg_lec_form" class= "form-inline" method = "POST" action = "/common/profile.php" >
+					$display
+				</form>
+block;
 			}
 		}
 	}
 }
 
 } 	else	{		//if no active session
-$display =  "<p>You do not have an active user session. Please go back and login in</p>";
+	$display =  "<p>You do not have an active user session. Please go back and login in</p>";
 }
 
 ?>

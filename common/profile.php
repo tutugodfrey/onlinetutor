@@ -106,7 +106,6 @@ block;
 		$query_string = "update registered_users set $update_field = date(\"$new_value\") where id = \"$user_id\"";
 		}	else	{		//end $_POST[date_of_birth]
 			if(isset($_POST["new_photo"])){
-				echo  "what is  hapening";
 				$store = "$doc_root/personal_data/user$user_id/profile_pix";
 				$new_value = "/personal_data/user$user_id/profile_pix/";
 

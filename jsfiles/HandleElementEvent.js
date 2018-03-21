@@ -67,7 +67,7 @@ function returnedLecturers (returnedLecturers) {
 	const registerBtn = document.getElementById("register-lecturer");
 	console.log("returned", returnedLecturers);
 	console.log(typeof returnedLecturers);
-	if((returnedLecturers === "p") || (returnedLecturers.indexOf("Not Found") >= 0 )) {
+	if((returnedLecturers.trim() === "p") || (returnedLecturers.indexOf("Not Found") >= 0 )) {
 		console.log("No lecturer returned");
 		console.log(returnedLecturers);
 		changeAttribute(registerBtn, "class", "hide-item", "no");

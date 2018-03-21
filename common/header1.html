@@ -1,27 +1,57 @@
-<div class = "navbar nav-tabs page-header fixed-top" >
+<div class = "container">
 	<div class = "row">
-		<div id = "pry-nav">
-			<ul class = 'nav' >
-				<li class = 'nav-item' >
-				  <a href = './default.html' class = 'nav-link active' >
-				    home
+		<div id = "logo-div" class = "col-2">
+			<a href = './default.html' class = 'nav-lin' >
+				<img id = "brand-logo" class = "nav-lin" src = "/images/logo.png" alt ="site logo" />
+			</a>
+		</div> 
+  	<div id = "login-form-inline" class = "col-7 offset-3 col-lg-5 offset-lg-5">
+  		<ul class = "nav" >
+	  		<li id = "login-form">
+					<form class = "form-group form-inline" method = "POST" action = "login.php" >
+		        <p id = "validation-notice"></p>
+		        <label for = "username" class = "sr-only">Username</label>
+		        <input type = "text" size = "10" class = 'requiredFields form-control form-control-sm' placeholder = "username" name = "username" id = 'username'  size = "30" /><br />
+		        <label for = "password" class = "sr-only" >Password</label>
+		        <input type = "password" id = 'password' size = "10" placeholder = "password" class = 'requiredFields form-control form-control-sm'  name = "password" /><br />
+		        <input type = "submit" value = "Login" class = "btn btn-success btn-sm form-control" name = "login" /><br />
+		      </form>
+		    </li>
+		    <li id = "signup-link">
+		    	<a href = './signup.php' class = 'nav-link' >
+				    Signup
 				  </a>
 				</li>
 			</ul>
 		</div>
-		<div id = "sec-nav" class = "ml-auto">
-			<ul class = 'nav' >
-				<li class = 'nav-item' >
-				  <a href = './signup.php' class = 'nav-link' >
-				    signup
-				  </a>
-				</li>
-				<li class = 'nav-item'>
-				  <a href = './login.php' class = 'nav-link' >
-				    signin
-				  </a>
-				</li>
-			</ul>
+	</div>
+	<div class = "row">
+		<div class = "navbar nav-tabs page-header col-2" >
+			<div id = "pry-nav">
+				<ul class = 'nav' >
+					<li class = 'nav-item' >
+					  <a href = './default.html' class = 'nav-link active' >
+					    home
+					  </a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id = "login-signin-links" class = "navbar nav-tabs page-header col-4 col-sm-2 offset-5 offset-sm-8" >
+			<div id = "sec-nav">
+				<ul class = 'nav' >
+					<li class = 'nav-item' >
+					  <a href = './login.php' class = 'nav-link' >
+					    Login
+					  </a>
+					</li>
+					<li class = 'nav-item' >
+					  <a href = './signup.php' class = 'nav-link' >
+					    Signup
+					  </a>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

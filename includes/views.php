@@ -101,7 +101,7 @@ function mytable($values, $checkbox = "no", $display_col1 = "yes", $grade = "no"
 				for($i = 1; $i < $length_of_field; ++$i){
 					$table_values .= "<td>$value[$i]</td>";
 				}
-				if($grade == "yes") {			//this field is check by default but it will be hidden by css and revealed only if student have been graded
+				if($grade == "yes") {			//this field is check by default but it will be hidden with css and revealed only if student have been graded
 					$table_values .= "<td><input type = \"checkbox\" class = \"graded\" id = \"grade$value[0]\" value = \"$value[4]\" name = \"graded[]\" checked = \"checked\" disabled = \"disabled\"/></td>";
 				}
 				$table_values .= "</tr>";
