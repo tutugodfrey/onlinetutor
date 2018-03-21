@@ -53,7 +53,7 @@ create table students (
 	confirm enum('yes', 'no')
 );
 
-create table courses(
+create table courses (
 	course_id tinyint not null primary key auto_increment,
 	lec_id int not null,
 	course_code varchar(15) not null, 

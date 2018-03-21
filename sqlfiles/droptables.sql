@@ -1,0 +1,15 @@
+drop table registered_users;
+drop table feedback;
+drop table friends;
+drop table chats;
+drop table students;
+drop table courses;
+drop table registered_courses;
+drop table tests;
+drop table questions;
+drop table score_board;
+drop table discussions;
+drop table posts;
+drop table announcements;
+drop table notes;
+drop table videos;
