@@ -26,11 +26,11 @@ body 		{
 }
 
 #header-div .navbar {
-	height:55px; position:relative; top:-10px; padding-bottom:0px; padding-top:0px; border:solid 2px red;
+	height:55px; position:relative; top:-10px; padding-bottom:0px; padding-top:0px;
 }
 
 #top-header {
-	height:55px; border:solid red 2px;
+	height:55px;
 }
 
 #top-headerds ul li {
