@@ -40,7 +40,7 @@ const Request = class {
    }
   } 
 
-  formRequest(method, url, formInfo) {
+   formRequest(method, url, formInfo) {
     if(method === 'post') {
       if(typeof formInfo === "object") {
         ajaxCall.postMethod(url, formInfo, handleContent.mainContent, true, true);
@@ -62,6 +62,7 @@ const Request = class {
               if(userType.toLowerCase() === "student") {
                 // '../students/dashboard.php?dashboard' '/onlinetutor/students/dashboard.php?dashboard' ./../students/dashboard.php?dashboard
                 ajaxCall.getMethod(`./../students/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
+                // ajaxCall.getMethod('./../students/home.php', handleContent.display, true);
                 setTimeout(ajaxCall.getMethod, 5000, './../students/home.php', handleContent.display, true);
               } else if (userType.toLowerCase() === "lecturer") {
                 ajaxCall.getMethod(`./../instructors/dashboard.php?dashboard&user_id=${userId}`, handleContent.header, false);
