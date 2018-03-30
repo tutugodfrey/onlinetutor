@@ -40,22 +40,6 @@ body 		{
 .nav-item {
 	height:45px; position:relative; top:5px;
 }
-/*
-#pry-nav .nav-item {
-	height:45px;
-}
-*/
-
-/*
-#pry-nav {
-	position:absolute; top:0px; left:5%; width:80vw; 
-}
-*/
-/*
-#sec-nav {
-	display:flex; flex-direction:column; position:relative; top: -15px; 
-}
-*/
 
 .nav-link {
 	font-size:13px; height:45px;
@@ -128,15 +112,6 @@ img#student-profile-pix, img#instructor-profile-pix	{
 	background-color:#acacbb; padding:50px 10px; display:grid; grid-template-columns: 100%; justify-items:center;
 }
 
-/*
-#reg-lecturer-form-group {
-	position:absolute; top:-2px; right:-90px; z-index:4;
-}
-
-#reg_lec_form {
-	position:relative; top:-30px;
-}
-*/
 #lecturers-name  {
 	width:150px;
 }
@@ -147,18 +122,13 @@ img#student-profile-pix, img#instructor-profile-pix	{
 p#validation-notice {
 	visibility:hidden; border:1px solid red;
 }
-/*
-#welcome-note {
-	text-align:center;
-}
-*/
 
 .fail-validation {
 	 border: 1px solid red;
 }
 
 #ajax_busy, #ajax_neutral	{
-					background-color:#9db7c0; position:absolute; left:5px; top:150px; z-index:3;
+					background-color:#9db7c0; position:fixed; left:5px; top:150px; z-index:300;
 }
 
 .graded[value="yes"], .show-item, #ajax_busy	{
@@ -178,7 +148,9 @@ p#validation-notice {
 	#login-form-inline {
 		display:none;
 	}
-
+	#pry-nav {
+		background-color:white;
+	}
 	#login-signin-links {
 		display:block;
 	}
