@@ -16,8 +16,8 @@ echo <<<block
     <div>
       <div id = "header-div">
       </div>
-      <div><p id = "ajax_neutral">Processing ...</p></div>
-      <div id = "content-area" class = "container"> 
+      <div><p id = "ajax_neutral">Processing ...</p></div> 
+      <div id = "content-area" class = "container">
       </div>
       <div id = "footer-div" class = "navbar">
       </div>

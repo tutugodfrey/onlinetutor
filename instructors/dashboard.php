@@ -13,7 +13,7 @@ if(isset($_SESSION["owner_id"])){
   $_SESSION["owner_id"] = $owner_id;
   $_SESSION["lecturer_db"] = "lec".$owner_id;
 } else  {
-  header("Location: /onlinetutor/common/login.php");      //user do not have an active session
+  header("Location: /common/login.php");      //user do not have an active session
   exit();
 }
 
@@ -30,7 +30,7 @@ $nav_buttons = <<<block
           <ul class = "nav">
             <li class = "nav-item">
               <a href = "/common/profile.php?profile&user_id=$owner_id" class = "pl-0 nav-link">
-                <img id = "student-profile-pix" class = "px-1 img-fluid img-thumbnail" src = "$user_image_url" alt = "profile image" />
+                <img id = "instructor-profile-pix" class = "px-1 img-fluid img-thumbnail" src = "$user_image_url" alt = "profile image" />
               </a>
             </li>
             <li class = "nav-item">
