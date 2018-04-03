@@ -48,7 +48,7 @@ $nav_buttons = <<<block
   </div>
   <div class = "container">
     <div class = "row">
-      <nav class="navbar nav-tabs navbar-toggleable-md navbar-light col-3 col-md-9 pr-0 ml-auto">
+      <nav class="navbar nav-tabs navbar-expand-md navbar-light col-3 col-md-9 pr-0 ml-auto">
 
         <button id = "toggler-btn" class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#pry-nav" aria-controls="pry-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

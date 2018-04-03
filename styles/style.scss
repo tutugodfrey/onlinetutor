@@ -46,10 +46,27 @@ body 		{
 }
 
 #showcase {
-	line-height: 20px; display:flex; flex-direction:column; justify-content:center; align-items:center;
-	text-align: center; background-color:#bed7e5; height:100vh;  position:relative; top: -68px;
-}
+	background:url("/images/learner1.jpeg");
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position:center;
+	min-height:100vh;  
+	position:relative; 
+	top: -68px;
+};
 
+#showcase-overlay {
+	background:rgba(0, 0, 0, 0.4);
+	line-height: 20px;
+	display:flex; 
+	flex-direction:column; 
+	justify-content:center; 
+	align-items:center;
+	text-align: center;  
+	min-height:100vh;  
+	position:relative; 
+	color:#ffffff
+}
 .showcase-sections {
 	line-height: 20px; display:flex; flex-direction:column; justify-content:center; align-items:center;
 	text-align: center; background-color:black; height:70vh;  position:relative; top: -68px; opacity:0.8;
@@ -142,8 +159,14 @@ p#validation-notice {
 }
 
 
+@media only screen and (max-width:700px) {
+	/** medium size screen **/
+	#brand-logo {
+	width:100px; height:60px; position:relative; top:-5px;
+	}
+}
 
-@media only screen and (max-width:768px) {
+@media only screen and (max-width:650px) {
 	/** medium size screen **/
 	#login-form-inline {
 		display:none;
@@ -151,12 +174,15 @@ p#validation-notice {
 	#pry-nav {
 		background-color:white;
 	}
+	#brand-logo {
+	width:100px; height:60px; position:relative; top:-5px;
+	}
 	#login-signin-links {
-		display:block;
+		display:inline-block;
 	}
 }
 
-@media only screen and (min-width:769px) {
+@media only screen and (min-width:651px) {
 	/** medium size screen **/
 	#login-form-inline {
 		display:block;

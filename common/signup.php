@@ -29,7 +29,7 @@ $select_result .= "</select>";
 <div id = "signup-page">
 	<div class = "container">
 		<div class = "row">
-			<div class = "card col-10 col-sm-6 col-lg-4" >
+			<div class = "card border-success col-10 col-sm-6 col-lg-4" >
 				<div id = "signup">
 				<h3 class = "form-heading card-title">sign up</h3>
 				<form method = "POST" class = "form-group" enctype = "multipart/form-data" action = "signup_process.php" >
