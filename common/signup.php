@@ -34,9 +34,9 @@ $select_result .= "</select>";
 				<h3 class = "form-heading card-title">sign up</h3>
 				<form method = "POST" class = "form-group" enctype = "multipart/form-data" action = "signup_process.php" >
 					<p id = "validation-notice">Fields mark below are required</p>
-					<div class="form-check">
+					<div class="form-check pb-2">
+						<input type = "checkbox" id = "check-lecturer" class = "form-check-input" name = "user_type" value = "lecturer" />
 						<label for = "check-lecturer" class = "form-check-label">Instructors check here</label>
-						<input type = "checkbox" id = "check-lecturer" class = "form-check-inline" name = "user_type" value = "lecturer" />
 					</div>
 					<label for = "firstname" class = "sr-only"> Firstname </label>
 					<input type = "text" class = "form-control requiredFields" placeholder = "firstname" name = "firstname" size = "30" /><br />
@@ -63,9 +63,11 @@ $select_result .= "</select>";
 						<label for = "matric_no" class = "sr-only">Student Id</label>
 						<input type = "text" class = "form-control" placeholder="Student Id" name = "matric_no" /><br />
 					</fieldset>
-					<?php date_field("date of birth"); echo $date_fields; ?> <br />
+					<div class = "form-group">
+						<?php date_field("date of birth"); echo $date_fields; ?>
+					</div>
 					<label for = "photo" class = "sr-only" >Photo</label>
-						<input type = "file" class = "form-control" placeholder="Photo" name = "photo" /><br />
+						<input type = "file" class = "form-control form-control-file" placeholder="Photo" name = "photo" /><br />
 					<label for = "email" class = "sr-only" >Email Address</label>
 						<input type = "email" class = "form-control requiredFields" name = "email" placeholder = "Email: you@yourdomain.com" /><br />
 					<label for = "phone_number" class = "sr-only" >Phone</label>
@@ -84,11 +86,11 @@ $select_result .= "</select>";
 
 						<p>Agree to our <a href = "/onlinetutor/common/term_of_use.htm" >term of use</a> and <a href = "/onlinetutor/privacypolicy.htm" >privacy policy</a></p>
 						<div class="form-check">
-							<input type = "radio" class = "form-check-inline" name = "agreement" value = "Agree" />
+							<input type = "radio" class = "form-check-input" name = "agreement" value = "Agree" />
 							<label for = "agree" class = "form-check-label">Agree</label>
 						</div>
 						<div class="form-check">
-							<input type = "radio" class = "form-check-inline" name = "agreement" value = "Disagree" />
+							<input type = "radio" class = "form-check-input" name = "agreement" value = "Disagree" />
 							<label for = "disagree" class = "form-check-label">Disagree</label>
 						</div>
 					</fieldset><br/>

@@ -34,7 +34,6 @@ const EventListener = class {
       } 
     );    //end popstate
   }
-
 }
 
 export default EventListener;
